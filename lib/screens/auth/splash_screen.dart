@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   late AnimationController _exitController;
 
   Future<void> initLoad() async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 700));
     _exitController.forward().then((value) => context.goNamed(MainNavigation.routeName));
   }
 
@@ -22,6 +22,9 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
     _exitController = AnimationController(vsync: this,duration: const Duration(milliseconds: 600));
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      initLoad();
+    });
   }
 
   @override
