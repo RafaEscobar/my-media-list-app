@@ -19,7 +19,7 @@ class _BottomTabsState extends State<BottomTabs> {
         initialSelectedTab: "Inicio",
         useSafeArea: true,
         labels: const ["Inicio", "Buscar", "Añadir", "Pendientes", "Perfil"],
-        icons: const [Icons.dashboard, Icons.home, Icons.people_alt, Icons.settings, Icons.ac_unit_rounded],
+        icons: const [Icons.home_filled, Icons.search_sharp, Icons.add_circle_outline_sharp, Icons.pending_actions_sharp, Icons.person_pin],
         tabSize: 50,
         tabBarHeight: 55,
         textStyle: const TextStyle(
