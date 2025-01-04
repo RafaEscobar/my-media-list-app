@@ -9,6 +9,7 @@ import 'package:mymedialist/screens/navigation/bottom_tabs.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
+  static const String routeName = "main-screen";
 
   @override
   State<MainNavigation> createState() => _MainNavigationState();
