@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:mymedialist/screens/main/home_screen.dart';
+import 'package:mymedialist/screens/navigation/main_navigation.dart';
 
 void main()
 {
@@ -15,7 +15,7 @@ class MyClass extends StatelessWidget
   Widget build(BuildContext context){
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: MainNavigation(),
     );
   }
 }
