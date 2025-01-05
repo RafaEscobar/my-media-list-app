@@ -5,6 +5,7 @@ import 'package:mymedialist/screens/lists/mangas_screen.dart';
 import 'package:mymedialist/screens/lists/movies_screen.dart';
 import 'package:mymedialist/screens/lists/series_screen.dart';
 import 'package:mymedialist/screens/lists/videogames_screens.dart';
+import 'package:mymedialist/widgets/main_head.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,15 +23,10 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 5,
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset("assets/images/logo.png", height: 60, width: 60),
-                const Icon(Icons.search_sharp, size: 34,)
-              ],
-            ),
+          const SizedBox(height: 10,),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: MainHead()
           ),
           Container(
             color: Colors.white,
