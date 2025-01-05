@@ -23,7 +23,7 @@ class _MainNavigationState extends State<MainNavigation> with TickerProviderStat
   void initState() {
     super.initState();
       _motionTabBarController = MotionTabBarController(
-      initialIndex: 1,
+      initialIndex: 0,
       length: 5,
       vsync: this,
     );
