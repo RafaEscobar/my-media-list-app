@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/screens/auth/splash_screen.dart';
+import 'package:mymedialist/screens/main/home_screen.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
 
 class AppRoute {
@@ -14,6 +15,11 @@ class AppRoute {
             path: MainNavigation.routeName,
             name: MainNavigation.routeName,
             builder: (BuildContext context, GoRouterState state) => const MainNavigation(),
+          ),
+          GoRoute(
+            path: HomeScreen.routeName,
+            name: HomeScreen.routeName,
+            builder: (BuildContext context, GoRouterState state) => const HomeScreen(),
           )
         ]
       )
