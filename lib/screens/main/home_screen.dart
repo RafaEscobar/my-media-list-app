@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -26,6 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: TabBar(
               indicatorColor: Colors.black,
+              onTap: (value) {
+                setState(() => _selectedIndex = value);
+              },
               tabs: <Widget>[
                 Tab(
                   text: 'Anime',
@@ -33,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     "assets/images/anime.svg",
                     height: 20,
                     width: 20,
+                    colorFilter: ColorFilter.mode((_selectedIndex == 0) ? Colors.blue : Colors.black, BlendMode.srcIn),
                   ),
                 ),
                 Tab(
@@ -41,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     "assets/images/movie.svg",
                     height: 20,
                     width: 20,
+                    colorFilter: ColorFilter.mode((_selectedIndex == 1) ? Colors.blue : Colors.black, BlendMode.srcIn),
                   ),
                 ),
                 Tab(
@@ -49,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     "assets/images/game.svg",
                     height: 20,
                     width: 20,
+                    colorFilter: ColorFilter.mode((_selectedIndex == 2) ? Colors.blue : Colors.black, BlendMode.srcIn),
                   ),
                 ),
                 Tab(
@@ -57,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     "assets/images/manga.svg",
                     height: 20,
                     width: 20,
+                    colorFilter: ColorFilter.mode((_selectedIndex == 3) ? Colors.blue : Colors.black, BlendMode.srcIn),
                   ),
                 ),
                 Tab(
@@ -65,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     "assets/images/serie.svg",
                     height: 20,
                     width: 20,
+                    colorFilter: ColorFilter.mode((_selectedIndex == 4) ? Colors.blue : Colors.black, BlendMode.srcIn),
                   ),
                 ),
               ],
