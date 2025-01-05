@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'package:mymedialist/screens/main/create_screen.dart';
+import 'package:mymedialist/screens/main/grades_screen.dart';
 import 'package:mymedialist/screens/main/home_screen.dart';
 import 'package:mymedialist/screens/main/pendings_screen.dart';
 import 'package:mymedialist/screens/main/profile_screen.dart';
-import 'package:mymedialist/screens/main/search_screen.dart';
 import 'package:mymedialist/screens/navigation/bottom_tabs.dart';
 
 class MainNavigation extends StatefulWidget {
@@ -38,16 +38,21 @@ class _MainNavigationState extends State<MainNavigation> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _motionTabBarController,
-        children: const [
-          HomeScreen(),
-          SearchScreen(),
-          CreateScreen(),
-          PendingsScreen(),
-          ProfileScreen()
-        ],
+      body: Container(
+        color: Colors.white,
+        child: SafeArea(
+          child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _motionTabBarController,
+            children: const [
+              HomeScreen(),
+              GradesScreen(),
+              CreateScreen(),
+              PendingsScreen(),
+              ProfileScreen()
+            ],
+          ),
+        ),
       ),
       bottomNavigationBar: BottomTabs(tabBarController: _motionTabBarController!,),
     );

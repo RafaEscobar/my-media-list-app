@@ -22,9 +22,18 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 5,
       child: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset("assets/images/logo.png", height: 60, width: 60),
+                const Icon(Icons.search_sharp, size: 34,)
+              ],
+            ),
+          ),
           Container(
             color: Colors.white,
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: TabBar(
               indicatorColor: Colors.black,
               onTap: (value) {

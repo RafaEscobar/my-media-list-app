@@ -18,8 +18,8 @@ class _BottomTabsState extends State<BottomTabs> {
         controller: widget.tabBarController,
         initialSelectedTab: "Inicio",
         useSafeArea: true,
-        labels: const ["Inicio", "Buscar", "Añadir", "Pendientes", "Perfil"],
-        icons: const [Icons.home_filled, Icons.search_sharp, Icons.add_circle_outline_sharp, Icons.pending_actions_sharp, Icons.person_pin],
+        labels: const ["Inicio", "Puntajes", "Añadir", "Pendientes", "Perfil"],
+        icons: const [Icons.home_filled, Icons.grade_outlined, Icons.add_circle_outline_sharp, Icons.pending_actions_sharp, Icons.person_pin],
         tabSize: 50,
         tabBarHeight: 55,
         textStyle: const TextStyle(
