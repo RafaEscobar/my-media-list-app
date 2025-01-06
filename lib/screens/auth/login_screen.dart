@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mymedialist/widgets/label.dart';
+import 'package:mymedialist/widgets/general/label.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -12,7 +12,8 @@ class LoginScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 20,),
-          Label(text: 'Correo electrónico:', size: 18,)
+          Label(text: 'Correo electrónico:', size: 18,),
+          
         ],
       ),
     );
