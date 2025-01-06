@@ -67,10 +67,10 @@ class _AuthScreenState extends State<AuthScreen> {
                         radius: 20,
                         tabs: const [
                           Tab(
-                              text: "Iniciar sesión",
+                              text: "Inicio de sesión",
                             ),
                             Tab(
-                              text: "Registrarme",
+                              text: "Registro",
                             ),
                         ]
                       ),

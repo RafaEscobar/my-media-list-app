@@ -8,53 +8,48 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 30,),
-                  Label(text: 'Correo electrónico:', size: 18,),
-                  Input(
-                    obscureText: false,
-                    keyboardType: TextInputType.emailAddress,
-                    hintText: 'example@mail.com',
-                    contentPadding: EdgeInsets.symmetric(vertical: 2),
-                    maxLength: 60,
-                  ),
-                  SizedBox(height: 40,),
-                  Label(text: 'Contraseña:', size: 18,),
-                  Input(
-                    obscureText: true,
-                    keyboardType: TextInputType.text,
-                    hintText: '* * * * * * * *',
-                    contentPadding: EdgeInsets.symmetric(vertical: 2),
-                    maxLength: 16,
-                    showMaxLenght: true,
-                  ),
-                  SizedBox(height: 10,),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Label(text: '¿Olvidaste tu contraseña?', size: 13, color: Colors.black54, ),
-                  ),
-                ],
+              SizedBox(height: 30,),
+              Label(text: 'Correo electrónico:', size: 18,),
+              Input(
+                obscureText: false,
+                keyboardType: TextInputType.emailAddress,
+                hintText: 'example@mail.com',
+                contentPadding: EdgeInsets.symmetric(vertical: 2),
+                maxLength: 60,
               ),
-              Button(
-                action: () => (),
-                text: 'Iniciar sesión',
-                backgroundSplash: const Color(0xFF3df0fa),
-                background: const Color(0xFF1e7df0),
-                borderRadius: 20
-              )
+              SizedBox(height: 36,),
+              Label(text: 'Contraseña:', size: 18,),
+              Input(
+                obscureText: true,
+                keyboardType: TextInputType.text,
+                hintText: '* * * * * * * *',
+                contentPadding: EdgeInsets.symmetric(vertical: 2),
+                maxLength: 16,
+              ),
+              SizedBox(height: 20,),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Label(text: '¿Olvidaste tu contraseña?', size: 13, color: Colors.black54, ),
+              ),
             ],
           ),
-        ),
-      ],
+          Button(
+            action: () => (),
+            text: 'Iniciar sesión',
+            backgroundSplash: const Color(0xFF3df0fa),
+            background: const Color(0xFF1e7df0),
+            borderRadius: 20
+          )
+        ],
+      ),
     );
   }
 }
