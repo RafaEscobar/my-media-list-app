@@ -10,10 +10,13 @@ class Button extends StatelessWidget {
     this.textSize = 22,
     this.padding = const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
     this.borderRadius = 10,
+    required this.backgroundSplash,
   });
+
   final Function() action;
   final String text;
   final Color background;
+  final Color backgroundSplash;
   final Color textColor;
   final double textSize;
   final EdgeInsetsGeometry padding;
@@ -21,16 +24,26 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: action,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: background,
-        padding: padding,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius)
-        )
+    return Container(
+    color: Colors.white,
+    child: Material(
+      color: background,
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(borderRadius),
+        onTap: action,
+        splashColor: backgroundSplash,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(color: textColor, fontSize: textSize),
+            ),
+          ),
+        ),
       ),
-      child: Text(text, style: TextStyle(color: textColor, fontSize: textSize),),
-    );
+    ),
+  );
   }
 }

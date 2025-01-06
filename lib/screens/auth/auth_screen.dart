@@ -28,8 +28,8 @@ class _AuthScreenState extends State<AuthScreen> {
                 const SizedBox(height: 40,),
                 SvgPicture.asset(
                   "assets/images/logob.svg",
-                  width: 150,
-                  height: 150,
+                  width: 140,
+                  height: 140,
                   colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                 ),
               ],
@@ -46,34 +46,37 @@ class _AuthScreenState extends State<AuthScreen> {
               height: size.height * .7,
               child: DefaultTabController(
                 length: 2,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 14,),
-                    ButtonsTabBar(
-                      backgroundColor: const Color(0xFF3df0fa),
-                      unselectedBackgroundColor: const Color(0xFF1e7df0),
-                      labelStyle: const TextStyle(color: Colors.black, fontSize: 18),
-                      unselectedLabelStyle: const TextStyle(color: Colors.white),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 26),
-                      radius: 20,
-                      tabs: const [
-                        Tab(
-                            text: "Iniciar sesión",
-                          ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 30, right: 20, left: 20),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 14,),
+                      ButtonsTabBar(
+                        backgroundColor: const Color(0xFF3df0fa),
+                        unselectedBackgroundColor: const Color(0xFF1e7df0),
+                        labelStyle: const TextStyle(color: Colors.black, fontSize: 18),
+                        unselectedLabelStyle: const TextStyle(color: Colors.white),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                        radius: 20,
+                        tabs: const [
                           Tab(
-                            text: "Registrarme",
-                          ),
-                      ]
-                    ),
-                    const Expanded(
-                      child: TabBarView(
-                          children: [
-                            LoginScreen(),
-                            RegisterScreen()
-                          ]
-                        )
-                    )
-                  ],
+                              text: "Iniciar sesión",
+                            ),
+                            Tab(
+                              text: "Registrarme",
+                            ),
+                        ]
+                      ),
+                      const Expanded(
+                        child: TabBarView(
+                            children: [
+                              LoginScreen(),
+                              RegisterScreen()
+                            ]
+                          )
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
