@@ -59,10 +59,10 @@ class _AuthScreenState extends State<AuthScreen> {
                     children: [
                       const SizedBox(height: 14,),
                       ButtonsTabBar(
-                        backgroundColor: Colors.white,
-                        unselectedBackgroundColor: const Color(0xFF1e7df0),
-                        labelStyle: const TextStyle(color: Colors.black, fontSize: 18),
-                        unselectedLabelStyle: const TextStyle(color: Colors.white),
+                        backgroundColor: const Color(0xFF1e7df0),
+                        unselectedBackgroundColor: Colors.white,
+                        labelStyle: const TextStyle(color: Colors.white, fontSize: 18),
+                        unselectedLabelStyle: const TextStyle(color: Colors.black),
                         contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                         radius: 20,
                         tabs: const [
