@@ -41,6 +41,13 @@ class _AuthScreenState extends State<AuthScreen> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
+                boxShadow: const [
+                   BoxShadow(
+                    color: Colors.white60,
+                    blurRadius: 4,
+                    offset: Offset(5, 5),
+                  ),
+                ]
               ),
               width: size.width * .84,
               height: size.height * .7,
@@ -52,7 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     children: [
                       const SizedBox(height: 14,),
                       ButtonsTabBar(
-                        backgroundColor: const Color(0xFF3df0fa),
+                        backgroundColor: Colors.white,
                         unselectedBackgroundColor: const Color(0xFF1e7df0),
                         labelStyle: const TextStyle(color: Colors.black, fontSize: 18),
                         unselectedLabelStyle: const TextStyle(color: Colors.white),
