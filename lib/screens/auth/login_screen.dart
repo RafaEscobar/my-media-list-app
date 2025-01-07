@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   final FocusNode _passwordFocuesNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
   static AppProvider appProvider = navigatorKey.currentContext!.read<AppProvider>();
+  bool? isChecked = true;
 
   @override
   void initState() {
@@ -114,19 +115,43 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   ]),
                 ),
                 const SizedBox(height: 20,),
-                const Align(
-                  alignment: Alignment.centerRight,
-                  child: Label(text: '¿Olvidaste tu contraseña?', size: 13, color: Colors.black54, ),
-                ),
+                Transform.translate(
+                  offset: const Offset(-14, 0),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() => isChecked = value);
+                        },
+                      ),
+                      InkWell(
+                        onTap: () => setState(() => isChecked = !isChecked!),
+                        child: const Label(text: "Recuerdame")
+                      )
+                    ],
+                  )
+                )
+
               ],
             ),
           ),
-          Button(
-            action: onSubmit,
-            text: 'Iniciar sesión',
-            backgroundSplash: const Color(0xFF3df0fa),
-            background: const Color(0xFF1e7df0),
-            borderRadius: 20,
+          Column(
+            children: [
+              Button(
+                action: onSubmit,
+                text: 'Iniciar sesión',
+                backgroundSplash: const Color(0xFF3df0fa),
+                background: const Color(0xFF1e7df0),
+                borderRadius: 20,
+              ),
+              const SizedBox(height: 14,),
+              const Label(
+                text: '¿Olvidaste tu contraseña?',
+                size: 13,
+                color: Colors.black54,
+              ),
+            ],
           )
         ],
       ),
