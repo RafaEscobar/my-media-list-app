@@ -8,7 +8,7 @@ class Alert {
     Color textColor = Colors.black,
     double textSize = 14,
     Duration duration = const Duration(milliseconds: 2300),
-    required double contentWidth,
+    double? contentWidth,
   }){
     ScaffoldMessenger.of(navigatorKey.currentState!.context).showSnackBar(
       SnackBar(
@@ -20,7 +20,7 @@ class Alert {
         shape: const StadiumBorder(),
         behavior: SnackBarBehavior.floating,
         duration: duration,
-        width: contentWidth,
+        width: contentWidth ?? 200,
       )
     );
   }

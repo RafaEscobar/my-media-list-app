@@ -9,6 +9,7 @@ import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/input.dart';
 import 'package:mymedialist/widgets/general/label.dart';
+import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -47,21 +48,19 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     removeFocus();
     bool? isValidated = _formKey.currentState?.saveAndValidate();
     Map<String, dynamic> credentiasl = {'email': _emailController.text, 'password': _passwordController.text};
+    bool isLogged = false;
     if (isValidated!) {
-      bool isLogged = await appProvider.login(credentials: credentiasl);
-      if (isLogged) {
-        if (mounted) context.goNamed(MainNavigation.routeName);
-      } else {
-        if (!mounted) return;
-        Size size = MediaQuery.of(context).size;
+      await Loader().runLoad(() async => isLogged = await appProvider.login(credentials: credentiasl));
+      if (!mounted) return;
+      (isLogged) ?
+        context.goNamed(MainNavigation.routeName) :
         Alert.show(
           text: 'Credenciales incorrectas',
           background: Colors.red.shade500,
           textColor: Colors.white,
-          contentWidth: (size.width * .82),
+          contentWidth: (MediaQuery.of(context).size.width * .82),
           duration: const Duration(seconds: 3)
         );
-      }
     }
   }
 
