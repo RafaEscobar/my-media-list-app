@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
+import 'package:mymedialist/services/preferences.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/input.dart';
@@ -27,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   final FocusNode _passwordFocuesNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
   static AppProvider appProvider = navigatorKey.currentContext!.read<AppProvider>();
-  bool? isChecked = true;
+  bool rememberme = true;
 
   @override
   void initState() {
@@ -53,8 +54,10 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     if (isValidated!) {
       await Loader().runLoad(() async => isLogged = await appProvider.login(credentials: credentiasl));
       if (!mounted) return;
-      (isLogged) ?
-        context.goNamed(MainNavigation.routeName) :
+      if (isLogged) {
+        Preferences.rememberme = rememberme;
+        context.goNamed(MainNavigation.routeName);
+      } else {
         Alert.show(
           text: 'Credenciales incorrectas',
           background: Colors.red.shade500,
@@ -62,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
           contentWidth: (MediaQuery.of(context).size.width * .82),
           duration: const Duration(seconds: 3)
         );
+      }
     }
   }
 
@@ -120,13 +124,13 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   child: Row(
                     children: [
                       Checkbox(
-                        value: isChecked,
+                        value: rememberme,
                         onChanged: (bool? value) {
-                          setState(() => isChecked = value);
+                          setState(() => rememberme = value!);
                         },
                       ),
                       InkWell(
-                        onTap: () => setState(() => isChecked = !isChecked!),
+                        onTap: () => setState(() => rememberme = !rememberme),
                         child: const Label(text: "Recuerdame")
                       )
                     ],

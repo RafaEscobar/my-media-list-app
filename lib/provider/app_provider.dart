@@ -24,11 +24,14 @@ class AppProvider extends ChangeNotifier{
     try {
        Response response = await ApiService.request('/login', body: credentials);
        if (response.statusCode == 200) {
-        userInfo = response.data['data'];
+        userInfo = User.fromJson(response.data['data']);
         Preferences.token = userInfo.token;
+        return true;
+       } else {
+        return false;
        }
-       return true;
     } catch (e) {
+      print(e.toString());
       throw Exception(e);
     }
   }

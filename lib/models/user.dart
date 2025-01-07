@@ -13,7 +13,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) => User(
     id: json['id'],
-    name: json['name'] . json['last_name'],
+    name: "${json['name']} ${json['last_name']}",
     email: json['email'],
     token: json['token']
   );
