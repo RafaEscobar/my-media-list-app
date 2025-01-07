@@ -2,10 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/routes/app_route.dart';
+import 'package:mymedialist/services/preferences.dart';
 import 'package:provider/provider.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-void main(){
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Preferences.init();
   return runApp(const MyClass());
 }
 
