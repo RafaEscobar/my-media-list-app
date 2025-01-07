@@ -8,7 +8,7 @@ class Alert {
     Color textColor = Colors.black,
     double textSize = 14,
     Duration duration = const Duration(milliseconds: 2300),
-    required double contentWidth
+    required double contentWidth,
   }){
     ScaffoldMessenger.of(navigatorKey.currentState!.context).showSnackBar(
       SnackBar(

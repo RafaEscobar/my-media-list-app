@@ -18,7 +18,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin{
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
@@ -57,8 +57,8 @@ class _LoginScreenState extends State<LoginScreen> {
           text: 'Credenciales incorrectas',
           background: Colors.red.shade500,
           textColor: Colors.white,
-          contentWidth: (size.width * .8),
-          
+          contentWidth: (size.width * .82),
+          duration: const Duration(seconds: 3)
         );
       }
     }
