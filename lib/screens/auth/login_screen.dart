@@ -13,14 +13,15 @@ import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+  static const String routeName = 'login-screen';
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin{
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController(text: '');
+  final TextEditingController _passwordController = TextEditingController(text: '');
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocuesNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
