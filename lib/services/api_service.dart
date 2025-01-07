@@ -13,7 +13,11 @@ class ApiService {
     Response response;
     Dio dio = Dio(BaseOptions(
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      validateStatus: (status) {
+        return true;
       },
     ));
 

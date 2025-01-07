@@ -18,6 +18,7 @@ class RegisterScreen extends StatelessWidget {
             children: [
               SizedBox(height: 30,),
               Label(text: 'Nombre:', size: 18,),
+              /*
               Input(
                 obscureText: false,
                 keyboardType: TextInputType.text,
@@ -52,6 +53,7 @@ class RegisterScreen extends StatelessWidget {
                 contentPadding: EdgeInsets.symmetric(vertical: 2),
                 maxLength: 16,
               ),
+              */
             ],
           ),
           Button(

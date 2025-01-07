@@ -34,7 +34,7 @@ class Button extends StatelessWidget {
         onTap: action,
         splashColor: backgroundSplash,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+          padding: padding,
           child: Center(
             child: Text(
               text,

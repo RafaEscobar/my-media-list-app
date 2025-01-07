@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class Input extends StatelessWidget {
   const Input({
@@ -6,9 +7,7 @@ class Input extends StatelessWidget {
     this.hintText,
     this.hintStyle,
     this.textStyle,
-    this.controller,
     this.keyboardType,
-    required this.obscureText,
     this.enabledBorder,
     this.focusedBorder,
     this.errorBorder,
@@ -16,12 +15,17 @@ class Input extends StatelessWidget {
     this.maxLength,
     this.contentPadding,
     this.onTap,
-    this.showMaxLenght = false
+    this.showMaxLenght = false,
+    this.validator,
+    required this.focusNode,
+    required this.obscureText,
+    required this.controller,
   });
+
   final String? hintText;
   final TextStyle? hintStyle;
   final TextStyle? textStyle;
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final TextInputType? keyboardType;
   final bool obscureText;
   final InputBorder? enabledBorder;
@@ -32,16 +36,20 @@ class Input extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final VoidCallback? onTap;
   final bool showMaxLenght;
+  final FormFieldValidator<String>? validator;
+  final FocusNode focusNode;
 
-    @override
+  @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return FormBuilderTextField(
+      focusNode: focusNode,
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
       style: textStyle,
       maxLength: maxLength,
       onTap: onTap,
+      validator: validator,
       decoration: InputDecoration(
         counterText: showMaxLenght ? null : '',
         hintText: hintText,
@@ -63,7 +71,7 @@ class Input extends StatelessWidget {
               borderSide: BorderSide(color: Colors.redAccent, width: 2),
             ),
         contentPadding: contentPadding ?? const EdgeInsets.all(16),
-      ),
+      ), name: '',
     );
   }
 }
