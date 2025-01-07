@@ -4,6 +4,13 @@ import 'package:mymedialist/services/api_service.dart';
 
 class AppProvider extends ChangeNotifier{
   String _token = '';
+  bool _showedSplash = false;
+
+  bool get showedSplash => _showedSplash;
+  set showedSplash(bool newValue){
+    _showedSplash = newValue;
+    notifyListeners();
+  }
 
   String get token => _token;
   set token(String newValue){

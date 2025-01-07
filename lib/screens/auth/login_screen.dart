@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   focusNode: _emailFocusNode,
                   obscureText: false,
                   keyboardType: TextInputType.emailAddress,
-                  hintText: 'example@mail.com',
+                  hintText: 'example@mail.com' ,
                   contentPadding: const EdgeInsets.symmetric(vertical: 2),
                   maxLength: 60,
                   validator: FormBuilderValidators.compose([
