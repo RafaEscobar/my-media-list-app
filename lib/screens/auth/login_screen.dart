@@ -45,9 +45,9 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   Future<void> onSubmit() async {
     removeFocus();
     bool? isValidated = _formKey.currentState?.saveAndValidate();
-    Map<String, dynamic> body = {'email': _emailController.text, 'password': _passwordController.text};
+    Map<String, dynamic> credentiasl = {'email': _emailController.text, 'password': _passwordController.text};
     if (isValidated!) {
-      bool isLogged = await appProvider.login(body);
+      bool isLogged = await appProvider.login(credentials: credentiasl);
       if (isLogged) {
         if (mounted) context.goNamed(MainNavigation.routeName);
       } else {

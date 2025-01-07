@@ -9,6 +9,6 @@ class Preferences {
   static String get token => pref.getString('token') ?? '';
   static set token(String newToken) => pref.setString('token', newToken);
 
-  static bool get logged => pref.getBool('logged') ?? false;
-  static set logged(bool newValue) => pref.setBool('logged', newValue);
+  static bool get rememberme => pref.getBool('rememberme') ?? false;
+  static set rememberme(bool newValue) => pref.setBool('rememberme', newValue);
 }
