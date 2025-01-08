@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-class Input extends StatelessWidget {
+class Input extends StatefulWidget {
   const Input({
     super.key,
     this.hintText,
@@ -17,6 +17,7 @@ class Input extends StatelessWidget {
     this.onTap,
     this.showMaxLenght = false,
     this.validator,
+    this.isPassword = false,
     required this.focusNode,
     required this.obscureText,
     required this.controller,
@@ -38,40 +39,61 @@ class Input extends StatelessWidget {
   final bool showMaxLenght;
   final FormFieldValidator<String>? validator;
   final FocusNode focusNode;
+  final bool isPassword;
+
+  @override
+  State<Input> createState() => _InputState();
+}
+
+class _InputState extends State<Input> {
+  late bool obscureText;
+
+  @override
+  void initState() {
+    super.initState();
+    obscureText = widget.isPassword;
+  }
+
+  void changeObscureText() => setState(() => obscureText = !obscureText);
 
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
-      focusNode: focusNode,
-      controller: controller,
-      keyboardType: keyboardType,
+      focusNode: widget.focusNode,
+      controller: widget.controller,
+      keyboardType: widget.keyboardType,
       obscureText: obscureText,
-      style: textStyle,
-      maxLength: maxLength,
-      onTap: onTap,
-      validator: validator,
+      style: widget.textStyle,
+      maxLength: widget.maxLength,
+      onTap: widget.onTap,
+      validator: widget.validator,
       decoration: InputDecoration(
-        counterText: showMaxLenght ? null : '',
-        hintText: hintText,
-        hintStyle: hintStyle,
-        enabledBorder: enabledBorder ??
+        counterText: widget.showMaxLenght ? null : '',
+        hintText: widget.hintText,
+        hintStyle: widget.hintStyle,
+        enabledBorder: widget.enabledBorder ??
             UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.grey.shade400),
             ),
-        focusedBorder: focusedBorder ??
+        focusedBorder: widget.focusedBorder ??
             UnderlineInputBorder(
               borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
             ),
-        errorBorder: errorBorder ??
+        errorBorder: widget.errorBorder ??
             const UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.red, width: 2),
             ),
-        focusedErrorBorder: focusedErrorBorder ??
+        focusedErrorBorder: widget.focusedErrorBorder ??
             const UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.redAccent, width: 2),
             ),
-        contentPadding: contentPadding ?? const EdgeInsets.all(16),
-      ), name: '',
+        contentPadding: widget.contentPadding ?? const EdgeInsets.all(16),
+        suffixIcon: widget.isPassword ? IconButton(
+          onPressed: changeObscureText,
+          icon: Icon(obscureText ? Icons.visibility : Icons.visibility_off)
+        ) : null
+      ),
+      name: '',
     );
   }
 }

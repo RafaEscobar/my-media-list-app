@@ -117,6 +117,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     FormBuilderValidators.maxLength(16, errorText: 'La contraseña es demasiado grande'),
                     FormBuilderValidators.minLength(8, errorText: 'La contraseña es demasiado corta'),
                   ]),
+                  isPassword: true,
                 ),
                 const SizedBox(height: 20,),
                 Transform.translate(
