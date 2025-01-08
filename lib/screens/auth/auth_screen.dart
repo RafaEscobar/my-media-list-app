@@ -17,79 +17,68 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            width: size.width,
-            color: const Color(0xFF1e7df0),
-            child: Column(
-              children: [
-                const SizedBox(height: 40,),
-                SvgPicture.asset(
-                  "assets/images/logob.svg",
-                  width: 140,
-                  height: 140,
-                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 80,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-                boxShadow: const [
-                   BoxShadow(
-                    color: Colors.white60,
-                    blurRadius: 4,
-                    offset: Offset(5, 5),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: size.width,
+              color: const Color(0xFF1e7df0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 40),
+                  SvgPicture.asset(
+                    "assets/images/logob.svg",
+                    width: 140,
+                    height: 140,
+                    colorFilter:
+                        const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                   ),
-                ]
+                ],
               ),
-              width: size.width * .84,
-              height: size.height * .7,
-              child: DefaultTabController(
-                length: 2,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 20, right: 20, left: 20),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 14,),
-                      ButtonsTabBar(
-                        backgroundColor: const Color(0xFF1e7df0),
-                        unselectedBackgroundColor: Colors.white,
-                        labelStyle: const TextStyle(color: Colors.white, fontSize: 18),
-                        unselectedLabelStyle: const TextStyle(color: Colors.black),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                        radius: 20,
-                        tabs: const [
-                          Tab(
-                              text: "Inicio de sesión",
-                            ),
-                            Tab(
-                              text: "Registro",
-                            ),
-                        ]
+            ),
+            DefaultTabController(
+              length: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 20, right: 14, left: 14),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 14),
+                    ButtonsTabBar(
+                      backgroundColor: const Color(0xFF1e7df0),
+                      unselectedBackgroundColor: Colors.white,
+                      labelStyle:
+                          const TextStyle(color: Colors.white, fontSize: 18),
+                      unselectedLabelStyle:
+                          const TextStyle(color: Colors.black),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
+                      radius: 20,
+                      tabs: const [
+                        Tab(
+                          text: "Inicio de sesión",
+                        ),
+                        Tab(
+                          text: "Registro",
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: size.height * .68,
+                      child: const TabBarView(
+                        children: [
+                          LoginScreen(),
+                          RegisterScreen(),
+                        ],
                       ),
-                      const Expanded(
-                        child: TabBarView(
-                            children: [
-                              LoginScreen(),
-                              RegisterScreen()
-                            ]
-                          )
-                      )
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          )
-        ],
-      )
+          ],
+        ),
+      ),
     );
   }
 }
