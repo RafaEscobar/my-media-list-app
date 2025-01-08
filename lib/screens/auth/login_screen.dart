@@ -5,10 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
+import 'package:mymedialist/services/preferences.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/input.dart';
 import 'package:mymedialist/widgets/general/label.dart';
+import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   final FocusNode _passwordFocuesNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
   static AppProvider appProvider = navigatorKey.currentContext!.read<AppProvider>();
+  bool rememberme = true;
 
   @override
   void initState() {
@@ -47,18 +50,19 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     removeFocus();
     bool? isValidated = _formKey.currentState?.saveAndValidate();
     Map<String, dynamic> credentiasl = {'email': _emailController.text, 'password': _passwordController.text};
+    bool isLogged = false;
     if (isValidated!) {
-      bool isLogged = await appProvider.login(credentials: credentiasl);
+      await Loader().runLoad(() async => isLogged = await appProvider.login(credentials: credentiasl));
+      if (!mounted) return;
       if (isLogged) {
-        if (mounted) context.goNamed(MainNavigation.routeName);
+        Preferences.rememberme = rememberme;
+        context.goNamed(MainNavigation.routeName);
       } else {
-        if (!mounted) return;
-        Size size = MediaQuery.of(context).size;
         Alert.show(
           text: 'Credenciales incorrectas',
           background: Colors.red.shade500,
           textColor: Colors.white,
-          contentWidth: (size.width * .82),
+          contentWidth: (MediaQuery.of(context).size.width * .82),
           duration: const Duration(seconds: 3)
         );
       }
@@ -115,19 +119,43 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   ]),
                 ),
                 const SizedBox(height: 20,),
-                const Align(
-                  alignment: Alignment.centerRight,
-                  child: Label(text: '¿Olvidaste tu contraseña?', size: 13, color: Colors.black54, ),
-                ),
+                Transform.translate(
+                  offset: const Offset(-14, 0),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: rememberme,
+                        onChanged: (bool? value) {
+                          setState(() => rememberme = value!);
+                        },
+                      ),
+                      InkWell(
+                        onTap: () => setState(() => rememberme = !rememberme),
+                        child: const Label(text: "Recuerdame")
+                      )
+                    ],
+                  )
+                )
+
               ],
             ),
           ),
-          Button(
-            action: onSubmit,
-            text: 'Iniciar sesión',
-            backgroundSplash: const Color(0xFF3df0fa),
-            background: const Color(0xFF1e7df0),
-            borderRadius: 20,
+          Column(
+            children: [
+              Button(
+                action: onSubmit,
+                text: 'Iniciar sesión',
+                backgroundSplash: const Color(0xFF3df0fa),
+                background: const Color(0xFF1e7df0),
+                borderRadius: 20,
+              ),
+              const SizedBox(height: 14,),
+              const Label(
+                text: '¿Olvidaste tu contraseña?',
+                size: 13,
+                color: Colors.black54,
+              ),
+            ],
           )
         ],
       ),

@@ -54,7 +54,7 @@ class _AuthScreenState extends State<AuthScreen> {
               child: DefaultTabController(
                 length: 2,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 30, right: 20, left: 20),
+                  padding: const EdgeInsets.only(top: 10, bottom: 20, right: 20, left: 20),
                   child: Column(
                     children: [
                       const SizedBox(height: 14,),
