@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
           text: 'Credenciales incorrectas',
           background: Colors.red.shade500,
           textColor: Colors.white,
-          contentWidth: (MediaQuery.of(context).size.width * .82),
+          contentWidth: (MediaQuery.of(context).size.width * .9),
           duration: const Duration(seconds: 3)
         );
       }

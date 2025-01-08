@@ -37,19 +37,22 @@ class _MainNavigationState extends State<MainNavigation> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _motionTabBarController,
-        children: const [
-          HomeScreen(),
-          GradesScreen(),
-          CreateScreen(),
-          PendingsScreen(),
-          ProfileScreen()
-        ],
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _motionTabBarController,
+          children: const [
+            HomeScreen(),
+            GradesScreen(),
+            CreateScreen(),
+            PendingsScreen(),
+            ProfileScreen()
+          ],
+        ),
+        bottomNavigationBar: BottomTabs(tabBarController: _motionTabBarController!,),
       ),
-      bottomNavigationBar: BottomTabs(tabBarController: _motionTabBarController!,),
     );
   }
 }

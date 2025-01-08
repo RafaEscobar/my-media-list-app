@@ -31,7 +31,6 @@ class AppProvider extends ChangeNotifier{
         return false;
        }
     } catch (e) {
-      print(e.toString());
       throw Exception(e);
     }
   }
