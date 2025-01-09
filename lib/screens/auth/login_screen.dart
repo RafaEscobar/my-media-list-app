@@ -22,8 +22,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin{
-  final TextEditingController _emailController = TextEditingController(text: '');
-  final TextEditingController _passwordController = TextEditingController(text: '');
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocuesNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
@@ -39,8 +37,6 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
     _emailFocusNode.dispose();
     _passwordFocuesNode.dispose();
     super.dispose();
@@ -48,8 +44,11 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   Future<void> onSubmit() async {
     removeFocus();
+    Map<String, dynamic> credentiasl = {
+      'email': _formKey.currentState!.fields['email']!.value.toString(),
+      'password': _formKey.currentState!.fields['password']!.value.toString()
+    };
     bool? isValidated = _formKey.currentState?.saveAndValidate();
-    Map<String, dynamic> credentiasl = {'email': _emailController.text, 'password': _passwordController.text};
     bool isLogged = false;
     if (isValidated!) {
       await Loader().runLoad(() async => isLogged = await appProvider.login(credentials: credentiasl));
@@ -89,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                 const SizedBox(height: 30,),
                 const Label(text: 'Correo electrónico:', size: 18,),
                 Input(
-                  controller: _emailController,
+                  name: 'email',
                   focusNode: _emailFocusNode,
                   obscureText: false,
                   keyboardType: TextInputType.emailAddress,
@@ -105,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                 const SizedBox(height: 36,),
                 const Label(text: 'Contraseña:', size: 18,),
                 Input(
-                  controller: _passwordController,
+                  name: 'password',
                   focusNode: _passwordFocuesNode,
                   obscureText: true,
                   keyboardType: TextInputType.text,

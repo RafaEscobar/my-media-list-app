@@ -20,13 +20,12 @@ class Input extends StatefulWidget {
     this.isPassword = false,
     required this.focusNode,
     required this.obscureText,
-    required this.controller,
+    required this.name,
   });
 
   final String? hintText;
   final TextStyle? hintStyle;
   final TextStyle? textStyle;
-  final TextEditingController controller;
   final TextInputType? keyboardType;
   final bool obscureText;
   final InputBorder? enabledBorder;
@@ -40,6 +39,7 @@ class Input extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final FocusNode focusNode;
   final bool isPassword;
+  final String name;
 
   @override
   State<Input> createState() => _InputState();
@@ -60,7 +60,6 @@ class _InputState extends State<Input> {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       focusNode: widget.focusNode,
-      controller: widget.controller,
       keyboardType: widget.keyboardType,
       obscureText: obscureText,
       style: widget.textStyle,
@@ -93,7 +92,7 @@ class _InputState extends State<Input> {
           icon: Icon(obscureText ? Icons.visibility : Icons.visibility_off)
         ) : null
       ),
-      name: '',
+      name: widget.name,
     );
   }
 }
