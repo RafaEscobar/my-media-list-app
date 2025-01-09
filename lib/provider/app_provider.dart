@@ -34,4 +34,10 @@ class AppProvider extends ChangeNotifier{
       throw Exception(e);
     }
   }
+
+  void logout(){
+    userInfo = User();
+    Preferences.rememberme = false;
+    Preferences.token = "";
+  }
 }
