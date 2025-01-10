@@ -35,6 +35,15 @@ class AppProvider extends ChangeNotifier{
     }
   }
 
+  Future<bool> register(Map<String, dynamic> data) async {
+    try {
+      Response response = await ApiService.request('/register', body: data);
+      return (response.statusCode == 200);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   void logout(){
     userInfo = User();
     Preferences.rememberme = false;

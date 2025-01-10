@@ -43,35 +43,48 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   }
 
   Future<void> onSubmit() async {
-    removeFocus();
-    Map<String, dynamic> credentiasl = {
-      'email': _formKey.currentState!.fields['email']!.value.toString(),
-      'password': _formKey.currentState!.fields['password']!.value.toString()
-    };
-    bool? isValidated = _formKey.currentState?.saveAndValidate();
-    bool isLogged = false;
-    if (isValidated!) {
-      await Loader().runLoad(() async => isLogged = await appProvider.login(credentials: credentiasl));
-      if (!mounted) return;
-      if (isLogged) {
-        Preferences.rememberme = rememberme;
-        context.goNamed(MainNavigation.routeName);
+    try {
+      _removeFocus();
+      if (await _generateLogin()) {
+        _onLoginSucces();
       } else {
-        Alert.show(
-          text: 'Credenciales incorrectas',
-          background: Colors.red.shade500,
-          textColor: Colors.white,
-          contentWidth: (MediaQuery.of(context).size.width * .9),
-          duration: const Duration(seconds: 3)
-        );
+        _onLogginFailure();
       }
+    } catch (e) {
+      Alert.show(text: e.toString());
     }
   }
 
-  void removeFocus(){
+  void _removeFocus(){
     _emailFocusNode.unfocus();
     _passwordFocuesNode.unfocus();
   }
+
+  Future<bool> _generateLogin() async {
+    bool isValidated = _formKey.currentState!.saveAndValidate();
+    if (!isValidated) return false;
+    bool? isLogged;
+    await Loader().runLoad(() async => isLogged = await appProvider.login(credentials: _getCredentials()));
+    return isLogged!;
+  }
+
+  Map<String, dynamic> _getCredentials() => {
+    'email': _formKey.currentState!.fields['email']!.value.toString(),
+    'password': _formKey.currentState!.fields['password']!.value.toString()
+  };
+
+  void _onLoginSucces(){
+    Preferences.rememberme = rememberme;
+    context.goNamed(MainNavigation.routeName);
+  }
+
+  void _onLogginFailure() => Alert.show(
+      text: 'Credenciales incorrectas',
+      background: Colors.red.shade500,
+      textColor: Colors.white,
+      contentWidth: (MediaQuery.of(context).size.width * .9),
+      duration: const Duration(seconds: 3)
+    );
 
   @override
   Widget build(BuildContext context) {

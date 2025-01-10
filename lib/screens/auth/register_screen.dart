@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/input.dart';
 import 'package:mymedialist/widgets/general/label.dart';
@@ -15,6 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocuesNode = FocusNode();
   final FocusNode _nameFocusNode = FocusNode();
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   void dispose() {
@@ -25,6 +27,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+  Future<void> submit() async {
+    removeFocus();
+    Map<String, dynamic> data = {
+      'name': _formKey.currentState!.fields['name'],
+      'last_name': _formKey.currentState!.fields['last_name'],
+      'email': _formKey.currentState!.fields['email'],
+      'password': _formKey.currentState!.fields['password']
+    };
+  }
+
+  void removeFocus(){
+    _nameFocusNode.unfocus();
+    _lastNFocusNode.unfocus();
+    _emailFocusNode.unfocus();
+    _passwordFocuesNode.unfocus();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,57 +51,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 30,),
-              const Label(text: 'Nombre:', size: 18,),
-              Input(
-                name: 'name',
-                focusNode: _nameFocusNode,
-                obscureText: false,
-                keyboardType: TextInputType.text,
-                hintText: 'Raúl',
-                contentPadding: const EdgeInsets.symmetric(vertical: 2),
-                maxLength: 60,
-              ),
-              const SizedBox(height: 30,),
-              const Label(text: 'Apellidos:', size: 18,),
-              Input(
-                name: 'last_name',
-                focusNode: _lastNFocusNode,
-                obscureText: false,
-                keyboardType: TextInputType.text,
-                hintText: 'Casillas',
-                contentPadding: const EdgeInsets.symmetric(vertical: 2),
-                maxLength: 60,
-              ),
-              const SizedBox(height: 30,),
-              const Label(text: 'Correo electrónico:', size: 18,),
-              Input(
-                name: 'email',
-                focusNode: _emailFocusNode,
-                obscureText: false,
-                keyboardType: TextInputType.emailAddress,
-                hintText: 'example@mail.com',
-                contentPadding: const EdgeInsets.symmetric(vertical: 2),
-                maxLength: 60,
-              ),
-              const SizedBox(height: 30,),
-              const Label(text: 'Contraseña:', size: 18,),
-              Input(
-                name: 'password',
-                focusNode: _passwordFocuesNode,
-                obscureText: true,
-                keyboardType: TextInputType.text,
-                hintText: '* * * * * * * *',
-                contentPadding: const EdgeInsets.symmetric(vertical: 2),
-                maxLength: 16,
-              ),
-            ],
+          FormBuilder(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 30,),
+                const Label(text: 'Nombre:', size: 18,),
+                Input(
+                  name: 'name',
+                  focusNode: _nameFocusNode,
+                  obscureText: false,
+                  keyboardType: TextInputType.text,
+                  hintText: 'Raúl',
+                  contentPadding: const EdgeInsets.symmetric(vertical: 2),
+                  maxLength: 60,
+                ),
+                const SizedBox(height: 30,),
+                const Label(text: 'Apellidos:', size: 18,),
+                Input(
+                  name: 'last_name',
+                  focusNode: _lastNFocusNode,
+                  obscureText: false,
+                  keyboardType: TextInputType.text,
+                  hintText: 'Casillas',
+                  contentPadding: const EdgeInsets.symmetric(vertical: 2),
+                  maxLength: 60,
+                ),
+                const SizedBox(height: 30,),
+                const Label(text: 'Correo electrónico:', size: 18,),
+                Input(
+                  name: 'email',
+                  focusNode: _emailFocusNode,
+                  obscureText: false,
+                  keyboardType: TextInputType.emailAddress,
+                  hintText: 'example@mail.com',
+                  contentPadding: const EdgeInsets.symmetric(vertical: 2),
+                  maxLength: 60,
+                ),
+                const SizedBox(height: 30,),
+                const Label(text: 'Contraseña:', size: 18,),
+                Input(
+                  name: 'password',
+                  focusNode: _passwordFocuesNode,
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                  hintText: '* * * * * * * *',
+                  contentPadding: const EdgeInsets.symmetric(vertical: 2),
+                  maxLength: 16,
+                ),
+              ],
+            ),
           ),
           Button(
-            action: () => (),
+            action: submit,
             text: 'Registrarme',
             backgroundSplash: const Color(0xFF3df0fa),
             background: const Color(0xFF1e7df0),
