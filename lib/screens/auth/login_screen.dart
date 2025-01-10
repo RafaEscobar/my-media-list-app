@@ -29,13 +29,6 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   bool rememberme = true;
 
   @override
-  void initState() {
-    super.initState();
-    _emailFocusNode.addListener((){ if (_emailFocusNode.hasFocus) _formKey.currentState?.fields['email']?.validate(); });
-    _passwordFocuesNode.addListener((){ if (_passwordFocuesNode.hasFocus) _formKey.currentState?.fields['password']?.validate(); });
-  }
-
-  @override
   void dispose() {
     _emailFocusNode.dispose();
     _passwordFocuesNode.dispose();
@@ -58,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   Future<bool> _generateLogin() async {
     bool? isLogged;
-    await Loader().runLoad(() async => isLogged = await appProvider.login(credentials: _getCredentials()));
+    await Loader().runLoad( asyncFunction: () async => isLogged = await appProvider.login(credentials: _getCredentials()) );
     return isLogged!;
   }
 
@@ -110,6 +103,9 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     FormBuilderValidators.email(errorText: 'El correo electrónico no es válido.'),
                     FormBuilderValidators.maxLength(64, errorText: 'La correo es demasiado grande')
                   ]),
+                  onEditingComplete: (){
+                    FocusScope.of(context).requestFocus(_passwordFocuesNode);
+                  },
                 ),
                 const SizedBox(height: 36,),
                 const Label(text: 'Contraseña:', size: 18,),
@@ -127,6 +123,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     FormBuilderValidators.minLength(8, errorText: 'La contraseña es demasiado corta'),
                   ]),
                   isPassword: true,
+                  onEditingComplete: onSubmit,
                 ),
                 const SizedBox(height: 20,),
                 Transform.translate(

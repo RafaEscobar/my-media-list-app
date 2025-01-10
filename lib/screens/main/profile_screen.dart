@@ -16,9 +16,13 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> logout() async {
-    navigatorKey.currentState!.context.read<AppProvider>().logout();
-    await Loader().runLoad(() async => await Future.delayed(const Duration(seconds: 1)));
-    if (mounted) navigatorKey.currentState!.context.goNamed(AuthScreen.routeName);
+    bool? isUnloged;
+    await Loader().runLoad(
+      asyncFunction: () async => isUnloged = await navigatorKey.currentState!.context.read<AppProvider>().makeLogout(),
+      secondsDelayed: 2
+    );
+    if (!mounted) return;
+    if (isUnloged!) navigatorKey.currentState!.context.goNamed(AuthScreen.routeName);
   }
 
   @override

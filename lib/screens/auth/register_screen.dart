@@ -18,7 +18,6 @@ class RegisterScreen extends StatefulWidget {
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
-
 class _RegisterScreenState extends State<RegisterScreen> {
   final FocusNode _lastNFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
@@ -26,15 +25,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final FocusNode _nameFocusNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
   final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
-
-  @override
-  void initState() {
-    super.initState();
-    _nameFocusNode.addListener((){ if (_nameFocusNode.hasFocus) _formKey.currentState!.fields['name']!.validate(); });
-    _lastNFocusNode.addListener((){ if (_lastNFocusNode.hasFocus) _formKey.currentState!.fields['last_name']!.validate(); });
-    _emailFocusNode.addListener((){ if (_emailFocusNode.hasFocus) _formKey.currentState!.fields['email']!.validate(); });
-    _passwordFocuesNode.addListener((){ if (_passwordFocuesNode.hasFocus) _formKey.currentState!.fields['password']!.validate(); });
-  }
 
   @override
   void dispose() {
@@ -63,7 +53,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<bool> _generateRegister() async {
     bool? isRegistered;
-    await Loader().runLoad(() async => isRegistered = await appProvider.register(data: _getData()) );
+    await Loader().runLoad( asyncFunction: () async => isRegistered = await appProvider.register(data: _getData()) );
     return isRegistered!;
   }
 
@@ -116,6 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     FormBuilderValidators.maxLength(32, errorText: 'El nombre es demasiado largo'),
                     FormBuilderValidators.minLength(3, errorText: 'El nombre es muy corto'),
                   ]),
+                  onEditingComplete: () => FocusScope.of(context).requestFocus(_lastNFocusNode),
                 ),
                 const SizedBox(height: 30,),
                 const Label(text: 'Apellidos:', size: 18,),
@@ -132,6 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     FormBuilderValidators.maxLength(48, errorText: 'El apellido es demasiado largo'),
                     FormBuilderValidators.minLength(3, errorText: 'El apellido es muy corto'),
                   ]),
+                  onEditingComplete: () => FocusScope.of(context).requestFocus(_emailFocusNode),
                 ),
                 const SizedBox(height: 30,),
                 const Label(text: 'Correo electrónico:', size: 18,),
@@ -148,6 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     FormBuilderValidators.email(errorText: 'El correo electrónico no es válido.'),
                     FormBuilderValidators.maxLength(64, errorText: 'La correo es demasiado grande')
                   ]),
+                  onEditingComplete: () => FocusScope.of(context).requestFocus(_passwordFocuesNode),
                 ),
                 const SizedBox(height: 30,),
                 const Label(text: 'Contraseña:', size: 18,),
@@ -165,6 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     FormBuilderValidators.minLength(8, errorText: 'La contraseña es demasiado corta'),
                   ]),
                   isPassword: true,
+                  onEditingComplete: onSubmit,
                 ),
               ],
             ),

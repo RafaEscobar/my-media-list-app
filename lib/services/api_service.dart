@@ -9,6 +9,7 @@ class ApiService {
     Object? deleteBody,
     void Function(int, int)? onReceiveProgress,
     String? auth,
+    bool isPostWithoutBody = false
   }) async {
     Response response;
     Dio dio = Dio(BaseOptions(
@@ -44,6 +45,10 @@ class ApiService {
           data: body,
           queryParameters: params,
           onReceiveProgress: onReceiveProgress,
+        );
+      } else if (isPostWithoutBody) {
+        response = await dio.post(
+          path,
         );
       } else {
         response = await dio.get(
