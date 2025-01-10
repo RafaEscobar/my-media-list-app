@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
-import 'package:mymedialist/screens/navigation/main_navigation.dart';
+import 'package:mymedialist/utils/modal_bottom_sheet.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/input.dart';
 import 'package:mymedialist/widgets/general/label.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
+import 'package:mymedialist/widgets/modals/rememberme_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -70,17 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _validateForm() => _formKey.currentState!.saveAndValidate();
 
   void _onRegisterSuccess() {
-    Alert.show(
-      text: '¡Bienvenido!',
-      background: Colors.blue.shade700,
-      textColor: Colors.white,
-      contentWidth: (MediaQuery.of(context).size.width * .4),
-      duration: const Duration(seconds: 3),
-      centeredText: true,
-      textSize: 16
-    );
-    //! PREGUNTAMOS SI ES QUE DESEA QUE LO RECORDEMOS (rememberme)
-    context.goNamed(MainNavigation.routeName);
+    ModalBottomSheet.showModal(body: const RemembermeBottomSheet(), height: 200, dismissible: false);
   }
 
   void _onRegisterFailure() => Alert.show(
@@ -100,6 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -183,7 +174,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             text: 'Registrarme',
             backgroundSplash: const Color(0xFF3df0fa),
             background: const Color(0xFF1e7df0),
-            borderRadius: 20
+            borderRadius: 20,
+            buttonWidth: size.width * .9,
           )
         ],
       ),

@@ -41,7 +41,6 @@ class AppProvider extends ChangeNotifier{
       if (response.statusCode == 201) {
         userInfo = User.fromJson(response.data['data']);
         Preferences.token = userInfo.token;
-        print('de');
         return true;
       } else {
         return false;

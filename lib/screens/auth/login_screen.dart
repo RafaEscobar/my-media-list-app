@@ -84,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -157,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                 backgroundSplash: const Color(0xFF3df0fa),
                 background: const Color(0xFF1e7df0),
                 borderRadius: 20,
+                buttonWidth: size.width * .9,
               ),
               const SizedBox(height: 14,),
               const Label(
