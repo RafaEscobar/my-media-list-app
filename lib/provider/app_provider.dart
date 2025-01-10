@@ -35,7 +35,7 @@ class AppProvider extends ChangeNotifier{
     }
   }
 
-  Future<bool> register(Map<String, dynamic> data) async {
+  Future<bool> register({required Map<String, dynamic> data}) async {
     try {
       Response response = await ApiService.request('/register', body: data);
       return (response.statusCode == 200);

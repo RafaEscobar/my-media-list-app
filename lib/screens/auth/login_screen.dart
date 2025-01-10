@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    _emailFocusNode.addListener((){if (_emailFocusNode.hasFocus) _formKey.currentState?.fields['email']?.validate(); });
+    _emailFocusNode.addListener((){ if (_emailFocusNode.hasFocus) _formKey.currentState?.fields['email']?.validate(); });
     _passwordFocuesNode.addListener((){ if (_passwordFocuesNode.hasFocus) _formKey.currentState?.fields['password']?.validate(); });
   }
 
@@ -45,11 +45,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   Future<void> onSubmit() async {
     try {
       _removeFocus();
-      if (await _generateLogin()) {
-        _onLoginSucces();
-      } else {
-        _onLogginFailure();
-      }
+      if (_validateForm()) (await _generateLogin()) ? _onLoginSucces() : _onLogginFailure();
     } catch (e) {
       Alert.show(text: e.toString());
     }
@@ -61,12 +57,12 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   }
 
   Future<bool> _generateLogin() async {
-    bool isValidated = _formKey.currentState!.saveAndValidate();
-    if (!isValidated) return false;
     bool? isLogged;
     await Loader().runLoad(() async => isLogged = await appProvider.login(credentials: _getCredentials()));
     return isLogged!;
   }
+
+  bool _validateForm() => _formKey.currentState!.saveAndValidate();
 
   Map<String, dynamic> _getCredentials() => {
     'email': _formKey.currentState!.fields['email']!.value.toString(),
@@ -111,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(errorText: 'Proporciona un correo electrónico'),
                     FormBuilderValidators.email(errorText: 'El correo electrónico no es válido.'),
-                    FormBuilderValidators.maxLength(32, errorText: 'La correo es demasiado grande')
+                    FormBuilderValidators.maxLength(64, errorText: 'La correo es demasiado grande')
                   ]),
                 ),
                 const SizedBox(height: 36,),

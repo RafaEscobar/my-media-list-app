@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mymedialist/main.dart';
+import 'package:mymedialist/provider/app_provider.dart';
+import 'package:mymedialist/screens/auth/login_screen.dart';
+import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/input.dart';
 import 'package:mymedialist/widgets/general/label.dart';
+import 'package:mymedialist/widgets/general/loader.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,6 +25,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final FocusNode _passwordFocuesNode = FocusNode();
   final FocusNode _nameFocusNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
+  final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
+
+  @override
+  void initState() {
+    super.initState();
+    _nameFocusNode.addListener((){ if (_nameFocusNode.hasFocus) _formKey.currentState!.fields['name']!.validate(); });
+    _lastNFocusNode.addListener((){ if (_lastNFocusNode.hasFocus) _formKey.currentState!.fields['last_name']!.validate(); });
+    _emailFocusNode.addListener((){ if (_emailFocusNode.hasFocus) _formKey.currentState!.fields['email']!.validate(); });
+    _passwordFocuesNode.addListener((){ if (_passwordFocuesNode.hasFocus) _formKey.currentState!.fields['password']!.validate(); });
+  }
 
   @override
   void dispose() {
@@ -27,15 +45,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  Future<void> submit() async {
-    removeFocus();
-    Map<String, dynamic> data = {
+  Future<void> onSubmit() async {
+    try {
+      removeFocus();
+      if (_validateForm()) (await _generateRegister()) ? _onRegisterSuccess() : _onRegisterFailure();
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Map<String, dynamic> _getData() => {
       'name': _formKey.currentState!.fields['name'],
       'last_name': _formKey.currentState!.fields['last_name'],
       'email': _formKey.currentState!.fields['email'],
       'password': _formKey.currentState!.fields['password']
     };
+
+  Future<bool> _generateRegister() async {
+    bool? isRegistered;
+    await Loader().runLoad(() async => isRegistered = await appProvider.register(data: _getData()) );
+    return isRegistered!;
   }
+
+  bool _validateForm() => _formKey.currentState!.saveAndValidate();
+
+  void _onRegisterSuccess() {
+    Alert.show(
+      text: 'Registro exitoso, inicia sesión',
+      background: Colors.blue.shade700,
+      textColor: Colors.white,
+      contentWidth: (MediaQuery.of(context).size.width * .9),
+      duration: const Duration(seconds: 3)
+    );
+    context.goNamed(LoginScreen.routeName);
+  }
+
+  void _onRegisterFailure() => Alert.show(
+      text: 'Error al generar el registro',
+      background: Colors.red.shade500,
+      textColor: Colors.white,
+      contentWidth: (MediaQuery.of(context).size.width * .9),
+      duration: const Duration(seconds: 3)
+    );
 
   void removeFocus(){
     _nameFocusNode.unfocus();
@@ -66,6 +117,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hintText: 'Raúl',
                   contentPadding: const EdgeInsets.symmetric(vertical: 2),
                   maxLength: 60,
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(errorText: 'El nombre es obligatorio.'),
+                    FormBuilderValidators.max(32, errorText: 'El nombre es demasiado largo'),
+                    FormBuilderValidators.min(3, errorText: 'El nombre es muy corto'),
+                  ]),
                 ),
                 const SizedBox(height: 30,),
                 const Label(text: 'Apellidos:', size: 18,),
@@ -77,6 +133,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hintText: 'Casillas',
                   contentPadding: const EdgeInsets.symmetric(vertical: 2),
                   maxLength: 60,
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(errorText: 'El apellido es obligatorio.'),
+                    FormBuilderValidators.max(48, errorText: 'El apellido es demasiado largo'),
+                    FormBuilderValidators.min(3, errorText: 'El apellido es muy corto'),
+                  ]),
                 ),
                 const SizedBox(height: 30,),
                 const Label(text: 'Correo electrónico:', size: 18,),
@@ -88,6 +149,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hintText: 'example@mail.com',
                   contentPadding: const EdgeInsets.symmetric(vertical: 2),
                   maxLength: 60,
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(errorText: 'Proporciona un correo electrónico'),
+                    FormBuilderValidators.email(errorText: 'El correo electrónico no es válido.'),
+                    FormBuilderValidators.maxLength(64, errorText: 'La correo es demasiado grande')
+                  ]),
                 ),
                 const SizedBox(height: 30,),
                 const Label(text: 'Contraseña:', size: 18,),
@@ -99,12 +165,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hintText: '* * * * * * * *',
                   contentPadding: const EdgeInsets.symmetric(vertical: 2),
                   maxLength: 16,
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(errorText: 'Proporciona una contraseña'),
+                    FormBuilderValidators.maxLength(16, errorText: 'La contraseña es demasiado grande'),
+                    FormBuilderValidators.minLength(8, errorText: 'La contraseña es demasiado corta'),
+                  ]),
                 ),
               ],
             ),
           ),
           Button(
-            action: submit,
+            action: onSubmit,
             text: 'Registrarme',
             backgroundSplash: const Color(0xFF3df0fa),
             background: const Color(0xFF1e7df0),
