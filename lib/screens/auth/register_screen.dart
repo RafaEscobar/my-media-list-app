@@ -4,7 +4,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
-import 'package:mymedialist/screens/auth/login_screen.dart';
+import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/input.dart';
@@ -55,10 +55,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Map<String, dynamic> _getData() => {
-      'name': _formKey.currentState!.fields['name'],
-      'last_name': _formKey.currentState!.fields['last_name'],
-      'email': _formKey.currentState!.fields['email'],
-      'password': _formKey.currentState!.fields['password']
+      'name': _formKey.currentState!.fields['name']!.value.toString(),
+      'last_name': _formKey.currentState!.fields['last_name']!.value.toString(),
+      'email': _formKey.currentState!.fields['email']!.value.toString(),
+      'password': _formKey.currentState!.fields['password']!.value.toString()
     };
 
   Future<bool> _generateRegister() async {
@@ -71,13 +71,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _onRegisterSuccess() {
     Alert.show(
-      text: 'Registro exitoso, inicia sesión',
+      text: '¡Bienvenido!',
       background: Colors.blue.shade700,
       textColor: Colors.white,
-      contentWidth: (MediaQuery.of(context).size.width * .9),
-      duration: const Duration(seconds: 3)
+      contentWidth: (MediaQuery.of(context).size.width * .4),
+      duration: const Duration(seconds: 3),
+      centeredText: true,
+      textSize: 16
     );
-    context.goNamed(LoginScreen.routeName);
+    //! PREGUNTAMOS SI ES QUE DESEA QUE LO RECORDEMOS (rememberme)
+    context.goNamed(MainNavigation.routeName);
   }
 
   void _onRegisterFailure() => Alert.show(
@@ -119,8 +122,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   maxLength: 60,
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(errorText: 'El nombre es obligatorio.'),
-                    FormBuilderValidators.max(32, errorText: 'El nombre es demasiado largo'),
-                    FormBuilderValidators.min(3, errorText: 'El nombre es muy corto'),
+                    FormBuilderValidators.maxLength(32, errorText: 'El nombre es demasiado largo'),
+                    FormBuilderValidators.minLength(3, errorText: 'El nombre es muy corto'),
                   ]),
                 ),
                 const SizedBox(height: 30,),
@@ -135,8 +138,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   maxLength: 60,
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(errorText: 'El apellido es obligatorio.'),
-                    FormBuilderValidators.max(48, errorText: 'El apellido es demasiado largo'),
-                    FormBuilderValidators.min(3, errorText: 'El apellido es muy corto'),
+                    FormBuilderValidators.maxLength(48, errorText: 'El apellido es demasiado largo'),
+                    FormBuilderValidators.minLength(3, errorText: 'El apellido es muy corto'),
                   ]),
                 ),
                 const SizedBox(height: 30,),
@@ -170,6 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     FormBuilderValidators.maxLength(16, errorText: 'La contraseña es demasiado grande'),
                     FormBuilderValidators.minLength(8, errorText: 'La contraseña es demasiado corta'),
                   ]),
+                  isPassword: true,
                 ),
               ],
             ),

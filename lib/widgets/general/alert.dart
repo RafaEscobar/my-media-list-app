@@ -9,12 +9,14 @@ class Alert {
     double textSize = 14,
     Duration duration = const Duration(milliseconds: 2300),
     double? contentWidth,
+    bool centeredText = false,
   }){
     ScaffoldMessenger.of(navigatorKey.currentState!.context).showSnackBar(
       SnackBar(
         content: Text(
           text,
           style: TextStyle(color: textColor, fontSize: textSize),
+          textAlign: centeredText ? TextAlign.center : null,
         ),
         backgroundColor: background,
         shape: const StadiumBorder(),
