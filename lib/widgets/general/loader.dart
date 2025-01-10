@@ -25,11 +25,11 @@ class Loader {
 
   void hide() => Navigator.pop(navigatorKey.currentState!.context);
 
-  Future<void> runLoad(Future<void> Function() asyncFunction) async {
+  Future<void> runLoad({required Future<void> Function() asyncFunction, int secondsDelayed = 1}) async {
     try {
       show();
       await asyncFunction();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: secondsDelayed));
     } catch (e) {
       Alert.show(text: e.toString());
     } finally {

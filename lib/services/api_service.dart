@@ -9,6 +9,7 @@ class ApiService {
     Object? deleteBody,
     void Function(int, int)? onReceiveProgress,
     String? auth,
+    bool isPostWithoutBody = false
   }) async {
     Response response;
     Dio dio = Dio(BaseOptions(
@@ -19,7 +20,7 @@ class ApiService {
       validateStatus: (status) {
         return true;
       },
-      baseUrl: "https://6a3f-187-235-135-111.ngrok-free.app/api"
+      baseUrl: "https://9a87-187-235-135-111.ngrok-free.app/api"
     ));
 
     try {
@@ -44,6 +45,10 @@ class ApiService {
           data: body,
           queryParameters: params,
           onReceiveProgress: onReceiveProgress,
+        );
+      } else if (isPostWithoutBody) {
+        response = await dio.post(
+          path,
         );
       } else {
         response = await dio.get(

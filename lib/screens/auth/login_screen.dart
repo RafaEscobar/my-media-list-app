@@ -22,8 +22,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin{
-  final TextEditingController _emailController = TextEditingController(text: '');
-  final TextEditingController _passwordController = TextEditingController(text: '');
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocuesNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
@@ -31,51 +29,55 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   bool rememberme = true;
 
   @override
-  void initState() {
-    super.initState();
-    _emailFocusNode.addListener((){if (_emailFocusNode.hasFocus) _formKey.currentState?.fields['email']?.validate(); });
-    _passwordFocuesNode.addListener((){ if (_passwordFocuesNode.hasFocus) _formKey.currentState?.fields['password']?.validate(); });
-  }
-
-  @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
     _emailFocusNode.dispose();
     _passwordFocuesNode.dispose();
     super.dispose();
   }
 
   Future<void> onSubmit() async {
-    removeFocus();
-    bool? isValidated = _formKey.currentState?.saveAndValidate();
-    Map<String, dynamic> credentiasl = {'email': _emailController.text, 'password': _passwordController.text};
-    bool isLogged = false;
-    if (isValidated!) {
-      await Loader().runLoad(() async => isLogged = await appProvider.login(credentials: credentiasl));
-      if (!mounted) return;
-      if (isLogged) {
-        Preferences.rememberme = rememberme;
-        context.goNamed(MainNavigation.routeName);
-      } else {
-        Alert.show(
-          text: 'Credenciales incorrectas',
-          background: Colors.red.shade500,
-          textColor: Colors.white,
-          contentWidth: (MediaQuery.of(context).size.width * .82),
-          duration: const Duration(seconds: 3)
-        );
-      }
+    try {
+      _removeFocus();
+      if (_validateForm()) (await _generateLogin()) ? _onLoginSucces() : _onLogginFailure();
+    } catch (e) {
+      Alert.show(text: e.toString());
     }
   }
 
-  void removeFocus(){
+  void _removeFocus(){
     _emailFocusNode.unfocus();
     _passwordFocuesNode.unfocus();
   }
 
+  Future<bool> _generateLogin() async {
+    bool? isLogged;
+    await Loader().runLoad( asyncFunction: () async => isLogged = await appProvider.login(credentials: _getCredentials()) );
+    return isLogged!;
+  }
+
+  bool _validateForm() => _formKey.currentState!.saveAndValidate();
+
+  Map<String, dynamic> _getCredentials() => {
+    'email': _formKey.currentState!.fields['email']!.value.toString(),
+    'password': _formKey.currentState!.fields['password']!.value.toString()
+  };
+
+  void _onLoginSucces(){
+    Preferences.rememberme = rememberme;
+    context.goNamed(MainNavigation.routeName);
+  }
+
+  void _onLogginFailure() => Alert.show(
+      text: 'Credenciales incorrectas',
+      background: Colors.red.shade500,
+      textColor: Colors.white,
+      contentWidth: (MediaQuery.of(context).size.width * .9),
+      duration: const Duration(seconds: 3)
+    );
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -89,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                 const SizedBox(height: 30,),
                 const Label(text: 'Correo electrónico:', size: 18,),
                 Input(
-                  controller: _emailController,
+                  name: 'email',
                   focusNode: _emailFocusNode,
                   obscureText: false,
                   keyboardType: TextInputType.emailAddress,
@@ -99,13 +101,16 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(errorText: 'Proporciona un correo electrónico'),
                     FormBuilderValidators.email(errorText: 'El correo electrónico no es válido.'),
-                    FormBuilderValidators.maxLength(32, errorText: 'La correo es demasiado grande')
+                    FormBuilderValidators.maxLength(64, errorText: 'La correo es demasiado grande')
                   ]),
+                  onEditingComplete: (){
+                    FocusScope.of(context).requestFocus(_passwordFocuesNode);
+                  },
                 ),
                 const SizedBox(height: 36,),
                 const Label(text: 'Contraseña:', size: 18,),
                 Input(
-                  controller: _passwordController,
+                  name: 'password',
                   focusNode: _passwordFocuesNode,
                   obscureText: true,
                   keyboardType: TextInputType.text,
@@ -117,6 +122,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     FormBuilderValidators.maxLength(16, errorText: 'La contraseña es demasiado grande'),
                     FormBuilderValidators.minLength(8, errorText: 'La contraseña es demasiado corta'),
                   ]),
+                  isPassword: true,
+                  onEditingComplete: onSubmit,
                 ),
                 const SizedBox(height: 20,),
                 Transform.translate(
@@ -148,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                 backgroundSplash: const Color(0xFF3df0fa),
                 background: const Color(0xFF1e7df0),
                 borderRadius: 20,
+                buttonWidth: size.width * .9,
               ),
               const SizedBox(height: 14,),
               const Label(
