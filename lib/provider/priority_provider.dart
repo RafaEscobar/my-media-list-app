@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/scheduler.dart';
+
 import 'package:mymedialist/main.dart';
+import 'package:mymedialist/models/priority.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/services/api_service.dart';
 import 'package:provider/provider.dart';
@@ -15,18 +16,21 @@ class PriorityProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<bool> getPriorities(int limit) async { // Responderemos con la data
+  Future<List<Priority>> getPriorities({required int limit, required int page}) async {
     try {
       String token = navigatorKey.currentState!.context.read<AppProvider>().userInfo.token;
-      Response response = await ApiService.request('/priorities', auth: token);
+      Response response = await ApiService.request('/priorities?per_page=$limit&page=$page', auth: token);
       if (response.statusCode == 200) {
-        List<dynamic> nose = response.data;
-        print(nose);
-        return true;
+        List<Priority> priorityList = [];
+        for(Map<String, dynamic> priority in response.data['data']){
+          priorityList.add(Priority.fromJson(priority));
+        }
+        return priorityList;
+      } else {
+        throw Exception('Erro al obtener la lista de prioridades');
       }
-      return false;
     } catch (e) {
-      return true;
+      throw Exception(e.toString());
     }
   }
 
