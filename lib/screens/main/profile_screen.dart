@@ -35,6 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 10,),
             Text(appProvider.userInfo.name),
             Text(appProvider.userInfo.email),
+            Text("${appProvider.userInfo.id}"),
             ElevatedButton(
               onPressed: logout,
               child: const Text('Cerrar sesión')

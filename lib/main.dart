@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mymedialist/provider/app_provider.dart';
+import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/provider/priority_provider.dart';
 import 'package:mymedialist/routes/app_route.dart';
 import 'package:mymedialist/services/preferences.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AppProvider(),),
-        ChangeNotifierProvider(create: (context) => PriorityProvider(),)
+        ChangeNotifierProvider(create: (context) => PriorityProvider(),),
+        ChangeNotifierProvider(create: (context) => MediaProvider(),)
       ],
       builder: (_, __) {
         return MaterialApp.router(
