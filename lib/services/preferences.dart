@@ -12,7 +12,7 @@ class Preferences {
   static User get userInfo{
     try {
       dynamic userData = pref.getString('userInfo');
-      if(userData.isEmpty) return User();
+      if(userData == null) return User();
       return User.fromJson(jsonDecode(pref.getString('userInfo') ?? ''));
     } catch (e) {
       throw Exception(e.toString());
