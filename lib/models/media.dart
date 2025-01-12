@@ -2,7 +2,7 @@ class Media {
 
   final int id;
   final String title;
-  final int score;
+  final double score;
   final String comment;
   final String category;
   final String status;
@@ -12,7 +12,7 @@ class Media {
   Media({
     this.id = 0,
     this.title = '',
-    this.score = 0,
+    this.score = 0.0,
     this.comment = '',
     this.category = '',
     this.status = '',
@@ -23,7 +23,7 @@ class Media {
   factory Media.fromJson(Map<String, dynamic> json) => Media(
     id: json['id'] ?? 0,
     title: json['title'] ?? '',
-    score: json['score'] ?? 0,
+    score: json['score'] ?? 0.0,
     comment: json[''] ?? '',
     category: json['category'] ?? '',
     status: json['status'] ?? '',

@@ -10,7 +10,7 @@ class MediaCard extends StatelessWidget {
   });
   final String imagePath;
   final String name;
-  final int score;
+  final double score;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class MediaCard extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: Container(
                   margin: const EdgeInsets.only(right: 4),
-                  width: 70,
+                  width: 80,
                   padding: const EdgeInsets.symmetric(vertical: 2),
                   decoration: const BoxDecoration(
                     color: Colors.white,
