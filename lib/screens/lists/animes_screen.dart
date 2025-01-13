@@ -54,12 +54,12 @@ class _AnimesScreenState extends State<AnimesScreen> {
           mainAxisSpacing: 10,
           childAspectRatio: 2/2.6
         ),
-        builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: (BuildContext context, Media media, int index) {
+        builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: (BuildContext context, Media anime, int index) {
           return Center(
             child: MediaCard(
-              imagePath: media.imagePath.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
-              name: media.title,
-              score: media.score,
+              imagePath: anime.imagePath.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
+              name: anime.title,
+              score: anime.score,
             ),
           );
         },)
