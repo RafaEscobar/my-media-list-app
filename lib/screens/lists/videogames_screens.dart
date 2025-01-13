@@ -58,7 +58,7 @@ class _VideogamesScreensState extends State<VideogamesScreens> {
           mainAxisSpacing: 10,
           childAspectRatio: 2/2.6
         ),
-        builderDelegate: PagedChildBuilderDelegate(itemBuilder: ( BuildContext context, Media game, int index) {
+        builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: (BuildContext context, Media game, int index) {
           return Center(
             child: MediaCard(
               imagePath: game.imagePath.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),

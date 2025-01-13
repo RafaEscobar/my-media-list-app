@@ -61,7 +61,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
         builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: (BuildContext context, Media movie, int index) {
           return Center(
             child: MediaCard(
-              imagePath: movie.imagePath.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
+              imagePath: ,
               name: movie.title,
               score: movie.score
             ),
