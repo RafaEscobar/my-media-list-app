@@ -12,10 +12,10 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json['id'],
-    name: "${json['name']} ${json['last_name']}",
-    email: json['email'],
-    token: json['token']
+    id: json['id'] ?? 0,
+    name: '${json['name'] ?? ''} ${json['last_name'] ?? ''}'.trim(),
+    email: json['email'] ?? '',
+    token: json['token'] ?? ''
   );
 
   Map<String, dynamic> toJson() => {

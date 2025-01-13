@@ -15,6 +15,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
   Future<void> logout() async {
     bool? isUnloged;
     await Loader().runLoad(
@@ -31,10 +32,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Center(
         child: Column(
           children: [
+            const SizedBox(height: 10,),
+            Text(appProvider.userInfo.name),
+            Text(appProvider.userInfo.email),
+            Text("${appProvider.userInfo.id}"),
+            SelectableText(appProvider.userInfo.token),
             ElevatedButton(
               onPressed: logout,
               child: const Text('Cerrar sesión')
-            )
+            ),
           ],
         ),
       ),

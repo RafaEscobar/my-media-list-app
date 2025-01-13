@@ -1,12 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:mymedialist/enum/category_enum.dart';
+import 'package:mymedialist/main.dart';
+import 'package:mymedialist/models/media.dart';
+import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/widgets/general/media_card.dart';
+import 'package:provider/provider.dart';
 
-class MangasScreen extends StatelessWidget {
+class MangasScreen extends StatefulWidget {
   const MangasScreen({super.key});
 
   @override
+  State<MangasScreen> createState() => _MangasScreenState();
+}
+
+class _MangasScreenState extends State<MangasScreen> {
+  final int _limit = 10;
+  final PagingController<int, Media> _pagingController = PagingController(firstPageKey: 1);
+  final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
+
+  @override
+  void initState() {
+    super.initState();
+    _pagingController.addPageRequestListener((pageKey){
+      _fetchPage(pageKey: pageKey);
+    });
+  }
+
+  Future<void> _fetchPage({ required int pageKey }) async {
+    try {
+      List<Media> mangaList = await _mediaProvider.getMedia(
+        limit: _limit,
+        page: pageKey,
+        categoryId: CategoryEnum.mangas.identifier
+      );
+      bool isLastPage = mangaList.length < _limit;
+      if (isLastPage) {
+        _pagingController.appendLastPage(mangaList);
+      } else {
+        int nextPageKey = ++pageKey;
+        _pagingController.appendPage(mangaList, nextPageKey);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      child: Text("Mangas"),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: PagedGridView(
+        pagingController: _pagingController,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 2/2.6
+        ),
+        builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: ( BuildContext context, Media manga, int index) {
+          return Center(
+            child: MediaCard(
+              imagePath: manga.imagePath.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
+              name: manga.title,
+              score: manga.score
+            ),
+          );
+        }),
+      ),
     );
   }
 }

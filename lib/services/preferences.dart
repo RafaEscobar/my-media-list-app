@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:mymedialist/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences {
@@ -6,8 +9,16 @@ class Preferences {
     pref = await SharedPreferences.getInstance();
   }
 
-  static String get token => pref.getString('token') ?? '';
-  static set token(String newToken) => pref.setString('token', newToken);
+  static User get userInfo{
+    try {
+      dynamic userData = pref.getString('userInfo');
+      if(userData == null) return User();
+      return User.fromJson(jsonDecode(pref.getString('userInfo') ?? ''));
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+  static set userInfo(User newUser) => pref.setString('userInfo', jsonEncode(newUser.toJson()));
 
   static bool get rememberme => pref.getBool('rememberme') ?? false;
   static set rememberme(bool newValue) => pref.setBool('rememberme', newValue);

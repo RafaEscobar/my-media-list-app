@@ -27,8 +27,8 @@ class AppProvider extends ChangeNotifier{
     try {
        Response response = await ApiService.request('/login', body: credentials);
        if (response.statusCode == 200) {
-        userInfo = User.fromJson(response.data['data']);
-        Preferences.token = userInfo.token;
+        Preferences.userInfo = User.fromJson(response.data['data']);
+        userInfo = Preferences.userInfo;
         return true;
        } else {
         return false;
@@ -39,16 +39,14 @@ class AppProvider extends ChangeNotifier{
     }
   }
 
-  Future<bool> register({required Map<String, dynamic> data}) async {
+  Future<int> register({required Map<String, dynamic> data}) async {
     try {
       Response response = await ApiService.request('/register', body: data);
       if (response.statusCode == 201) {
-        userInfo = User.fromJson(response.data['data']);
-        Preferences.token = userInfo.token;
-        return true;
-      } else {
-        return false;
+        Preferences.userInfo = User.fromJson(response.data['data']);
+        userInfo = Preferences.userInfo;
       }
+      return response.statusCode!;
     } catch (e) {
       Alert.show(text: e.toString());
       throw Exception(e);
@@ -78,8 +76,8 @@ class AppProvider extends ChangeNotifier{
 
   bool _onLogoutSuccess(){
     userInfo = User();
+    Preferences.userInfo = User();
     Preferences.rememberme = false;
-    Preferences.token = "";
     return true;
   }
 
