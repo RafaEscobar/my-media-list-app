@@ -76,7 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _onRegisterFailure() => Alert.show(
       text: 'Error al generar el registro',
-      background: Colors.red.shade500,
+      background: Colors.red.shade800,
       textColor: Colors.white,
       contentWidth: (MediaQuery.of(context).size.width * .9),
       duration: const Duration(seconds: 3)
@@ -84,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _onEmailIsUsed() => Alert.show(
       text: 'El correo electrónico ya esta registrado.',
-      background: Colors.red.shade600,
+      background: Colors.red.shade400,
       textColor: Colors.white,
       contentWidth: 360
     );

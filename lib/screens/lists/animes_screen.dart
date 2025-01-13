@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/media.dart';
 import 'package:mymedialist/provider/media_provider.dart';
@@ -28,7 +29,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Media> mediaList = await mediaProvider.getMedia(limit: _limit, page: pageKey);
+      List<Media> mediaList = await mediaProvider.getMedia(limit: _limit, page: pageKey, categoryId: CategoryEnum.animes.identifier);
       bool isLastPage = mediaList.length < _limit;
       if (isLastPage) {
         _pagingController.appendLastPage(mediaList);

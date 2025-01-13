@@ -18,9 +18,9 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<List<Media>> getMedia({ required int limit, required int page }) async {
+  Future<List<Media>> getMedia({ required int limit, required int page, int? categoryId } ) async {
     try {
-      Response response = await ApiService.request('/medias?limit=$limit&page=$page', auth: appProvider.userInfo.token);
+      Response response = await ApiService.request('/medias?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
       if (response.statusCode == 200) {
         List<Media> mediaList = [];
         for( Map<String, dynamic> mediaJson in response.data['data'] ) {
