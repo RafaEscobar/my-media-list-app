@@ -38,7 +38,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> onSubmit() async {
     try {
       removeFocus();
-      if (_validateForm()) (await _generateRegister()) ? _onRegisterSuccess() : _onRegisterFailure();
+      if (_validateForm()){
+        switch (await _generateRegister()) {
+          case 201:
+            _onRegisterSuccess();
+            break;
+          case 422:
+            _onEmailIsUsed();
+            break;
+          default:
+            _onRegisterFailure();
+        }
+      }
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -51,10 +62,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       'password': _formKey.currentState!.fields['password']!.value.toString()
     };
 
-  Future<bool> _generateRegister() async {
-    bool? isRegistered;
-    await Loader().runLoad( asyncFunction: () async => isRegistered = await appProvider.register(data: _getData()) );
-    return isRegistered!;
+  Future<int> _generateRegister() async {
+    int? statusCode;
+    await Loader().runLoad( asyncFunction: () async => statusCode = await appProvider.register(data: _getData()) );
+    return statusCode!;
   }
 
   bool _validateForm() => _formKey.currentState!.saveAndValidate();
@@ -69,6 +80,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       textColor: Colors.white,
       contentWidth: (MediaQuery.of(context).size.width * .9),
       duration: const Duration(seconds: 3)
+    );
+
+  void _onEmailIsUsed() => Alert.show(
+      text: 'El correo electrónico ya esta registrado.',
+      background: Colors.red.shade600,
+      textColor: Colors.white,
+      contentWidth: 360
     );
 
   void removeFocus(){

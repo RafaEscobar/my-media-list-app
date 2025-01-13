@@ -39,16 +39,14 @@ class AppProvider extends ChangeNotifier{
     }
   }
 
-  Future<bool> register({required Map<String, dynamic> data}) async {
+  Future<int> register({required Map<String, dynamic> data}) async {
     try {
       Response response = await ApiService.request('/register', body: data);
       if (response.statusCode == 201) {
         Preferences.userInfo = User.fromJson(response.data['data']);
         userInfo = Preferences.userInfo;
-        return true;
-      } else {
-        return false;
       }
+      return response.statusCode!;
     } catch (e) {
       Alert.show(text: e.toString());
       throw Exception(e);

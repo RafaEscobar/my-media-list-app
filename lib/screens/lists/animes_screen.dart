@@ -56,7 +56,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
         builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: (BuildContext context, Media media, int index) {
           return Center(
             child: MediaCard(
-              imagePath: media.imagePath.replaceAll('http://localhost:8000', 'https://94fa-207-248-115-158.ngrok-free.app'),
+              imagePath: media.imagePath.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
               name: media.title,
               score: media.score,
             ),
