@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mymedialist/models/priority.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/auth/auth_screen.dart';
 import 'package:mymedialist/screens/auth/splash_screen.dart';
+import 'package:mymedialist/screens/create/comment_screen.dart';
+import 'package:mymedialist/screens/create/priority_screen.dart';
+import 'package:mymedialist/screens/create/score_screen.dart';
+import 'package:mymedialist/screens/create/status_screen.dart';
+import 'package:mymedialist/screens/create/title_screen.dart';
+import 'package:mymedialist/screens/create/type_screen.dart';
 import 'package:mymedialist/screens/main/home_screen.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/services/preferences.dart';
@@ -20,7 +27,36 @@ class AppRoute {
             name: MainNavigation.routeName,
             builder: (BuildContext context, GoRouterState state) => const MainNavigation(),
             routes: [
-              
+              GoRoute(
+                path: TypeScreen.routeName,
+                name: TypeScreen.routeName,
+                builder: ( BuildContext context, GoRouterState state) => const TypeScreen(),
+              ),
+              GoRoute(
+                path: TitleScreen.routeName,
+                name: TitleScreen.routeName,
+                builder: ( BuildContext context, GoRouterState state) => const TitleScreen(),
+              ),
+              GoRoute(
+                path: StatusScreen.routeName,
+                name: StatusScreen.routeName,
+                builder: ( BuildContext context, GoRouterState state) => const StatusScreen(),
+              ),
+              GoRoute(
+                path: ScoreScreen.routeName,
+                name: ScoreScreen.routeName,
+                builder: ( BuildContext context, GoRouterState state) => const ScoreScreen(),
+              ),
+              GoRoute(
+                path: CommentScreen.routeName,
+                name: CommentScreen.routeName,
+                builder: ( BuildContext context, GoRouterState state) => const CommentScreen(),
+              ),
+              GoRoute(
+                path: PriorityScreen.routeName,
+                name: PriorityScreen.routeName,
+                builder: ( BuildContext context, GoRouterState state ) => const PriorityScreen()
+              ),
             ]
           ),
           GoRoute(
