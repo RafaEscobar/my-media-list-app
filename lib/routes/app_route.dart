@@ -19,6 +19,9 @@ class AppRoute {
             path: MainNavigation.routeName,
             name: MainNavigation.routeName,
             builder: (BuildContext context, GoRouterState state) => const MainNavigation(),
+            routes: [
+              
+            ]
           ),
           GoRoute(
             path: HomeScreen.routeName,
