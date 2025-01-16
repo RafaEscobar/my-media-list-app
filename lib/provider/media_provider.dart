@@ -9,12 +9,91 @@ import 'package:provider/provider.dart';
 
 
 class MediaProvider extends ChangeNotifier{
+  // Media list from API
   List<Media> _mediaList = [];
+  // Variable to connect with AppProvider
   final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
+  // Media types (names and imageUrl)
+  final List<Map<String, dynamic>> _types = [
+    {
+      "name": "Anime",
+      "imageUrl": "assets/images/anime.svg"
+    },
+    {
+      "name": "Peliculas",
+      "imageUrl": "assets/images/movie.svg"
+    },
+    {
+      "name": "Mangas",
+      "imageUrl": "assets/images/manga.svg"
+    },
+    {
+      "name": "Series",
+      "imageUrl": "assets/images/serie.svg"
+    },
+    {
+      "name": "Videojuegos",
+      "imageUrl": "assets/images/game.svg"
+    },
+  ];
+  // Current step in process to create a media register
+  int _currentStep = 0;
 
+  //* Data to create a media register
+  int? _categoryId;
+  String? _title;
+  int? _statusId;
+  int? _priorityId;
+  double? _score;
+  String? _comment;
+
+  //* General Getters and Setters
+  List<Map<String, dynamic>> get types => _types;
   List<Media> get mediaList => _mediaList;
   set mediaList(List<Media> newMediaList){
     _mediaList = newMediaList;
+    notifyListeners();
+  }
+  int get currentStep => _currentStep;
+  set currentStep(int newStep){
+    _currentStep = newStep;
+    notifyListeners();
+  }
+
+  //* Getters and Settets to create a media register
+  int get categoryId => _categoryId!;
+  set categoryId(int newCategoryId){
+    _categoryId = newCategoryId;
+    notifyListeners();
+  }
+
+  String get title => _title!;
+  set title(String newTitle){
+    _title = newTitle;
+    notifyListeners();
+  }
+
+  int get statusId => _statusId!;
+  set statusId(int newStatusId){
+    _statusId = newStatusId;
+    notifyListeners();
+  }
+
+  int get priorityId => _priorityId!;
+  set priorityId(int newPriorityId){
+    _priorityId = newPriorityId;
+    notifyListeners();
+  }
+
+  double get score => _score!;
+  set score(double newScore){
+    _score = newScore;
+    notifyListeners();
+  }
+
+  String get comment => _comment!;
+  set comment(String newComment) {
+    _comment = newComment;
     notifyListeners();
   }
 
