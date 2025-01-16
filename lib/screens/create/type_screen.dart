@@ -18,7 +18,8 @@ class _TypeScreenState extends State<TypeScreen> {
   @override
   Widget build(BuildContext context) {
     return  SafeArea(
-      child: SizedBox(
+      child: Container(
+        color: Colors.white,
         child: Column(
           children: [
             SizedBox(

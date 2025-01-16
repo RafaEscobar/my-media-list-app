@@ -19,84 +19,87 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: Column(
-        children: [
-          const SizedBox(height: 10,),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: MainHead()
-          ),
-          Container(
-            color: Colors.white,
-            child: TabBar(
-              indicatorColor: Colors.black,
-              onTap: (value) {
-                setState(() => _selectedIndex = value);
-              },
-              tabs: <Widget>[
-                Tab(
-                  text: 'Anime',
-                  icon: SvgPicture.asset(
-                    "assets/images/anime.svg",
-                    height: 20,
-                    width: 20,
-                    colorFilter: ColorFilter.mode((_selectedIndex == 0) ? Colors.blue : Colors.black, BlendMode.srcIn),
-                  ),
-                ),
-                Tab(
-                  text: 'Pelis',
-                  icon: SvgPicture.asset(
-                    "assets/images/movie.svg",
-                    height: 20,
-                    width: 20,
-                    colorFilter: ColorFilter.mode((_selectedIndex == 1) ? Colors.blue : Colors.black, BlendMode.srcIn),
-                  ),
-                ),
-                Tab(
-                  text: 'Games',
-                  icon: SvgPicture.asset(
-                    "assets/images/game.svg",
-                    height: 20,
-                    width: 20,
-                    colorFilter: ColorFilter.mode((_selectedIndex == 2) ? Colors.blue : Colors.black, BlendMode.srcIn),
-                  ),
-                ),
-                Tab(
-                  text: 'Manga',
-                  icon: SvgPicture.asset(
-                    "assets/images/manga.svg",
-                    height: 20,
-                    width: 20,
-                    colorFilter: ColorFilter.mode((_selectedIndex == 3) ? Colors.blue : Colors.black, BlendMode.srcIn),
-                  ),
-                ),
-                Tab(
-                  text: 'Series',
-                  icon: SvgPicture.asset(
-                    "assets/images/serie.svg",
-                    height: 20,
-                    width: 20,
-                    colorFilter: ColorFilter.mode((_selectedIndex == 4) ? Colors.blue : Colors.black, BlendMode.srcIn),
-                  ),
-                ),
-              ],
+    return Container(
+      color: Colors.white,
+      child: DefaultTabController(
+        length: 5,
+        child: Column(
+          children: [
+            const SizedBox(height: 10,),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: MainHead()
             ),
-          ),
-          // TabBarView
-          const Expanded(
-            child: TabBarView(
-              children: [
-                AnimesScreen(),
-                MoviesScreen(),
-                VideogamesScreens(),
-                MangasScreen(),
-                SeriesScreen(),
-              ],
+            Container(
+              color: Colors.white,
+              child: TabBar(
+                indicatorColor: Colors.black,
+                onTap: (value) {
+                  setState(() => _selectedIndex = value);
+                },
+                tabs: <Widget>[
+                  Tab(
+                    text: 'Anime',
+                    icon: SvgPicture.asset(
+                      "assets/images/anime.svg",
+                      height: 20,
+                      width: 20,
+                      colorFilter: ColorFilter.mode((_selectedIndex == 0) ? Colors.blue : Colors.black, BlendMode.srcIn),
+                    ),
+                  ),
+                  Tab(
+                    text: 'Pelis',
+                    icon: SvgPicture.asset(
+                      "assets/images/movie.svg",
+                      height: 20,
+                      width: 20,
+                      colorFilter: ColorFilter.mode((_selectedIndex == 1) ? Colors.blue : Colors.black, BlendMode.srcIn),
+                    ),
+                  ),
+                  Tab(
+                    text: 'Games',
+                    icon: SvgPicture.asset(
+                      "assets/images/game.svg",
+                      height: 20,
+                      width: 20,
+                      colorFilter: ColorFilter.mode((_selectedIndex == 2) ? Colors.blue : Colors.black, BlendMode.srcIn),
+                    ),
+                  ),
+                  Tab(
+                    text: 'Manga',
+                    icon: SvgPicture.asset(
+                      "assets/images/manga.svg",
+                      height: 20,
+                      width: 20,
+                      colorFilter: ColorFilter.mode((_selectedIndex == 3) ? Colors.blue : Colors.black, BlendMode.srcIn),
+                    ),
+                  ),
+                  Tab(
+                    text: 'Series',
+                    icon: SvgPicture.asset(
+                      "assets/images/serie.svg",
+                      height: 20,
+                      width: 20,
+                      colorFilter: ColorFilter.mode((_selectedIndex == 4) ? Colors.blue : Colors.black, BlendMode.srcIn),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            // TabBarView
+            const Expanded(
+              child: TabBarView(
+                children: [
+                  AnimesScreen(),
+                  MoviesScreen(),
+                  VideogamesScreens(),
+                  MangasScreen(),
+                  SeriesScreen(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
