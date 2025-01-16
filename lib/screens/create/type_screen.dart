@@ -45,6 +45,7 @@ class _TypeScreenState extends State<TypeScreen> {
                   return MediaTypeCard(
                     name: _mediaProvider.types[index]['name'],
                     svgPath: _mediaProvider.types[index]['imageUrl'],
+                    categoryId: _mediaProvider.types[index]['categoryId'],
                   );
                 },
               ),

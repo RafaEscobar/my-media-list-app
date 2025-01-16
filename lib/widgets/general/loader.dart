@@ -7,7 +7,7 @@ class Loader {
   void show(){
     showDialog(
       context: navigatorKey.currentState!.context,
-      barrierColor: Colors.white,
+      barrierColor:Colors.white,
       builder: (context) {
         return SizedBox(
           child: Center(

@@ -1,16 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mymedialist/main.dart';
+import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/screens/create/title_screen.dart';
+import 'package:mymedialist/widgets/general/alert.dart';
+import 'package:mymedialist/widgets/general/loader.dart';
+import 'package:provider/provider.dart';
 
-class MediaTypeCard extends StatelessWidget {
+class MediaTypeCard extends StatefulWidget {
   const MediaTypeCard({
     super.key,
     required this.svgPath,
     required this.name,
+    required this.categoryId
   });
   final String svgPath;
   final String name;
-  void nextStep(){
-    print('se');
+  final int categoryId;
+
+  @override
+  State<MediaTypeCard> createState() => _MediaTypeCardState();
+}
+
+class _MediaTypeCardState extends State<MediaTypeCard> {
+  Future<void> nextStep() async {
+    try {
+      MediaProvider mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
+      mediaProvider.categoryId = widget.categoryId;
+      await Loader().runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 700)), secondsDelayed: 0);
+      if (!mounted) return;
+      navigatorKey.currentState!.context.goNamed(TitleScreen.routeName);
+    } catch (e) {
+      Alert.show(text: e.toString());
+    }
   }
 
   @override
@@ -31,13 +54,13 @@ class MediaTypeCard extends StatelessWidget {
                 SizedBox(
                   height: 120,
                   child: SvgPicture.asset(
-                    svgPath,
+                    widget.svgPath,
                     fit: BoxFit.contain,
                     colorFilter: ColorFilter.mode(Colors.blueGrey.shade600, BlendMode.srcIn),
                   ),
                 ),
                 Text(
-                  name,
+                  widget.name,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.blueGrey.shade600),
                 ),

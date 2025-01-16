@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/media.dart';
 import 'package:mymedialist/provider/app_provider.dart';
@@ -17,23 +18,28 @@ class MediaProvider extends ChangeNotifier{
   final List<Map<String, dynamic>> _types = [
     {
       "name": "Anime",
-      "imageUrl": "assets/images/anime.svg"
+      "imageUrl": "assets/images/anime.svg",
+      "categoryId": CategoryEnum.animes.identifier
     },
     {
       "name": "Peliculas",
-      "imageUrl": "assets/images/movie.svg"
+      "imageUrl": "assets/images/movie.svg",
+      "categoryId": CategoryEnum.movies.identifier
     },
     {
       "name": "Mangas",
-      "imageUrl": "assets/images/manga.svg"
+      "imageUrl": "assets/images/manga.svg",
+      "categoryId": CategoryEnum.mangas.identifier
     },
     {
       "name": "Series",
-      "imageUrl": "assets/images/serie.svg"
+      "imageUrl": "assets/images/serie.svg",
+      "categoryId": CategoryEnum.series.identifier
     },
     {
       "name": "Videojuegos",
-      "imageUrl": "assets/images/game.svg"
+      "imageUrl": "assets/images/game.svg",
+      "categoryId": CategoryEnum.videogames.identifier
     },
   ];
   // Current step in process to create a media register
