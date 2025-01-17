@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/category_model.dart';
 import 'package:mymedialist/provider/media_provider.dart';
@@ -56,13 +57,13 @@ class _MediaTypeCardState extends State<MediaTypeCard> {
                 SizedBox(
                   height: 120,
                   child: SvgPicture.network(
-                    widget.category.imageUrl,
+                    widget.category.imageUrl.replaceAll('http://localhost:8000', 'https://74fe-187-235-163-54.ngrok-free.app'),
                     fit: BoxFit.contain,
                     colorFilter: ColorFilter.mode(Colors.blueGrey.shade600, BlendMode.srcIn),
                   ),
                 ),
                 Text(
-                  widget.category.category,
+                  CategoryEnum.values[widget.category.id-1].name,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.blueGrey.shade600),
                 ),

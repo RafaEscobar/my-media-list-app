@@ -10,15 +10,15 @@ extension CategoryEnumExtension on CategoryEnum{
   String get name {
     switch (this) {
       case CategoryEnum.movies:
-        return "Películas"  ;
+        return "película"  ;
       case CategoryEnum.series:
-        return "Series";
+        return "serie";
       case CategoryEnum.mangas:
-        return "Mangas";
+        return "manga";
       case CategoryEnum.videogames:
-        return "Videojuegos";
+        return "videojuego";
       case CategoryEnum.animes:
-        return "Animes";
+        return "anime";
     }
   }
 

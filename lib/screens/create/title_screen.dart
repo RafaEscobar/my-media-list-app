@@ -27,8 +27,8 @@ class _TitleScreenState extends State<TitleScreen> {
   String _buildTitle() {
     String title = CategoryEnum.values[_mediaProvider.categoryId-1].name;
     return (_mediaProvider.categoryId == CategoryEnum.movies.identifier || _mediaProvider.categoryId == CategoryEnum.series.identifier) ?
-      "Ingresa el título de la ${title.substring(0, title.length-1)}" :
-      "Ingresa el título del ${title.substring(0, title.length-1)}";
+      "Ingresa el título de la $title" :
+      "Ingresa el título del $title";
   }
 
   void nextStep(){
