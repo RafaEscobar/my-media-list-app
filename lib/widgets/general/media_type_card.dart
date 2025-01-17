@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/screens/create/title_screen.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:provider/provider.dart';
@@ -29,11 +30,11 @@ class _MediaTypeCardState extends State<MediaTypeCard> {
       mediaProvider.categoryId = widget.categoryId;
       await Loader().runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 700)), secondsDelayed: 0);
       if (!mounted) return;
-      //navigatorKey.currentState!.context.goNamed(TitleScreen.routeName);
+      navigatorKey.currentState!.context.goNamed(TitleScreen.routeName);
     } catch (e) {
       Alert.show(text: e.toString());
     }
-  }
+  } 
 
   @override
   Widget build(BuildContext context) {

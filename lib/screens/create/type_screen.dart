@@ -22,10 +22,11 @@ class _TypeScreenState extends State<TypeScreen> {
         color: Colors.white,
         child: Column(
           children: [
-            SizedBox(
-              width: 260,
+            const SizedBox(height: 20,),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Text(
-                '¿Qué quieres vas a calificar?',
+                '¿Qué vas a calificar?',
                 style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 28, fontWeight: FontWeight.w700),
                 textAlign: TextAlign.center,
               ),

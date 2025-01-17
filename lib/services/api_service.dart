@@ -20,7 +20,7 @@ class ApiService {
       validateStatus: (status) {
         return true;
       },
-      baseUrl: "https://aff0-187-235-163-54.ngrok-free.app/api"
+      baseUrl: "https://74fe-187-235-163-54.ngrok-free.app/api"
     ));
 
     try {
