@@ -22,20 +22,29 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   Future<void> initLoad() async {
     try {
-      appProvider.showedSplash = true;
+      _setInitialConfig();
       bool rememberme = Preferences.rememberme;
-      appProvider.userInfo = Preferences.userInfo;
-      if (rememberme && appProvider.userInfo.token.isNotEmpty) {
-        await _categoryProvider.getCategories();
-        _exitController.forward().then((value) => context.goNamed(MainNavigation.routeName)) ;
-      } else {
-        _exitController.forward().then((value) => context.goNamed(AuthScreen.routeName));
-      }
-
+      (rememberme && appProvider.userInfo.token.isNotEmpty) ? _onLoginSucces() : _onLogginFailure();
     } catch (e) {
       throw Exception(e.toString());
     }
   }
+
+  Future<void> _loadFirstCalls() async {
+    await _categoryProvider.getCategories();
+  }
+
+  void _setInitialConfig(){
+    appProvider.showedSplash = true;
+    appProvider.userInfo = Preferences.userInfo;
+  }
+
+  Future<void> _onLoginSucces() async {
+    await _loadFirstCalls();
+    _exitController.forward().then((value) => context.goNamed(MainNavigation.routeName)) ;
+  }
+
+  void _onLogginFailure() => _exitController.forward().then((value) => context.goNamed(AuthScreen.routeName));
 
   @override
   void initState() {

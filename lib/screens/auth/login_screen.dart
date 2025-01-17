@@ -23,11 +23,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin{
+  //* NodeFocus
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocuesNode = FocusNode();
+  //* Key by form
   final _formKey = GlobalKey<FormBuilderState>();
-  static AppProvider appProvider = navigatorKey.currentContext!.read<AppProvider>();
+  //* Providers
+  final AppProvider _appProvider = navigatorKey.currentContext!.read<AppProvider>();
   final CategoryProvider _categoryProvider =  navigatorKey.currentState!.context.read<CategoryProvider>();
+  //* Global variables
   bool rememberme = true;
 
   @override
@@ -51,13 +55,13 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     _passwordFocuesNode.unfocus();
   }
 
+  bool _validateForm() => _formKey.currentState!.saveAndValidate();
+
   Future<bool> _generateLogin() async {
     bool? isLogged;
-    await Loader().runLoad( asyncFunction: () async => isLogged = await appProvider.login(credentials: _getCredentials()) );
+    await Loader().runLoad( asyncFunction: () async => isLogged = await _appProvider.login(credentials: _getCredentials()) );
     return isLogged!;
   }
-
-  bool _validateForm() => _formKey.currentState!.saveAndValidate();
 
   Map<String, dynamic> _getCredentials() => {
     'email': _formKey.currentState!.fields['email']!.value.toString(),
@@ -66,9 +70,13 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   Future<void> _onLoginSucces() async {
     Preferences.rememberme = rememberme;
-    await _categoryProvider.getCategories();
+    await _loadFirstCalls();
     if (!mounted) return;
     context.goNamed(MainNavigation.routeName);
+  }
+
+  Future<void> _loadFirstCalls() async {
+    await _categoryProvider.getCategories();
   }
 
   void _onLogginFailure() => Alert.show(
