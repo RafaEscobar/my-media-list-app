@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymedialist/main.dart';
-import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/provider/category_provider.dart';
 import 'package:mymedialist/widgets/general/media_type_card.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +13,12 @@ class TypeScreen extends StatefulWidget {
 }
 
 class _TypeScreenState extends State<TypeScreen> {
-  final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
+  final CategoryProvider _categoryProvider = navigatorKey.currentState!.context.read<CategoryProvider>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +47,9 @@ class _TypeScreenState extends State<TypeScreen> {
                   mainAxisSpacing: 20,
                   childAspectRatio: 2 /2.4,
                 ),
-                itemCount: _mediaProvider.types.length,
+                itemCount: _categoryProvider.categoryList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return MediaTypeCard(
-                    name: _mediaProvider.types[index]['name'],
-                    svgPath: _mediaProvider.types[index]['imageUrl'],
-                    categoryId: _mediaProvider.types[index]['categoryId'],
-                  );
+                  return MediaTypeCard(category: _categoryProvider.categoryList[index]);
                 },
               ),
                       ),

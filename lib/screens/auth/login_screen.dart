@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   Future<void> onSubmit() async {
     try {
       _removeFocus();
-      if (_validateForm()) (await _generateLogin()) ? _onLoginSucces() : _onLogginFailure();
+      if (_validateForm()) (await _generateLogin()) ? await _onLoginSucces() : _onLogginFailure();
     } catch (e) {
       Alert.show(text: e.toString());
     }
@@ -62,8 +62,10 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     'password': _formKey.currentState!.fields['password']!.value.toString()
   };
 
-  void _onLoginSucces(){
+  Future<void> _onLoginSucces() async {
     Preferences.rememberme = rememberme;
+    await appProvider.initApp();
+    if (!mounted) return;
     context.goNamed(MainNavigation.routeName);
   }
 

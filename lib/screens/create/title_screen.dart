@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';

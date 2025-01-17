@@ -23,9 +23,13 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       appProvider.showedSplash = true;
       bool rememberme = Preferences.rememberme;
       appProvider.userInfo = Preferences.userInfo;
-      (rememberme && appProvider.userInfo.token.isNotEmpty) ?
-        _exitController.forward().then((value) => context.goNamed(MainNavigation.routeName)) :
+      if (rememberme && appProvider.userInfo.token.isNotEmpty) {
+        await appProvider.initApp();
+        _exitController.forward().then((value) => context.goNamed(MainNavigation.routeName)) ;
+      } else {
         _exitController.forward().then((value) => context.goNamed(AuthScreen.routeName));
+      }
+
     } catch (e) {
       throw Exception(e.toString());
     }

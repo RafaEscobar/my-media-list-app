@@ -2,12 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/user.dart';
+import 'package:mymedialist/provider/category_provider.dart';
 import 'package:mymedialist/services/api_service.dart';
 import 'package:mymedialist/services/preferences.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:provider/provider.dart';
 
 class AppProvider extends ChangeNotifier{
+  final CategoryProvider _categoryProvider = navigatorKey.currentState!.context.read<CategoryProvider>();
   bool _showedSplash = false;
   User _userInfo = User();
 
@@ -21,6 +23,11 @@ class AppProvider extends ChangeNotifier{
   set userInfo(User newValue){
     _userInfo = newValue;
     notifyListeners();
+  }
+
+  //* Inicialización
+  Future<void> initApp() async {
+    await _categoryProvider.getCategories();
   }
 
   Future<bool> login({required Map<String, dynamic> credentials}) async {

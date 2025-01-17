@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
+import 'package:mymedialist/models/category_model.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/title_screen.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -11,13 +12,9 @@ import 'package:provider/provider.dart';
 class MediaTypeCard extends StatefulWidget {
   const MediaTypeCard({
     super.key,
-    required this.svgPath,
-    required this.name,
-    required this.categoryId
+    required this.category,
   });
-  final String svgPath;
-  final String name;
-  final int categoryId;
+  final CategoryModel category;
 
   @override
   State<MediaTypeCard> createState() => _MediaTypeCardState();
@@ -27,14 +24,15 @@ class _MediaTypeCardState extends State<MediaTypeCard> {
   Future<void> nextStep() async {
     try {
       MediaProvider mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
-      mediaProvider.categoryId = widget.categoryId;
+      mediaProvider.categoryId = widget.category.id;
+      // otros datos requeridos dentro del modelo category
       await Loader().runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 700)), secondsDelayed: 0);
       if (!mounted) return;
       navigatorKey.currentState!.context.goNamed(TitleScreen.routeName);
     } catch (e) {
       Alert.show(text: e.toString());
     }
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +55,14 @@ class _MediaTypeCardState extends State<MediaTypeCard> {
               children: [
                 SizedBox(
                   height: 120,
-                  child: SvgPicture.asset(
-                    widget.svgPath,
+                  child: SvgPicture.network(
+                    widget.category.imageUrl,
                     fit: BoxFit.contain,
                     colorFilter: ColorFilter.mode(Colors.blueGrey.shade600, BlendMode.srcIn),
                   ),
                 ),
                 Text(
-                  widget.name,
+                  widget.category.category,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.blueGrey.shade600),
                 ),
