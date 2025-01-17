@@ -63,7 +63,7 @@ class _MediaTypeCardState extends State<MediaTypeCard> {
                   ),
                 ),
                 Text(
-                  CategoryEnum.values[widget.category.id-1].name,
+                  CategoryEnum.values[widget.category.id-1].name[0].toUpperCase() + CategoryEnum.values[widget.category.id-1].name.substring(1),
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.blueGrey.shade600),
                 ),

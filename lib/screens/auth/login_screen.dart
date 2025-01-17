@@ -4,6 +4,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
+import 'package:mymedialist/provider/category_provider.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/services/preferences.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -26,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   final FocusNode _passwordFocuesNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
   static AppProvider appProvider = navigatorKey.currentContext!.read<AppProvider>();
+  final CategoryProvider _categoryProvider =  navigatorKey.currentState!.context.read<CategoryProvider>();
   bool rememberme = true;
 
   @override
@@ -64,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   Future<void> _onLoginSucces() async {
     Preferences.rememberme = rememberme;
-    await appProvider.initApp();
+    await _categoryProvider.getCategories();
     if (!mounted) return;
     context.goNamed(MainNavigation.routeName);
   }
