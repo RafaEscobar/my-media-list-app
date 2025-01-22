@@ -4,6 +4,7 @@ import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/category_model.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/services/api_service.dart';
+import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:provider/provider.dart';
 
@@ -24,13 +25,15 @@ class CategoryProvider extends ChangeNotifier{
         for(Map<String, dynamic> category in response.data['data']){
           categoryList.add( CategoryModel.fromJson(category) );
         }
+      } else if(response.statusCode == 401) {
+        Redirect.onUnauthorized();
       } else {
-        Alert.show(text: "Error al obtener los datos ${response.statusCode}");
-        throw Exception("Error al obtener los datos");
+        Alert.show(text: "Error al obtener listado de categorias ${response.statusCode}");
+        throw Exception("Error al obtener listado de categorias");
       }
     } catch (e) {
       Alert.show(text: e.toString());
-      throw Exception("Error al obtener los datos");
+      throw Exception("Error al obtener listado de categorias");
     }
   }
 }
