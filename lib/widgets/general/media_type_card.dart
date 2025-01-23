@@ -24,9 +24,10 @@ class MediaTypeCard extends StatefulWidget {
 class _MediaTypeCardState extends State<MediaTypeCard> {
   Future<void> nextStep() async {
     try {
-      MediaProvider mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
+      final MediaProvider mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
       mediaProvider.categoryId = widget.category.id;
-      // otros datos requeridos dentro del modelo category
+      mediaProvider.type = widget.category.category;
+      mediaProvider.subtype = widget.category.subtype;
       await Loader().runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 700)), secondsDelayed: 0);
       if (!mounted) return;
       navigatorKey.currentState!.context.goNamed(TitleScreen.routeName);
@@ -57,7 +58,7 @@ class _MediaTypeCardState extends State<MediaTypeCard> {
                 SizedBox(
                   height: 120,
                   child: SvgPicture.network(
-                    widget.category.imageUrl.replaceAll('http://localhost:8000', 'https://74fe-187-235-163-54.ngrok-free.app'),
+                    widget.category.imageUrl.replaceAll('http://localhost:8000', 'https://fcd7-207-248-115-158.ngrok-free.app'),
                     fit: BoxFit.contain,
                     colorFilter: ColorFilter.mode(Colors.blueGrey.shade600, BlendMode.srcIn),
                   ),

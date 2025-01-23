@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/media.dart';
 import 'package:mymedialist/provider/app_provider.dart';
@@ -14,39 +13,13 @@ class MediaProvider extends ChangeNotifier{
   List<Media> _mediaList = [];
   // Variable to connect with AppProvider
   final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
-  // Media types (names and imageUrl)
-  final List<Map<String, dynamic>> _types = [
-    {
-      "name": "Anime",
-      "imageUrl": "assets/images/anime.svg",
-      "categoryId": CategoryEnum.animes.identifier
-    },
-    {
-      "name": "Peliculas",
-      "imageUrl": "assets/images/movie.svg",
-      "categoryId": CategoryEnum.movies.identifier
-    },
-    {
-      "name": "Mangas",
-      "imageUrl": "assets/images/manga.svg",
-      "categoryId": CategoryEnum.mangas.identifier
-    },
-    {
-      "name": "Series",
-      "imageUrl": "assets/images/serie.svg",
-      "categoryId": CategoryEnum.series.identifier
-    },
-    {
-      "name": "Videojuegos",
-      "imageUrl": "assets/images/game.svg",
-      "categoryId": CategoryEnum.videogames.identifier
-    },
-  ];
   // Current step in process to create a media register
   int _currentStep = 0;
 
   //* Data to create a media register
   int? _categoryId;
+  String? _type;
+  String? _subtype;
   String? _title;
   int? _statusId;
   int? _priorityId;
@@ -54,7 +27,6 @@ class MediaProvider extends ChangeNotifier{
   String? _comment;
 
   //* General Getters and Setters
-  List<Map<String, dynamic>> get types => _types;
   List<Media> get mediaList => _mediaList;
   set mediaList(List<Media> newMediaList){
     _mediaList = newMediaList;
@@ -70,6 +42,18 @@ class MediaProvider extends ChangeNotifier{
   int get categoryId => _categoryId!;
   set categoryId(int newCategoryId){
     _categoryId = newCategoryId;
+    notifyListeners();
+  }
+
+  String get type => _type!;
+  set type(String newValue){
+    _type = newValue;
+    notifyListeners();
+  }
+
+  String get subtype => _subtype!;
+  set subtype(String newValue){
+    _subtype = newValue;
     notifyListeners();
   }
 

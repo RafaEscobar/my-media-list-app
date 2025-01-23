@@ -4,6 +4,7 @@ import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/provider/category_provider.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/provider/priority_provider.dart';
+import 'package:mymedialist/provider/status_provider.dart';
 import 'package:mymedialist/routes/app_route.dart';
 import 'package:mymedialist/services/preferences.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget
         ChangeNotifierProvider(create: (context) => AppProvider(),),
         ChangeNotifierProvider(create: (context) => PriorityProvider(),),
         ChangeNotifierProvider(create: (context) => MediaProvider(),),
-        ChangeNotifierProvider(create: (context) => CategoryProvider(),)
+        ChangeNotifierProvider(create: (context) => CategoryProvider(),),
+        ChangeNotifierProvider(create: (context) => StatusProvider(),)
       ],
       builder: (_, __) {
         return MaterialApp.router(

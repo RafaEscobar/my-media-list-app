@@ -5,10 +5,13 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/provider/status_provider.dart';
+import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/input.dart';
+import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:provider/provider.dart';
 
 class TitleScreen extends StatefulWidget {
@@ -31,9 +34,14 @@ class _TitleScreenState extends State<TitleScreen> {
       "Ingresa el título del $title";
   }
 
-  void nextStep(){
+  Future<void> nextStep() async {
     try {
-      _validateTitle();
+      if (_validateTitle()) {
+        context.read<MediaProvider>().title = _formKey.currentState!.fields['title']!.value.toString();
+        await context.read<StatusProvider>().getStatusList();
+        await Loader().runLoad(asyncFunction: () async => await Future.delayed(const Duration(seconds: 0)));
+        if (mounted) context.goNamed(StatusScreen.routeName);
+      }
     } catch (e) {
       Alert.show(text: e.toString());
     }
@@ -83,7 +91,7 @@ class _TitleScreenState extends State<TitleScreen> {
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(errorText: 'El título es obligatorio.'),
                         FormBuilderValidators.maxLength(52, errorText: 'El título debe ser más corto.'),
-                        FormBuilderValidators.min(3, errorText: 'El título es muy corto')
+                        FormBuilderValidators.minLength(3, errorText: 'El título es muy corto')
                       ]),
                     ),
                   ),

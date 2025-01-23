@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
+import 'package:mymedialist/provider/category_provider.dart';
 import 'package:mymedialist/utils/modal_bottom_sheet.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
@@ -25,6 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final FocusNode _nameFocusNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
   final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
+  final CategoryProvider _categoryProvider = navigatorKey.currentState!.context.read<CategoryProvider>();
 
   @override
   void dispose() {
@@ -70,7 +72,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   bool _validateForm() => _formKey.currentState!.saveAndValidate();
 
-  void _onRegisterSuccess() {
+  Future<void> _onRegisterSuccess() async {
+    await _loadFirstCalls();
     ModalBottomSheet.showModal(body: const RemembermeBottomSheet(), height: 200, dismissible: false);
   }
 
@@ -94,6 +97,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _lastNFocusNode.unfocus();
     _emailFocusNode.unfocus();
     _passwordFocuesNode.unfocus();
+  }
+
+  Future<void> _loadFirstCalls() async {
+    await _categoryProvider.getCategories();
   }
 
   @override
