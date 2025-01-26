@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/auth/auth_screen.dart';
 import 'package:mymedialist/screens/auth/splash_screen.dart';
+import 'package:mymedialist/screens/create/caps_screen.dart';
 import 'package:mymedialist/screens/create/comment_screen.dart';
-import 'package:mymedialist/screens/create/priority_screen.dart';
+import 'package:mymedialist/screens/create/pending_priority.dart';
+import 'package:mymedialist/screens/create/post_view_priority.dart';
 import 'package:mymedialist/screens/create/score_screen.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/screens/create/title_screen.dart';
@@ -39,7 +41,7 @@ class AppRoute {
               GoRoute(
                 path: StatusScreen.routeName,
                 name: StatusScreen.routeName,
-                builder: ( BuildContext context, GoRouterState state) => const StatusScreen(),
+                builder: ( BuildContext context, GoRouterState state) => StatusScreen(),
               ),
               GoRoute(
                 path: ScoreScreen.routeName,
@@ -52,9 +54,19 @@ class AppRoute {
                 builder: ( BuildContext context, GoRouterState state) => const CommentScreen(),
               ),
               GoRoute(
-                path: PriorityScreen.routeName,
-                name: PriorityScreen.routeName,
-                builder: ( BuildContext context, GoRouterState state ) => const PriorityScreen()
+                path: PendingPriority.routeName,
+                name: PendingPriority.routeName,
+                builder: ( BuildContext context, GoRouterState state ) => const PendingPriority()
+              ),
+              GoRoute(
+                path: PostViewPriority.routeName,
+                name: PostViewPriority.routeName,
+                builder: (BuildContext context, GoRouterState state) => const PostViewPriority(),
+              ),
+              GoRoute(
+                path: CapsScreen.routeName,
+                name: CapsScreen.routeName,
+                builder: ( BuildContext context, GoRouterState state) => const CapsScreen(),
               ),
             ]
           ),

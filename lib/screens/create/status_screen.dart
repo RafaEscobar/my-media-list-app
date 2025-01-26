@@ -1,35 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mymedialist/main.dart';
-import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/provider/status_provider.dart';
-import 'package:mymedialist/widgets/general/alert.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/general/media_status_card.dart';
 import 'package:provider/provider.dart';
 
-class StatusScreen extends StatefulWidget {
+class StatusScreen extends StatelessWidget {
   static const String routeName = 'status-screen';
-  const StatusScreen({super.key});
-
-  @override
-  State<StatusScreen> createState() => _StatusScreenState();
-}
-
-class _StatusScreenState extends State<StatusScreen> {
+  StatusScreen({super.key});
   final StatusProvider _statusProvider = navigatorKey.currentState!.context.read<StatusProvider>();
-  Future<void> nextStep() async {
-    try {
-      context.read<MediaProvider>().statusId = 0;
-      await Loader().runLoad(asyncFunction: () async => Future.delayed(const Duration(milliseconds: 700)) );
-      // Aqui vamos a verificar:
-      /*
-        !
-      */
-      //if (mounted) context.goNamed();
-    } catch (e) {
-      Alert.show(text: e.toString());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

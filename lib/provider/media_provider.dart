@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/media.dart';
+import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/services/api_service.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -21,7 +22,7 @@ class MediaProvider extends ChangeNotifier{
   String? _type;
   String? _subtype;
   String? _title;
-  int? _statusId;
+  Status? _status;
   int? _priorityId;
   double? _score;
   String? _comment;
@@ -63,9 +64,9 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  int get statusId => _statusId!;
-  set statusId(int newStatusId){
-    _statusId = newStatusId;
+  Status get status => _status!;
+  set status(Status newStatus){
+    _status = newStatus;
     notifyListeners();
   }
 
