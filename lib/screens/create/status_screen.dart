@@ -4,6 +4,7 @@ import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/provider/status_provider.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
+import 'package:mymedialist/widgets/general/media_status_card.dart';
 import 'package:provider/provider.dart';
 
 class StatusScreen extends StatefulWidget {
@@ -48,12 +49,12 @@ class _StatusScreenState extends State<StatusScreen> {
                 itemCount: _statusProvider.statusList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 2/2.6
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 2/2
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  return Text(_statusProvider.statusList[index].status);
+                  return MediaStatusCard(status: _statusProvider.statusList[index]);
                 },
               ),
             )

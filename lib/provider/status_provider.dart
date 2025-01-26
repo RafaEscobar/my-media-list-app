@@ -18,6 +18,7 @@ class StatusProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         statusList = [];
         for(Map<String, dynamic> status in response.data['data']){
+          status['iconPath'] = addIconPath(status['status']);
           statusList.add(Status.fromJson(status));
         }
       } else if(response.statusCode == 401){
@@ -28,6 +29,23 @@ class StatusProvider extends ChangeNotifier {
     } catch (e) {
       Alert.show(text: e.toString());
       throw Exception("Error al obtener la lista de estatus");
+    }
+  }
+
+  String addIconPath(String status){
+    switch (status) {
+      case 'Pendiente':
+        return "assets/icons/pending.png";
+      case 'Visto':
+        return "assets/icons/check.png";
+      case 'Declinado':
+        return "assets/icons/bad.png";
+      case 'No terminado':
+        return "assets/icons/dislike.png";
+      case 'En emisión':
+        return "assets/icons/now.png";
+      default:
+        return '';
     }
   }
 }

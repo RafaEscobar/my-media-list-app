@@ -39,20 +39,20 @@ class _TypeScreenState extends State<TypeScreen> {
             const SizedBox(height: 20,),
             Expanded(
               child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 28,
-                  mainAxisSpacing: 20,
-                  childAspectRatio: 2 /2.4,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 28,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: 2 /2.4,
+                  ),
+                  itemCount: _categoryProvider.categoryList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return MediaTypeCard(category: _categoryProvider.categoryList[index]);
+                  },
                 ),
-                itemCount: _categoryProvider.categoryList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return MediaTypeCard(category: _categoryProvider.categoryList[index]);
-                },
               ),
-                      ),
             )
           ],
         ),
