@@ -37,7 +37,7 @@ class _TitleScreenState extends State<TitleScreen> {
       if (_validateTitle()) {
         _mediaProvider.title = _formKey.currentState!.fields['title']!.value.toString();
         await Loader().runLoad(asyncFunction: () async => await Future.delayed(const Duration(seconds: 1)));
-        if (mounted) context.goNamed(StatusScreen.routeName);
+        if (mounted) context.goNamed(StatusScreen.routeName); 
       }
     } catch (e) {
       Alert.show(text: e.toString());

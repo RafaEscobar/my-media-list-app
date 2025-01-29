@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
-import 'package:mymedialist/provider/category_provider.dart';
-import 'package:mymedialist/provider/status_provider.dart';
 import 'package:mymedialist/screens/auth/auth_screen.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/services/preferences.dart';
+import 'package:mymedialist/utils/call.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -30,18 +29,13 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     }
   }
 
-  Future<void> _loadFirstCalls() async {
-    await navigatorKey.currentState!.context.read<CategoryProvider>().getCategories();
-    if (mounted) await navigatorKey.currentState!.context.read<StatusProvider>().getStatusList();
-  }
-
   void _setInitialConfig(){
     appProvider.showedSplash = true;
     appProvider.userInfo = Preferences.userInfo;
   }
 
   Future<void> _onLoginSucces() async {
-    await _loadFirstCalls();
+    await Call.firstCalls();
     _exitController.forward().then((value) => context.goNamed(MainNavigation.routeName)) ;
   }
 

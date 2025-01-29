@@ -8,6 +8,7 @@ import 'package:mymedialist/screens/create/comment_screen.dart';
 import 'package:mymedialist/screens/create/pending_priority.dart';
 import 'package:mymedialist/screens/create/post_view_priority.dart';
 import 'package:mymedialist/screens/create/score_screen.dart';
+import 'package:mymedialist/screens/create/season_screen.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/screens/create/title_screen.dart';
 import 'package:mymedialist/screens/create/type_screen.dart';
@@ -68,6 +69,11 @@ class AppRoute {
                 name: CapsScreen.routeName,
                 builder: ( BuildContext context, GoRouterState state) => const CapsScreen(),
               ),
+              GoRoute(
+                path: SeasonScreen.routeName,
+                name: SeasonScreen.routeName,
+                builder: (BuildContext context, GoRouterState state) => const SeasonScreen(),
+              )
             ]
           ),
           GoRoute(
