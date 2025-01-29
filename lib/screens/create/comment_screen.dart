@@ -6,6 +6,8 @@ class CommentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      body: Text('Comentario final'),
+    );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
-import 'package:mymedialist/screens/create/score_screen.dart';
 import 'package:mymedialist/screens/create/type_screen.dart';
 import 'package:mymedialist/screens/main/grades_screen.dart';
 import 'package:mymedialist/screens/main/home_screen.dart';
@@ -50,8 +49,7 @@ class _MainNavigationState extends State<MainNavigation> with TickerProviderStat
               children: const [
                 HomeScreen(),
                 GradesScreen(),
-                //TypeScreen(),
-                ScoreScreen(),
+                TypeScreen(),
                 PendingsScreen(),
                 ProfileScreen()
               ],

@@ -61,6 +61,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
           children: [
             Column(
               children: [
+                const SizedBox(height: 20,),
                 Text(
                   "¿Qué calificación obtuvo?",
                   style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
