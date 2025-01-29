@@ -17,6 +17,7 @@ class Input extends StatefulWidget {
     this.onTap,
     this.validator,
     this.onEditingComplete,
+    this.initialValue,
     this.showMaxLenght = false,
     this.isPassword = false,
     required this.focusNode,
@@ -42,6 +43,7 @@ class Input extends StatefulWidget {
   final bool isPassword;
   final String name;
   final Function()? onEditingComplete;
+  final String? initialValue;
 
   @override
   State<Input> createState() => _InputState();
@@ -61,6 +63,7 @@ class _InputState extends State<Input> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      initialValue: widget.initialValue,
       focusNode: widget.focusNode,
       keyboardType: widget.keyboardType,
       obscureText: obscureText,

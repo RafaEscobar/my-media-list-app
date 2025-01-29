@@ -42,7 +42,7 @@ class BottomButtons extends StatelessWidget{
           margin: margin,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            spacing: 20.0,
+            spacing: !onlyOneBtn ? 20.0 : 0,
             children: [
               Expanded(
                 child: Button(

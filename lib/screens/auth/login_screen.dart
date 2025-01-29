@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/provider/category_provider.dart';
+import 'package:mymedialist/provider/status_provider.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/services/preferences.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -30,7 +31,6 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   final _formKey = GlobalKey<FormBuilderState>();
   //* Providers
   final AppProvider _appProvider = navigatorKey.currentContext!.read<AppProvider>();
-  final CategoryProvider _categoryProvider =  navigatorKey.currentState!.context.read<CategoryProvider>();
   //* Global variables
   bool rememberme = true;
 
@@ -76,7 +76,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   }
 
   Future<void> _loadFirstCalls() async {
-    await _categoryProvider.getCategories();
+    await navigatorKey.currentState!.context.read<CategoryProvider>().getCategories();
+    if (mounted) await navigatorKey.currentState!.context.read<StatusProvider>().getStatusList();
   }
 
   void _onLogginFailure() => Alert.show(

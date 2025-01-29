@@ -3,9 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/category_enum.dart';
-import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/provider/status_provider.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/input.dart';
@@ -22,7 +20,7 @@ class TitleScreen extends StatefulWidget {
 }
 
 class _TitleScreenState extends State<TitleScreen> {
-  final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
+  late MediaProvider _mediaProvider;
   final _formKey = GlobalKey<FormBuilderState>();
   final FocusNode _titleFocusNode = FocusNode();
 
@@ -34,11 +32,11 @@ class _TitleScreenState extends State<TitleScreen> {
   }
 
   Future<void> _nextStep() async {
+    _titleFocusNode.unfocus();
     try {
       if (_validateTitle()) {
-        context.read<MediaProvider>().title = _formKey.currentState!.fields['title']!.value.toString();
-        await context.read<StatusProvider>().getStatusList();
-        await Loader().runLoad(asyncFunction: () async => await Future.delayed(const Duration(seconds: 0)));
+        _mediaProvider.title = _formKey.currentState!.fields['title']!.value.toString();
+        await Loader().runLoad(asyncFunction: () async => await Future.delayed(const Duration(seconds: 1)));
         if (mounted) context.goNamed(StatusScreen.routeName);
       }
     } catch (e) {
@@ -46,9 +44,18 @@ class _TitleScreenState extends State<TitleScreen> {
     }
   }
 
-  void _previusStep() => context.pop();
+  void _previusStep() {
+    context.read<MediaProvider>().title = '';
+    context.pop();
+  }
 
   bool _validateTitle() => _formKey.currentState!.fields['title']!.validate();
+
+  @override
+  void initState() {
+    super.initState();
+    _mediaProvider = context.read<MediaProvider>();
+  }
 
   @override
   void dispose() {
@@ -81,6 +88,7 @@ class _TitleScreenState extends State<TitleScreen> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Input(
+                      initialValue: context.watch<MediaProvider>().title,
                       maxLength: 52,
                       showMaxLenght: false,
                       focusNode: _titleFocusNode,

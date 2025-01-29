@@ -21,7 +21,7 @@ class MediaProvider extends ChangeNotifier{
   int? _categoryId;
   String? _type;
   String? _subtype;
-  String? _title;
+  String _title = '';
   Status? _status;
   int? _priorityId;
   double? _score;
@@ -58,7 +58,7 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  String get title => _title!;
+  String get title => _title;
   set title(String newTitle){
     _title = newTitle;
     notifyListeners();
