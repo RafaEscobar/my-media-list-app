@@ -39,19 +39,24 @@ class _MainNavigationState extends State<MainNavigation> with TickerProviderStat
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      child: Scaffold(
-        body: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _motionTabBarController,
-          children: const [
-            HomeScreen(),
-            GradesScreen(),
-            TypeScreen(),
-            PendingsScreen(),
-            ProfileScreen()
-          ],
+      child: Container(
+        color: Colors.white,
+        child: SafeArea(
+          child: Scaffold(
+            body: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _motionTabBarController,
+              children: const [
+                HomeScreen(),
+                GradesScreen(),
+                TypeScreen(),
+                PendingsScreen(),
+                ProfileScreen()
+              ],
+            ),
+            bottomNavigationBar: BottomTabs(tabBarController: _motionTabBarController!,),
+          ),
         ),
-        bottomNavigationBar: BottomTabs(tabBarController: _motionTabBarController!,),
       ),
     );
   }

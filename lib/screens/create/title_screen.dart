@@ -7,11 +7,10 @@ import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/provider/status_provider.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
-import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
-import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/input.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
+import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
 class TitleScreen extends StatefulWidget {
@@ -34,7 +33,7 @@ class _TitleScreenState extends State<TitleScreen> {
       "Ingresa el título del $title";
   }
 
-  Future<void> nextStep() async {
+  Future<void> _nextStep() async {
     try {
       if (_validateTitle()) {
         context.read<MediaProvider>().title = _formKey.currentState!.fields['title']!.value.toString();
@@ -47,7 +46,7 @@ class _TitleScreenState extends State<TitleScreen> {
     }
   }
 
-  void previusStep() => context.pop();
+  void _previusStep() => context.pop();
 
   bool _validateTitle() => _formKey.currentState!.fields['title']!.validate();
 
@@ -98,39 +97,13 @@ class _TitleScreenState extends State<TitleScreen> {
                 )
               ],
             ),
-            Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 40),
-                  width: size.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Button(
-                        text: 'Regresar',
-                        backgroundSplash: Colors.white,
-                        textColor: Colors.white,
-                        background: Colors.grey.shade500,
-                        buttonWidth: size.width * .44,
-                        borderRadius: 20,
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        action: previusStep,
-                      ),
-                      Button(
-                        text: 'Continuar',
-                        backgroundSplash: Colors.white,
-                        textColor: Colors.white,
-                        background: AppTheme.primary,
-                        buttonWidth: size.width * .44,
-                        borderRadius: 20,
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        action: nextStep,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+            BottomButtons(
+              textBtnLeft: 'Regresar',
+              textBtnRight: 'Continuar',
+              actionBtnL: _previusStep,
+              actionBtnR: _nextStep,
+              padding: const EdgeInsets.symmetric(vertical: 8),
+            )
           ],
         ),
       )

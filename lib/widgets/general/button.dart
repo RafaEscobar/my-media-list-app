@@ -4,6 +4,7 @@ class Button extends StatelessWidget {
   const Button({
     super.key,
     required this.text,
+    required this.backgroundSplash,
     this.background = Colors.black,
     this.textColor = Colors.white,
     this.textSize = 22,
@@ -11,7 +12,7 @@ class Button extends StatelessWidget {
     this.borderRadius = 10,
     this.buttonWidth = 100,
     this.action,
-    required this.backgroundSplash,
+    this.textWeight,
   });
 
   final Function()? action;
@@ -23,6 +24,7 @@ class Button extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final double borderRadius;
   final double buttonWidth;
+  final FontWeight? textWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class Button extends StatelessWidget {
             child: Center(
               child: Text(
                 text,
-                style: TextStyle(color: textColor, fontSize: textSize),
+                style: TextStyle(color: textColor, fontSize: textSize, fontWeight: textWeight),
               ),
             ),
           ),

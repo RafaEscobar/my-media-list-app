@@ -17,6 +17,7 @@ class StatusScreen extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: [
+            const SizedBox(height: 20,),
             Text(
               "¿Cuál es el estatus actual del contenido?",
               style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
