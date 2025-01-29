@@ -13,10 +13,11 @@ class BottomButtons extends StatelessWidget{
     this.backgroundBtnR = AppTheme.primary,
     this.textColorBtnR = Colors.white,
     this.splashBtnR = const Color.fromRGBO(158, 158, 158, 1),
+    this.onlyOneBtn = false,
+    this.textBtnRight = "Continuar",
+    this.actionBtnR,
     required this.textBtnLeft,
-    required this.textBtnRight,
     required this.actionBtnL,
-    required this.actionBtnR
   });
 
   final EdgeInsetsGeometry margin;
@@ -30,7 +31,8 @@ class BottomButtons extends StatelessWidget{
   final Color textColorBtnR;
   final Color splashBtnR;
   final Function() actionBtnL;
-  final Function() actionBtnR;
+  final Function()? actionBtnR;
+  final bool onlyOneBtn;
 
   @override
   Widget build(BuildContext context){
@@ -54,16 +56,19 @@ class BottomButtons extends StatelessWidget{
                   action: actionBtnL,
                 ),
               ),
-              Expanded(
-                child: Button(
-                  text: textBtnRight,
-                  textWeight: FontWeight.w500,
-                  backgroundSplash: splashBtnR,
-                  textColor: textColorBtnR,
-                  background: backgroundBtnR,
-                  borderRadius: 20,
-                  padding: padding,
-                  action: actionBtnR,
+              Visibility(
+                visible: !onlyOneBtn,
+                child: Expanded(
+                  child: Button(
+                    text: textBtnRight,
+                    textWeight: FontWeight.w500,
+                    backgroundSplash: splashBtnR,
+                    textColor: textColorBtnR,
+                    background: backgroundBtnR,
+                    borderRadius: 20,
+                    padding: padding,
+                    action: actionBtnR,
+                  ),
                 ),
               ),
             ],
