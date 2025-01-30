@@ -51,6 +51,7 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
     withCloseIcon: false
   );
 
+  //! Falta validar si son pendientes o en emisión
   void _onMoreInfo() {
     Navigator.of(context).pop();
     context.goNamed(SeasonScreen.routeName);
