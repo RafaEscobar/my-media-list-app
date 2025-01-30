@@ -3,10 +3,11 @@ import 'package:mymedialist/main.dart';
 
 class BottomSheetWidget {
   static void open({
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+    EdgeInsetsGeometry padding = const EdgeInsets.only(right: 20, left: 20, top: 4),
     AlignmentGeometry alignment = Alignment.centerLeft,
     double height = 350,
     bool dismissible = false,
+    bool withCloseIcon = true,
     required String title,
     required Widget body,
     Widget? footer,
@@ -29,13 +30,14 @@ class BottomSheetWidget {
               children: [
                 Column(
                   children: [
+                    withCloseIcon ?
                     Align(
                       alignment: Alignment.topRight,
                       child: IconButton(
                         onPressed: () => Navigator.of(context).pop(),
                         icon: Icon(Icons.cancel_outlined, size: 32, color: Colors.blueGrey.shade600,)
                       ),
-                    ),
+                    ) : const SizedBox(height: 20,),
                     Text(
                       title,
                       style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 24, fontWeight: FontWeight.w700),
