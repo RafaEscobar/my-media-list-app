@@ -21,6 +21,11 @@ class _CommentScreenState extends State<CommentScreen> {
     _commentFocusNode.dispose();
   }
 
+  Future<void> _onNextStep() async {
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

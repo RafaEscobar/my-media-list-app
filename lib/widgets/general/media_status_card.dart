@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/screens/create/caps_screen.dart';
 import 'package:mymedialist/screens/create/pending_priority.dart';
 import 'package:mymedialist/screens/create/score_screen.dart';
-import 'package:mymedialist/widgets/general/alert.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
+import 'package:mymedialist/widgets/general/bottom_sheet_widget.dart';
+import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
 class MediaStatusCard extends StatefulWidget {
@@ -19,22 +18,55 @@ class MediaStatusCard extends StatefulWidget {
 
 class _MediaStatusCardState extends State<MediaStatusCard> {
   Future<void> nextStep() async {
+    BottomSheetWidget.open(
+      title: '¿Quieres agregar más información?',
+      body: modalBody,
+      footer: modalFooter,
+      height: 350,
+    );
+    /*
     try {
       context.read<MediaProvider>().status = widget.status;
-      await Loader().runLoad(asyncFunction: () async => Future.delayed(const Duration(milliseconds: 700)) );
       redirectTo();
     } catch (e) {
       Alert.show(text: e.toString());
     }
+    */
   }
 
+  Widget modalBody = SizedBox(
+    child: Column(
+      spacing: 10,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '+ ¿Qué temporada es?',
+          style: TextStyle(color: Colors.blueGrey.shade800, fontSize: 20, fontWeight: FontWeight.w300),
+        ),
+        Text(
+          '+ ¿Cuántos capítulos tiene?',
+          style: TextStyle(color: Colors.blueGrey.shade800, fontSize: 20, fontWeight: FontWeight.w300),
+        )
+      ],
+    ),
+  );
+
+  Widget modalFooter = BottomButtons(
+    textBtnLeft: 'No',
+    actionBtnL: () => (),
+    textBtnRight: 'Sí',
+    actionBtnR: () => (),
+  );
+
   void redirectTo(){
-    if (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión') {
-      context.goNamed(PendingPriority.routeName);
-    } else {
-      (context.read<MediaProvider>().subtype== 'Saga') ?
-        context.goNamed(CapsScreen.routeName) :
+    if (context.read<MediaProvider>().subtype == 'Media') {
+      if (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión') {
+        context.goNamed(PendingPriority.routeName);
+      } else {
         context.goNamed(ScoreScreen.routeName);
+      }
+    } else if (context.read<MediaProvider>().subtype == 'Saga'){
+      // modal
     }
   }
 

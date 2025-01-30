@@ -18,7 +18,7 @@ class Input extends StatefulWidget {
     this.validator,
     this.onEditingComplete,
     this.initialValue,
-    this.maxLines,
+    this.maxLines = 1,
     this.showMaxLenght = false,
     this.isPassword = false,
     required this.focusNode,
@@ -45,7 +45,7 @@ class Input extends StatefulWidget {
   final String name;
   final Function()? onEditingComplete;
   final String? initialValue;
-  final int? maxLines;
+  final int maxLines;
   final InputDecoration? inputDecoration;
 
   @override
