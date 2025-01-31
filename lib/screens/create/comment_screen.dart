@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/screens/create/post_view_priority.dart';
+import 'package:mymedialist/screens/create/score_screen.dart';
 import 'package:mymedialist/theme/app_theme.dart';
+import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/input.dart';
+import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
+import 'package:provider/provider.dart';
 
 class CommentScreen extends StatefulWidget {
   static const String routeName = 'comment-screen';
@@ -14,6 +22,7 @@ class CommentScreen extends StatefulWidget {
 
 class _CommentScreenState extends State<CommentScreen> {
   final FocusNode _commentFocusNode = FocusNode();
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   void dispose() {
@@ -22,8 +31,18 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   Future<void> _onNextStep() async {
-
+    try {
+      if (_formKey.currentState!.fields['comment']!.validate()) {
+        context.read<MediaProvider>().comment = _formKey.currentState!.fields['comment']!.value.toString();
+        await Loader().runLoad(asyncFunction: () async => await Future.delayed(const Duration(seconds: 2)));
+        if (mounted) context.goNamed(PostViewPriority.routeName);
+      }
+    } catch (e) {
+      Alert.show(text: e.toString());
+    }
   }
+
+  void _onPreviousStep() => context.goNamed(ScoreScreen.routeName);
 
 
   @override
@@ -43,40 +62,43 @@ class _CommentScreenState extends State<CommentScreen> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20,),
-                Input(
-                  focusNode: _commentFocusNode,
-                  obscureText: false,
-                  name: 'comment',
-                  maxLines: 8,
-                  textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(errorText: 'El comentario es obligatorio'),
-                    FormBuilderValidators.minLength(3, errorText: 'El comentario es demasiado corto'),
-                    FormBuilderValidators.maxLength(232, errorText: 'El comentario es muy largo')
-                  ]),
-                  inputDecoration: InputDecoration(
-                    hintText: 'Mi opinión',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                FormBuilder(
+                  key: _formKey,
+                  child: Input(
+                    focusNode: _commentFocusNode,
+                    obscureText: false,
+                    name: 'comment',
+                    maxLines: 8,
+                    textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(errorText: 'El comentario es obligatorio'),
+                      FormBuilderValidators.minLength(3, errorText: 'El comentario es demasiado corto'),
+                      FormBuilderValidators.maxLength(232, errorText: 'El comentario es muy largo')
+                    ]),
+                    inputDecoration: InputDecoration(
+                      hintText: 'Mi opinión',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: AppTheme.primary),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: AppTheme.primary),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: AppTheme.primary),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: AppTheme.primary),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  ),
+                  )
                 )
               ],
             ),
             BottomButtons(
               textBtnLeft: 'Regresar',
-              actionBtnL: () => (),
+              actionBtnL: _onPreviousStep,
               textBtnRight: 'Continuar',
-              actionBtnR: () => (),
+              actionBtnR: _onNextStep,
             )
           ],
         ),
