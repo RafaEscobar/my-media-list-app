@@ -19,13 +19,13 @@ class MediaProvider extends ChangeNotifier{
 
   //* Data to create a media register
   int? _categoryId;
-  String? _type;
-  String? _subtype;
+  String _type = '';
+  String _subtype = '';
   String _title = '';
   Status? _status;
-  int? _priorityId;
-  double? _score;
-  String? _comment;
+  int _priorityId = 0;
+  double _score = 5;
+  String _comment = '';
 
   //* General Getters and Setters
   List<Media> get mediaList => _mediaList;
@@ -46,13 +46,13 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  String get type => _type!;
+  String get type => _type;
   set type(String newValue){
     _type = newValue;
     notifyListeners();
   }
 
-  String get subtype => _subtype!;
+  String get subtype => _subtype;
   set subtype(String newValue){
     _subtype = newValue;
     notifyListeners();
@@ -70,19 +70,19 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  int get priorityId => _priorityId!;
+  int get priorityId => _priorityId;
   set priorityId(int newPriorityId){
     _priorityId = newPriorityId;
     notifyListeners();
   }
 
-  double get score => _score!;
+  double get score => _score;
   set score(double newScore){
     _score = newScore;
     notifyListeners();
   }
 
-  String get comment => _comment!;
+  String get comment => _comment;
   set comment(String newComment) {
     _comment = newComment;
     notifyListeners();
@@ -107,14 +107,13 @@ class MediaProvider extends ChangeNotifier{
   }
 
   void deleteData(){
-     _categoryId = 0;
      _type = '';
      _subtype = '';
-    _title = '';
-     _status = Status();
-     _priorityId = 0;
-     _score = 0;
+     _title = '';
      _comment = '';
+     _categoryId = 0;
+     _priorityId = 0;
+     _score = 5;
   }
 
 }

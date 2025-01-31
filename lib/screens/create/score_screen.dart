@@ -23,7 +23,7 @@ class ScoreScreen extends StatefulWidget {
 }
 
 class _ScoreScreenState extends State<ScoreScreen> with CancelCreationMixin {
-  double _currentValue = 5;
+  double _currentValue = navigatorKey.currentState!.context.read<MediaProvider>().score;
   final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
 
   void _onLess() => setState(() => _currentValue -= 0.1);
