@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/provider/category_provider.dart';
 import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/provider/pending_priority_provider.dart';
+import 'package:mymedialist/provider/post_view_priority_provider.dart';
 import 'package:mymedialist/provider/status_provider.dart';
 import 'package:mymedialist/routes/app_route.dart';
 import 'package:mymedialist/services/preferences.dart';
@@ -26,7 +28,9 @@ class MyApp extends StatelessWidget
         ChangeNotifierProvider(create: (context) => AppProvider(),),
         ChangeNotifierProvider(create: (context) => MediaProvider(),),
         ChangeNotifierProvider(create: (context) => CategoryProvider(),),
-        ChangeNotifierProvider(create: (context) => StatusProvider(),)
+        ChangeNotifierProvider(create: (context) => StatusProvider(),),
+        ChangeNotifierProvider(create: (context) => PendingPriorityProvider(),),
+        ChangeNotifierProvider(create: (context) => PostViewPriorityProvider(),)
       ],
       builder: (_, __) {
         return MaterialApp.router(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mymedialist/provider/post_view_priority_provider.dart';
+import 'package:provider/provider.dart';
 
 class PostViewPriority extends StatelessWidget{
   const PostViewPriority({super.key});
@@ -6,8 +8,8 @@ class PostViewPriority extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return const Scaffold(
-      body: Center(child: Text('Post View Priority'),),
+    return Scaffold(
+      body: Center(child: Text('Post View Priority ${context.read<PostViewPriorityProvider>().postViewPriorityList.length}'),),
     );
   }
 }

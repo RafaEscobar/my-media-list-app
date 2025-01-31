@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mymedialist/provider/pending_priority_provider.dart';
+import 'package:provider/provider.dart';
 
 class PendingPriority extends StatelessWidget {
   static const String routeName = 'pending-priority';
@@ -6,8 +8,8 @@ class PendingPriority extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Pending priorities')),
+    return Scaffold(
+      body: Center(child: Text('Pending priorities:  ${context.read<PendingPriorityProvider>().pendingPriorityList.length}')),
     );
   }
 }
