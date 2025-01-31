@@ -6,8 +6,8 @@ class PendingPriority extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      child: Text('Pending priorities'),
+    return const Scaffold(
+      body: Center(child: Text('Pending priorities')),
     );
   }
 }

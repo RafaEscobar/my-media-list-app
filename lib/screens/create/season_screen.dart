@@ -7,7 +7,7 @@ class SeasonScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text('Season screen'),
+      body: Center(child: Text('Season screen')),
     );
   }
 }

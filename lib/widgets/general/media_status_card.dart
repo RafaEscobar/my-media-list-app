@@ -31,15 +31,13 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
     }
   }
 
-  void redirectTo(){
-    if (context.read<MediaProvider>().subtype == 'Media') {
-      if (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión') {
-        context.goNamed(PendingPriority.routeName);
-      } else {
-        context.goNamed(ScoreScreen.routeName);
-      }
-    } else if (context.read<MediaProvider>().subtype == 'Saga'){
-      _onSaga();
+  void redirectTo() => (context.read<MediaProvider>().subtype == 'Media') ? _onMedia() : _onSaga();
+
+  void _onMedia() {
+    if (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión') {
+      context.goNamed(PendingPriority.routeName);
+    } else {
+      context.goNamed(ScoreScreen.routeName);
     }
   }
 
@@ -51,14 +49,18 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
     withCloseIcon: false
   );
 
-  //! Falta validar si son pendientes o en emisión
   void _onMoreInfo() {
     Navigator.of(context).pop();
     context.goNamed(SeasonScreen.routeName);
   }
+
   void _onDenyMoreInfo() {
     Navigator.of(context).pop();
-    context.goNamed(ScoreScreen.routeName);
+    if (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión') {
+      context.goNamed(PendingPriority.routeName);
+    } else {
+      context.goNamed(ScoreScreen.routeName);
+    }
   }
 
   /*
