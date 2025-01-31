@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/category_enum.dart';
+import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -19,7 +20,7 @@ class TitleScreen extends StatefulWidget {
   State<TitleScreen> createState() => _TitleScreenState();
 }
 
-class _TitleScreenState extends State<TitleScreen> {
+class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
   late MediaProvider _mediaProvider;
   final _formKey = GlobalKey<FormBuilderState>();
   final FocusNode _titleFocusNode = FocusNode();
@@ -63,12 +64,29 @@ class _TitleScreenState extends State<TitleScreen> {
     super.dispose();
   }
 
+  /*
+  ? Al establecer canPop = false evitamos que Flutter haga algo "automaticamente" al respecto
+  ? al momento de hacer la acción de: "hacia atras"
+  ? -> AHORA BIEN como evitamos que flutter haga algo en automatico una vez se detone ese evento
+  ? -> tenemos la posibilidad de hacer algo nosotros (mandar a llamar al showModal)
+  */
+  /*
+    * FLUJO
+    * 1. El usuario detona el evento "back"
+    * 2. La acción automatica que flutter haría se cancela por tener canPop = false
+    * 3. Por lo que el evento "back" NO SE PROCESO, didPop == true NO SE CUMPLE
+    * 4. Entonces podemos llamar a showModal
+  */
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: PopScope(
         canPop: false,
+        onPopInvokedWithResult: (didPop, _) {
+           if (didPop) return;
+            showModal(context);
+        },
         child: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
           width: size.width,

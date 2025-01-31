@@ -19,6 +19,7 @@ class StatusScreen extends StatelessWidget {
     return Scaffold(
       body: PopScope(
         canPop: false,
+        onPopInvokedWithResult: (didPop, result) => (),
         child: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
           color: Colors.white,

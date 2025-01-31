@@ -6,6 +6,7 @@ import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/post_view_priority.dart';
 import 'package:mymedialist/screens/create/score_screen.dart';
 import 'package:mymedialist/theme/app_theme.dart';
+import 'package:mymedialist/utils/call.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/input.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
@@ -46,9 +47,10 @@ class _CommentScreenState extends State<CommentScreen> {
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Scaffold(
       body: PopScope(
+        onPopInvokedWithResult: (didPop, result) => (),
         canPop: false,
         child: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),

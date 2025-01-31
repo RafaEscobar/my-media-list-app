@@ -8,8 +8,8 @@ class BottomSheetWidget {
     double height = 350,
     bool dismissible = false,
     bool withCloseIcon = true,
+    Widget? body,
     required String title,
-    required Widget body,
     Widget? footer,
   }) {
     showModalBottomSheet(
@@ -44,10 +44,11 @@ class BottomSheetWidget {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 20,),
-                    Align(
-                      alignment: alignment,
-                      child: body
-                    )
+                    body != null ?
+                      Align(
+                        alignment: alignment,
+                        child: body
+                      ) : Container()
                   ],
                 ),
                 footer ?? Container(),

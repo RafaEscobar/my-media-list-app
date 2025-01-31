@@ -7,6 +7,7 @@ import 'package:mymedialist/screens/create/comment_screen.dart';
 import 'package:mymedialist/screens/create/season_screen.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/theme/app_theme.dart';
+import 'package:mymedialist/utils/call.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
@@ -55,6 +56,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
     return Scaffold(
       body: PopScope(
         canPop: false,
+        onPopInvokedWithResult: (didPop, result) => (),
         child: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
           color: Colors.white,
