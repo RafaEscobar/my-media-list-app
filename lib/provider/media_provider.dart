@@ -106,4 +106,15 @@ class MediaProvider extends ChangeNotifier{
     }
   }
 
+  void deleteData(){
+     _categoryId = 0;
+     _type = '';
+     _subtype = '';
+    _title = '';
+     _status = Status();
+     _priorityId = 0;
+     _score = 0;
+     _comment = '';
+  }
+
 }
