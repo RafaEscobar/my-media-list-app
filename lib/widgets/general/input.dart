@@ -18,12 +18,14 @@ class Input extends StatefulWidget {
     this.validator,
     this.onEditingComplete,
     this.initialValue,
+    this.inputDecoration,
+     this.controller,
     this.maxLines = 1,
     this.showMaxLenght = false,
     this.isPassword = false,
     required this.focusNode,
     required this.obscureText,
-    required this.name, this.inputDecoration,
+    required this.name,
   });
 
   final String? hintText;
@@ -47,6 +49,7 @@ class Input extends StatefulWidget {
   final String? initialValue;
   final int maxLines;
   final InputDecoration? inputDecoration;
+  final TextEditingController? controller;
 
   @override
   State<Input> createState() => _InputState();
@@ -66,6 +69,7 @@ class _InputState extends State<Input> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      controller: widget.controller,
       maxLines: widget.maxLines,
       initialValue: widget.initialValue,
       focusNode: widget.focusNode,

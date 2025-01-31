@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mymedialist/main.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/post_view_priority.dart';
@@ -24,6 +25,7 @@ class CommentScreen extends StatefulWidget {
 class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin {
   final FocusNode _commentFocusNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
+  late TextEditingController _commentController;
 
   @override
   void dispose() {
@@ -45,6 +47,11 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
 
   void _onPreviousStep() => context.goNamed(ScoreScreen.routeName);
 
+  @override
+  void initState() {
+    super.initState();
+    _commentController = TextEditingController(text: navigatorKey.currentState!.context.read<MediaProvider>().comment);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +80,7 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
                   FormBuilder(
                     key: _formKey,
                     child: Input(
+                      controller: _commentController,
                       focusNode: _commentFocusNode,
                       obscureText: false,
                       name: 'comment',
