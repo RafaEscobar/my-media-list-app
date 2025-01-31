@@ -56,6 +56,7 @@ class _CommentScreenState extends State<CommentScreen> {
           children: [
             Column(
               children: [
+                const SizedBox(height: 20,),
                 Text(
                   "Comentario final:",
                   style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
@@ -69,6 +70,7 @@ class _CommentScreenState extends State<CommentScreen> {
                     obscureText: false,
                     name: 'comment',
                     maxLines: 8,
+                    maxLength: 235,
                     textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(errorText: 'El comentario es obligatorio'),

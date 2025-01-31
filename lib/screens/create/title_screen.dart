@@ -7,7 +7,6 @@ import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/input.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -31,13 +30,12 @@ class _TitleScreenState extends State<TitleScreen> {
       "Ingresa el título del $title";
   }
 
-  Future<void> _nextStep() async {
+  void _nextStep() {
     _titleFocusNode.unfocus();
     try {
       if (_validateTitle()) {
         _mediaProvider.title = _formKey.currentState!.fields['title']!.value.toString();
-        await Loader().runLoad(asyncFunction: () async => await Future.delayed(const Duration(seconds: 1)));
-        if (mounted) context.goNamed(StatusScreen.routeName); 
+        context.goNamed(StatusScreen.routeName);
       }
     } catch (e) {
       Alert.show(text: e.toString());
