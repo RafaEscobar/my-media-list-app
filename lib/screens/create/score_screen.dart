@@ -9,6 +9,7 @@ import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
+import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -27,9 +28,10 @@ class _ScoreScreenState extends State<ScoreScreen> {
   void _onLess() => setState(() => _currentValue -= 0.1);
   void _onPlus() => setState(() => _currentValue += 0.1);
 
-  void _onNextStep() {
+  Future<void> _onNextStep() async {
     try {
       _mediaProvider.score = _currentValue;
+      await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
       if (mounted) context.goNamed(CommentScreen.routeName);
     } catch (e) {
       Alert.show(text: e.toString());

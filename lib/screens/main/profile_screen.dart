@@ -18,7 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
   Future<void> logout() async {
     bool? isUnloged;
-    await Loader().runLoad(
+    await Loader.runLoad(
       asyncFunction: () async => isUnloged = await navigatorKey.currentState!.context.read<AppProvider>().makeLogout(),
       secondsDelayed: 2
     );

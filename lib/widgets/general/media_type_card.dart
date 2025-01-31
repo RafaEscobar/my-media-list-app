@@ -7,6 +7,7 @@ import 'package:mymedialist/models/category_model.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/title_screen.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
+import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:provider/provider.dart';
 
 class MediaTypeCard extends StatefulWidget {
@@ -21,12 +22,13 @@ class MediaTypeCard extends StatefulWidget {
 }
 
 class _MediaTypeCardState extends State<MediaTypeCard> {
-  void nextStep() {
+  Future<void> nextStep() async {
     try {
       final MediaProvider mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
       mediaProvider.categoryId = widget.category.id;
       mediaProvider.type = widget.category.category;
       mediaProvider.subtype = widget.category.subtype;
+      await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
       if (!mounted) return;
       navigatorKey.currentState!.context.goNamed(TitleScreen.routeName);
     } catch (e) {

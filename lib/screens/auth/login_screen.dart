@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   Future<bool> _generateLogin() async {
     bool? isLogged;
-    await Loader().runLoad( asyncFunction: () async => isLogged = await _appProvider.login(credentials: _getCredentials()) );
+    await Loader.runLoad( asyncFunction: () async => isLogged = await _appProvider.login(credentials: _getCredentials()) );
     return isLogged!;
   }
 

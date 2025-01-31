@@ -4,7 +4,7 @@ import 'package:mymedialist/main.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 
 class Loader {
-  void show(){
+  static void show(){
     showDialog(
       context: navigatorKey.currentState!.context,
       barrierColor:Colors.white,
@@ -23,9 +23,9 @@ class Loader {
     );
   }
 
-  void hide() => Navigator.pop(navigatorKey.currentState!.context);
+  static void hide() => Navigator.pop(navigatorKey.currentState!.context);
 
-  Future<void> runLoad({required Future<void> Function() asyncFunction, int secondsDelayed = 1}) async {
+  static Future<void> runLoad({required Future<void> Function() asyncFunction, int secondsDelayed = 1}) async {
     try {
       show();
       await asyncFunction();

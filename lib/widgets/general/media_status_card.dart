@@ -53,7 +53,6 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
     Navigator.of(context).pop();
     context.goNamed(SeasonScreen.routeName);
   }
-
   void _onDenyMoreInfo() {
     Navigator.of(context).pop();
     if (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión') {

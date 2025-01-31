@@ -65,7 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<int> _generateRegister() async {
     int? statusCode;
-    await Loader().runLoad( asyncFunction: () async => statusCode = await appProvider.register(data: _getData()) );
+    await Loader.runLoad( asyncFunction: () async => statusCode = await appProvider.register(data: _getData()) );
     return statusCode!;
   }
 
