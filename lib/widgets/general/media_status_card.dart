@@ -7,6 +7,7 @@ import 'package:mymedialist/screens/create/score_screen.dart';
 import 'package:mymedialist/screens/create/season_screen.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/bottom_sheet_widget.dart';
+import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,7 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
   Future<void> nextStep() async {
     try {
       context.read<MediaProvider>().status = widget.status;
+      await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
       redirectTo();
     } catch (e) {
       Alert.show(text: e.toString());

@@ -17,44 +17,47 @@ class StatusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-        color: Colors.white,
-        child: Column(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  const SizedBox(height: 20,),
-                  Text(
-                    "¿Cuál es el estatus actual del contenido?",
-                    style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                    textAlign: TextAlign.center,
-                  ),
-                  Expanded(
-                    child: GridView.builder(
-                      itemCount: _statusProvider.statusList.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
-                        childAspectRatio: 2/2
-                      ),
-                      itemBuilder: (BuildContext context, int index) {
-                        return MediaStatusCard(status: _statusProvider.statusList[index]);
-                      },
+      body: PopScope(
+        canPop: false,
+        child: Container(
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+          color: Colors.white,
+          child: Column(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20,),
+                    Text(
+                      "¿Cuál es el estatus actual del contenido?",
+                      style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
+                      textAlign: TextAlign.center,
                     ),
-                  )
-                ],
+                    Expanded(
+                      child: GridView.builder(
+                        itemCount: _statusProvider.statusList.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          childAspectRatio: 2/2
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return MediaStatusCard(status: _statusProvider.statusList[index]);
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            BottomButtons(
-              textBtnLeft: 'Regresar',
-              actionBtnL: _previusStep,
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              onlyOneBtn: true,
-            )
-          ],
+              BottomButtons(
+                textBtnLeft: 'Regresar',
+                actionBtnL: _previusStep,
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                onlyOneBtn: true,
+              )
+            ],
+          ),
         ),
       ),
     );

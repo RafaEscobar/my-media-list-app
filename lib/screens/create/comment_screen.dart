@@ -48,61 +48,64 @@ class _CommentScreenState extends State<CommentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                const SizedBox(height: 20,),
-                Text(
-                  "Comentario final:",
-                  style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20,),
-                FormBuilder(
-                  key: _formKey,
-                  child: Input(
-                    focusNode: _commentFocusNode,
-                    obscureText: false,
-                    name: 'comment',
-                    maxLines: 8,
-                    maxLength: 235,
-                    textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(errorText: 'El comentario es obligatorio'),
-                      FormBuilderValidators.minLength(3, errorText: 'El comentario es demasiado corto'),
-                      FormBuilderValidators.maxLength(232, errorText: 'El comentario es muy largo')
-                    ]),
-                    inputDecoration: InputDecoration(
-                      hintText: 'Mi opinión',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+      body: PopScope(
+        canPop: false,
+        child: Container(
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  const SizedBox(height: 20,),
+                  Text(
+                    "Comentario final:",
+                    style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20,),
+                  FormBuilder(
+                    key: _formKey,
+                    child: Input(
+                      focusNode: _commentFocusNode,
+                      obscureText: false,
+                      name: 'comment',
+                      maxLines: 8,
+                      maxLength: 235,
+                      textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(errorText: 'El comentario es obligatorio'),
+                        FormBuilderValidators.minLength(3, errorText: 'El comentario es demasiado corto'),
+                        FormBuilderValidators.maxLength(232, errorText: 'El comentario es muy largo')
+                      ]),
+                      inputDecoration: InputDecoration(
+                        hintText: 'Mi opinión',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppTheme.primary),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppTheme.primary),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: AppTheme.primary),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: AppTheme.primary),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    ),
+                    )
                   )
-                )
-              ],
-            ),
-            BottomButtons(
-              textBtnLeft: 'Regresar',
-              actionBtnL: _onPreviousStep,
-              textBtnRight: 'Continuar',
-              actionBtnR: _onNextStep,
-            )
-          ],
+                ],
+              ),
+              BottomButtons(
+                textBtnLeft: 'Regresar',
+                actionBtnL: _onPreviousStep,
+                textBtnRight: 'Continuar',
+                actionBtnR: _onNextStep,
+              )
+            ],
+          ),
         ),
       )
     );

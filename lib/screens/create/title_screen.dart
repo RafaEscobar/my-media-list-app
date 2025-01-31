@@ -67,52 +67,55 @@ class _TitleScreenState extends State<TitleScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-        width: size.width,
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                const SizedBox(height: 20,),
-                Text(
-                  _buildTitle(),
-                  style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20,),
-                FormBuilder(
-                  key: _formKey,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Input(
-                      initialValue: context.watch<MediaProvider>().title,
-                      maxLength: 52,
-                      showMaxLenght: false,
-                      focusNode: _titleFocusNode,
-                      obscureText: false,
-                      name: 'title',
-                      textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.blueGrey.shade600),
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(errorText: 'El título es obligatorio.'),
-                        FormBuilderValidators.maxLength(52, errorText: 'El título debe ser más corto.'),
-                        FormBuilderValidators.minLength(3, errorText: 'El título es muy corto')
-                      ]),
-                    ),
+      body: PopScope(
+        canPop: false,
+        child: Container(
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+          width: size.width,
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  const SizedBox(height: 20,),
+                  Text(
+                    _buildTitle(),
+                    style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
+                    textAlign: TextAlign.center,
                   ),
-                )
-              ],
-            ),
-            BottomButtons(
-              textBtnLeft: 'Regresar',
-              textBtnRight: 'Continuar',
-              actionBtnL: _previusStep,
-              actionBtnR: _nextStep,
-              padding: const EdgeInsets.symmetric(vertical: 8),
-            )
-          ],
+                  const SizedBox(height: 20,),
+                  FormBuilder(
+                    key: _formKey,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Input(
+                        initialValue: context.watch<MediaProvider>().title,
+                        maxLength: 52,
+                        showMaxLenght: false,
+                        focusNode: _titleFocusNode,
+                        obscureText: false,
+                        name: 'title',
+                        textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.blueGrey.shade600),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(errorText: 'El título es obligatorio.'),
+                          FormBuilderValidators.maxLength(52, errorText: 'El título debe ser más corto.'),
+                          FormBuilderValidators.minLength(3, errorText: 'El título es muy corto')
+                        ]),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              BottomButtons(
+                textBtnLeft: 'Regresar',
+                textBtnRight: 'Continuar',
+                actionBtnL: _previusStep,
+                actionBtnR: _nextStep,
+                padding: const EdgeInsets.symmetric(vertical: 8),
+              )
+            ],
+          ),
         ),
       )
     );

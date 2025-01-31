@@ -53,94 +53,97 @@ class _ScoreScreenState extends State<ScoreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                const SizedBox(height: 20,),
-                Text(
-                  "¿Qué calificación obtuvo?",
-                  style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      _currentValue.toStringAsFixed(1),
-                      style: const TextStyle(color: AppTheme.primary, fontSize: 40, fontWeight: FontWeight.w700),
-                      textAlign: TextAlign.center,
-                    ),
-                    const Icon(Icons.grade_outlined, color: AppTheme.primary, size: 30,)
-                  ],
-                )
-              ],
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Button(
-                      text: '-',
-                      backgroundSplash: Colors.white,
-                      background: AppTheme.primary,
-                      borderRadius: 30,
-                      buttonWidth: 53,
-                      textSize: 31,
-                      textWeight: FontWeight.bold,
-                      action: _onLess,
-                    ),
-                    Button(
-                      text: '+',
-                      backgroundSplash: Colors.white,
-                      background: AppTheme.primary,
-                      borderRadius: 30,
-                      buttonWidth: 53,
-                      textSize: 31,
-                      textWeight: FontWeight.bold,
-                      action: _onPlus,
-                    )
-                  ],
-                ),
-                const SizedBox(height: 8,),
-                 SliderTheme(
-                  data: SliderTheme.of(context).copyWith(
-                    trackHeight: 10,
-                    thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 16),
+      body: PopScope(
+        canPop: false,
+        child: Container(
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  const SizedBox(height: 20,),
+                  Text(
+                    "¿Qué calificación obtuvo?",
+                    style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
+                    textAlign: TextAlign.center,
                   ),
-                  child: Slider(
-                    activeColor: AppTheme.primary,
-                    overlayColor: WidgetStatePropertyAll(Colors.blue.shade100),
-                    inactiveColor: Colors.black54,
-                    value: _currentValue,
-                    min: 1,
-                    max: 10,
-                    divisions: 90,
-                    label: _currentValue.toStringAsFixed(1),
-                    onChanged: (value) {
-                      setState(() {
-                        _currentValue = value;
-                      });
-                    },
+                  const SizedBox(height: 20,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        _currentValue.toStringAsFixed(1),
+                        style: const TextStyle(color: AppTheme.primary, fontSize: 40, fontWeight: FontWeight.w700),
+                        textAlign: TextAlign.center,
+                      ),
+                      const Icon(Icons.grade_outlined, color: AppTheme.primary, size: 30,)
+                    ],
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Button(
+                        text: '-',
+                        backgroundSplash: Colors.white,
+                        background: AppTheme.primary,
+                        borderRadius: 30,
+                        buttonWidth: 53,
+                        textSize: 31,
+                        textWeight: FontWeight.bold,
+                        action: _onLess,
+                      ),
+                      Button(
+                        text: '+',
+                        backgroundSplash: Colors.white,
+                        background: AppTheme.primary,
+                        borderRadius: 30,
+                        buttonWidth: 53,
+                        textSize: 31,
+                        textWeight: FontWeight.bold,
+                        action: _onPlus,
+                      )
+                    ],
                   ),
-                ),
-                const SizedBox(height: 60,),
-                BottomButtons(
-                  textBtnLeft: 'Regresar',
-                  actionBtnL: _onPreviousStep,
-                  textBtnRight: 'Continuar',
-                  actionBtnR: _onNextStep,
-                )
-              ],
-            )
-          ],
-        )
+                  const SizedBox(height: 8,),
+                   SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      trackHeight: 10,
+                      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 16),
+                    ),
+                    child: Slider(
+                      activeColor: AppTheme.primary,
+                      overlayColor: WidgetStatePropertyAll(Colors.blue.shade100),
+                      inactiveColor: Colors.black54,
+                      value: _currentValue,
+                      min: 1,
+                      max: 10,
+                      divisions: 90,
+                      label: _currentValue.toStringAsFixed(1),
+                      onChanged: (value) {
+                        setState(() {
+                          _currentValue = value;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 60,),
+                  BottomButtons(
+                    textBtnLeft: 'Regresar',
+                    actionBtnL: _onPreviousStep,
+                    textBtnRight: 'Continuar',
+                    actionBtnR: _onNextStep,
+                  )
+                ],
+              )
+            ],
+          )
+        ),
       ),
     );
   }
