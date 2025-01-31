@@ -85,7 +85,7 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
         canPop: false,
         onPopInvokedWithResult: (didPop, _) {
            if (didPop) return;
-            showModal(context);
+            showModal();
         },
         child: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
+import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/status_provider.dart';
 import 'package:mymedialist/screens/create/title_screen.dart';
 import 'package:mymedialist/widgets/general/media_status_card.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
-class StatusScreen extends StatelessWidget {
+class StatusScreen extends StatelessWidget with CancelCreationMixin {
   static const String routeName = 'status-screen';
   StatusScreen({super.key});
   final StatusProvider _statusProvider = navigatorKey.currentState!.context.read<StatusProvider>();
@@ -19,7 +20,10 @@ class StatusScreen extends StatelessWidget {
     return Scaffold(
       body: PopScope(
         canPop: false,
-        onPopInvokedWithResult: (didPop, result) => (),
+        onPopInvokedWithResult: (didPop, _) {
+          if (didPop) return;
+          showModal();
+        },
         child: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
           color: Colors.white,

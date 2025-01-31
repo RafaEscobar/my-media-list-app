@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/post_view_priority.dart';
 import 'package:mymedialist/screens/create/score_screen.dart';
 import 'package:mymedialist/theme/app_theme.dart';
-import 'package:mymedialist/utils/call.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/input.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
@@ -21,7 +21,7 @@ class CommentScreen extends StatefulWidget {
   State<CommentScreen> createState() => _CommentScreenState();
 }
 
-class _CommentScreenState extends State<CommentScreen> {
+class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin {
   final FocusNode _commentFocusNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
 
@@ -47,10 +47,13 @@ class _CommentScreenState extends State<CommentScreen> {
 
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Scaffold(
       body: PopScope(
-        onPopInvokedWithResult: (didPop, result) => (),
+        onPopInvokedWithResult: (didPop, _) {
+          if (didPop) return;
+          showModal();
+        },
         canPop: false,
         child: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),

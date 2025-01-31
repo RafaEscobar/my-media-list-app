@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
+import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/caps_screen.dart';
 import 'package:mymedialist/screens/create/comment_screen.dart';
 import 'package:mymedialist/screens/create/season_screen.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/theme/app_theme.dart';
-import 'package:mymedialist/utils/call.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
@@ -22,7 +22,7 @@ class ScoreScreen extends StatefulWidget {
   State<ScoreScreen> createState() => _ScoreScreenState();
 }
 
-class _ScoreScreenState extends State<ScoreScreen> {
+class _ScoreScreenState extends State<ScoreScreen> with CancelCreationMixin {
   double _currentValue = 5;
   final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
 
@@ -56,7 +56,10 @@ class _ScoreScreenState extends State<ScoreScreen> {
     return Scaffold(
       body: PopScope(
         canPop: false,
-        onPopInvokedWithResult: (didPop, result) => (),
+        onPopInvokedWithResult: (didPop, result) {
+          if(didPop) return;
+          showModal();
+        },
         child: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
           color: Colors.white,
