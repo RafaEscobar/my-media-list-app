@@ -4,7 +4,7 @@ import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/provider/pending_priority_provider.dart';
 import 'package:mymedialist/provider/post_view_priority_provider.dart';
-import 'package:mymedialist/screens/create/caps_screen.dart';
+import 'package:mymedialist/screens/create/num_caps.dart';
 import 'package:mymedialist/screens/create/comment_screen.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -28,7 +28,7 @@ class PriorityScreen extends StatelessWidget with CancelCreationMixin {
   void _navigateToPending(BuildContext context){
     MediaProvider mediaProvider = context.read<MediaProvider>();
     if (mediaProvider.subtype == 'Saga') {
-      (mediaProvider.thereIsMoreInfo) ? context.goNamed(CapsScreen.routeName) : context.goNamed(StatusScreen.routeName);
+      (mediaProvider.thereIsMoreInfo) ? context.goNamed(NumCaps.routeName) : context.goNamed(StatusScreen.routeName);
     } else if (mediaProvider.subtype == 'Media') {
       context.goNamed(StatusScreen.routeName);
     }

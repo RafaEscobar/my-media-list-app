@@ -40,6 +40,7 @@ dependencies:
   infinite_scroll_pagination: ^4.1.0
   lottie: ^3.3.0
   motion_tab_bar: ^2.0.4
+  numberpicker: ^2.1.2
   provider: ^6.1.2
   shared_preferences: ^2.3.5
 

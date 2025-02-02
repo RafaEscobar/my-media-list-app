@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/auth/auth_screen.dart';
 import 'package:mymedialist/screens/auth/splash_screen.dart';
-import 'package:mymedialist/screens/create/caps_screen.dart';
+import 'package:mymedialist/screens/create/num_caps.dart';
 import 'package:mymedialist/screens/create/comment_screen.dart';
 import 'package:mymedialist/screens/create/priority_screen.dart';
 import 'package:mymedialist/screens/create/score_screen.dart';
@@ -59,15 +59,15 @@ class AppRoute {
                 builder: ( BuildContext context, GoRouterState state ) => PriorityScreen()
               ),
               GoRoute(
-                path: CapsScreen.routeName,
-                name: CapsScreen.routeName,
-                builder: ( BuildContext context, GoRouterState state) => const CapsScreen(),
+                path: NumCaps.routeName,
+                name: NumCaps.routeName,
+                builder: ( BuildContext context, GoRouterState state) => const NumCaps(),
               ),
               GoRoute(
                 path: SeasonScreen.routeName,
                 name: SeasonScreen.routeName,
-                builder: (BuildContext context, GoRouterState state) => const SeasonScreen(),
-              )
+                builder: ( BuildContext context, GoRouterState state) => const SeasonScreen(),
+              ),
             ]
           ),
           GoRoute(

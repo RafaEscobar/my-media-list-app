@@ -23,10 +23,9 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
   late Widget modalBody;
   late Widget modalFooter;
 
-  Future<void> nextStep() async {
+  void nextStep() {
     try {
       context.read<MediaProvider>().status = widget.status;
-      await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
       redirectTo();
     } catch (e) {
       Alert.show(text: e.toString());
@@ -52,13 +51,17 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
     withCloseIcon: false
   );
 
-  void _onMoreInfo() {
+  Future<void> _onMoreInfo() async {
     Navigator.of(context).pop();
     context.read<MediaProvider>().thereIsMoreInfo = true;
-    context.goNamed(SeasonScreen.routeName);
+    await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
+    if (mounted) context.goNamed(SeasonScreen.routeName);
   }
-  void _onDenyMoreInfo() {
+  Future<void> _onDenyMoreInfo() async {
     Navigator.of(context).pop();
+    context.read<MediaProvider>().thereIsMoreInfo = false;
+    await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
+    if (!mounted) return;
     if (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión') {
       context.read<MediaProvider>().isPendingPriority = true;
       context.goNamed(PriorityScreen.routeName);

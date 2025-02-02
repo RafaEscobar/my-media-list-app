@@ -18,15 +18,17 @@ class MediaProvider extends ChangeNotifier{
   int _currentStep = 0;
 
   //* Data to create a media register
-  int? _categoryId;
   String _type = '';
   String _subtype = '';
   String _title = '';
+  String _comment = '';
   Status? _status;
   int _pendingPriorityId = 0;
   int _postViewPriority = 0;
+  int _season = 0;
+  int _numCaps = 0;
+  int? _categoryId;
   double _score = 5;
-  String _comment = '';
 
   //* Data util para el flujo
   bool _thereIsMoreInfo = false;
@@ -108,6 +110,18 @@ class MediaProvider extends ChangeNotifier{
   bool get isPendingPriority => _isPendingPriority;
   set isPendingPriority(bool newValue){
     _isPendingPriority = newValue;
+    notifyListeners();
+  }
+
+  int get season => _season;
+  set season(int newValue){
+    _season = newValue;
+    notifyListeners();
+  }
+
+  int get numCaps => _numCaps;
+  set numCaps(int newValue){
+    _numCaps = newValue;
     notifyListeners();
   }
 
