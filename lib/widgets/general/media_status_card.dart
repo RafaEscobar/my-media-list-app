@@ -52,6 +52,7 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
   );
 
   void _onMoreInfo() {
+    context.read<MediaProvider>().thereIsMoreInfo = true;
     Navigator.of(context).pop();
     context.goNamed(SeasonScreen.routeName);
   }

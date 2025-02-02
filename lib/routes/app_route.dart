@@ -57,7 +57,7 @@ class AppRoute {
               GoRoute(
                 path: PendingPriority.routeName,
                 name: PendingPriority.routeName,
-                builder: ( BuildContext context, GoRouterState state ) => const PendingPriority()
+                builder: ( BuildContext context, GoRouterState state ) => PendingPriority()
               ),
               GoRoute(
                 path: PostViewPriority.routeName,

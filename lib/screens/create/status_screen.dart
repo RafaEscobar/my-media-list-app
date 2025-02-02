@@ -32,7 +32,7 @@ class StatusScreen extends StatelessWidget with CancelCreationMixin {
               Expanded(
                 child: Column(
                   children: [
-                    const SizedBox(height: 20,),
+                    const SizedBox(height: 10,),
                     Text(
                       "¿Cuál es el estatus actual del contenido?",
                       style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),

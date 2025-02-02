@@ -36,45 +36,41 @@ class BottomButtons extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return Column(
-      children: [
-        Container(
-          margin: margin,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            spacing: !onlyOneBtn ? 20.0 : 0,
-            children: [
-              Expanded(
-                child: Button(
-                  text: textBtnLeft,
-                  textWeight: FontWeight.w500,
-                  backgroundSplash: splashBtnL,
-                  textColor: textColorBtnL,
-                  background: backgroundBtnL,
-                  borderRadius: 20,
-                  padding: padding,
-                  action: actionBtnL,
-                ),
-              ),
-              Visibility(
-                visible: !onlyOneBtn,
-                child: Expanded(
-                  child: Button(
-                    text: textBtnRight,
-                    textWeight: FontWeight.w500,
-                    backgroundSplash: splashBtnR,
-                    textColor: textColorBtnR,
-                    background: backgroundBtnR,
-                    borderRadius: 20,
-                    padding: padding,
-                    action: actionBtnR,
-                  ),
-                ),
-              ),
-            ],
+    return Container(
+      margin: margin,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        spacing: !onlyOneBtn ? 20.0 : 0,
+        children: [
+          Expanded(
+            child: Button(
+              text: textBtnLeft,
+              textWeight: FontWeight.w500,
+              backgroundSplash: splashBtnL,
+              textColor: textColorBtnL,
+              background: backgroundBtnL,
+              borderRadius: 20,
+              padding: padding,
+              action: actionBtnL,
+            ),
           ),
-        )
-      ],
+          Visibility(
+            visible: !onlyOneBtn,
+            child: Expanded(
+              child: Button(
+                text: textBtnRight,
+                textWeight: FontWeight.w500,
+                backgroundSplash: splashBtnR,
+                textColor: textColorBtnR,
+                background: backgroundBtnR,
+                borderRadius: 20,
+                padding: padding,
+                action: actionBtnR,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

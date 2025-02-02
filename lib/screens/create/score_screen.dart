@@ -68,7 +68,7 @@ class _ScoreScreenState extends State<ScoreScreen> with CancelCreationMixin {
             children: [
               Column(
                 children: [
-                  const SizedBox(height: 20,),
+                  const SizedBox(height: 10,),
                   Text(
                     "¿Qué calificación obtuvo?",
                     style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),

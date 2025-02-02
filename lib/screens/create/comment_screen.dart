@@ -70,7 +70,7 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
             children: [
               Column(
                 children: [
-                  const SizedBox(height: 20,),
+                  const SizedBox(height: 10,),
                   Text(
                     "Comentario final:",
                     style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),

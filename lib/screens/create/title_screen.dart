@@ -96,7 +96,7 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
             children: [
               Column(
                 children: [
-                  const SizedBox(height: 20,),
+                  const SizedBox(height: 10,),
                   Text(
                     _buildTitle(),
                     style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),

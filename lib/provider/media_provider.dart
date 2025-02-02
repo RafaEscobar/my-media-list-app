@@ -27,6 +27,8 @@ class MediaProvider extends ChangeNotifier{
   double _score = 5;
   String _comment = '';
 
+  bool _thereIsMoreInfo = false;
+
   //* General Getters and Setters
   List<Media> get mediaList => _mediaList;
   set mediaList(List<Media> newMediaList){
@@ -88,6 +90,12 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  bool get thereIsMoreInfo => _thereIsMoreInfo;
+  set thereIsMoreInfo(bool newValue){
+    _thereIsMoreInfo = newValue;
+    notifyListeners();
+  }
+
   Future<List<Media>> getMedia({ required int limit, required int page, int? categoryId } ) async {
     try {
       Response response = await ApiService.request('/medias?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
@@ -114,6 +122,7 @@ class MediaProvider extends ChangeNotifier{
      _categoryId = 0;
      _priorityId = 0;
      _score = 5;
+     _thereIsMoreInfo = false;
   }
 
 }

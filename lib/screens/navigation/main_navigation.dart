@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
+import 'package:mymedialist/screens/create/pending_priority.dart';
 import 'package:mymedialist/screens/create/type_screen.dart';
 import 'package:mymedialist/screens/main/grades_screen.dart';
 import 'package:mymedialist/screens/main/home_screen.dart';
@@ -50,6 +51,7 @@ class _MainNavigationState extends State<MainNavigation> with TickerProviderStat
                 HomeScreen(),
                 GradesScreen(),
                 TypeScreen(),
+                //PendingPriority(),
                 PendingsScreen(),
                 ProfileScreen()
               ],
