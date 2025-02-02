@@ -5,6 +5,7 @@ import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/priority_screen.dart';
 import 'package:mymedialist/screens/create/score_screen.dart';
 import 'package:mymedialist/screens/create/season_screen.dart';
+import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
@@ -39,7 +40,7 @@ class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
     }
   }
 
-  void _navigateToPreviousStep() => context.goNamed(SeasonScreen.routeName);
+  void _navigateToPreviousStep() => (context.read<MediaProvider>().type == 'Manga') ? context.goNamed(StatusScreen.routeName) : context.goNamed(SeasonScreen.routeName);
 
   @override
   Widget build(BuildContext context) {

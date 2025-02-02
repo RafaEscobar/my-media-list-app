@@ -39,6 +39,7 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
       context.read<MediaProvider>().isPendingPriority = true;
       context.goNamed(PriorityScreen.routeName);
     } else {
+      context.read<MediaProvider>().isPendingPriority = false;
       context.goNamed(ScoreScreen.routeName);
     }
   }
@@ -54,6 +55,7 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
   Future<void> _onMoreInfo() async {
     Navigator.of(context).pop();
     context.read<MediaProvider>().thereIsMoreInfo = true;
+    context.read<MediaProvider>().isPendingPriority = (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión');
     await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
     if (mounted) context.goNamed(SeasonScreen.routeName);
   }
@@ -66,6 +68,7 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
       context.read<MediaProvider>().isPendingPriority = true;
       context.goNamed(PriorityScreen.routeName);
     } else {
+      context.read<MediaProvider>().isPendingPriority = false;
       context.goNamed(ScoreScreen.routeName);
     }
   }

@@ -5,7 +5,6 @@ import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/num_caps.dart';
 import 'package:mymedialist/screens/create/comment_screen.dart';
-import 'package:mymedialist/screens/create/season_screen.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -44,7 +43,11 @@ class _ScoreScreenState extends State<ScoreScreen> with CancelCreationMixin {
       if (_mediaProvider.subtype == 'Media') {
         context.goNamed(StatusScreen.routeName);
       } else if(_mediaProvider.subtype == 'Saga') {
-         (_mediaProvider.type != 'Manga' ? SeasonScreen.routeName : NumCaps.routeName);
+        if (_mediaProvider.thereIsMoreInfo) {
+          context.goNamed(NumCaps.routeName);
+        } else {
+          context.goNamed(StatusScreen.routeName);
+        }
       }
     } catch (e) {
       Alert.show(text: e.toString());
