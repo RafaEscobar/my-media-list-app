@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/screens/create/pending_priority.dart';
+import 'package:mymedialist/screens/create/priority_screen.dart';
 import 'package:mymedialist/screens/create/score_screen.dart';
 import 'package:mymedialist/screens/create/season_screen.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -37,7 +37,8 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
 
   void _onMedia() {
     if (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión') {
-      context.goNamed(PendingPriority.routeName);
+      context.read<MediaProvider>().isPendingPriority = true;
+      context.goNamed(PriorityScreen.routeName);
     } else {
       context.goNamed(ScoreScreen.routeName);
     }
@@ -52,14 +53,15 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
   );
 
   void _onMoreInfo() {
-    context.read<MediaProvider>().thereIsMoreInfo = true;
     Navigator.of(context).pop();
+    context.read<MediaProvider>().thereIsMoreInfo = true;
     context.goNamed(SeasonScreen.routeName);
   }
   void _onDenyMoreInfo() {
     Navigator.of(context).pop();
     if (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión') {
-      context.goNamed(PendingPriority.routeName);
+      context.read<MediaProvider>().isPendingPriority = true;
+      context.goNamed(PriorityScreen.routeName);
     } else {
       context.goNamed(ScoreScreen.routeName);
     }

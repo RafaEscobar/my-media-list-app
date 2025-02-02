@@ -11,9 +11,9 @@ import 'package:mymedialist/widgets/general/priority_card.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
-class PendingPriority extends StatelessWidget with CancelCreationMixin {
-  static const String routeName = 'pending-priority';
-  PendingPriority({super.key});
+class PriorityScreen extends StatelessWidget with CancelCreationMixin {
+  static const String routeName = 'priority-screen';
+  PriorityScreen({super.key});
   final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
 
   void _onPreviousStep() {

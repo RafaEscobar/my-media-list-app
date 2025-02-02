@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/screens/create/post_view_priority.dart';
+import 'package:mymedialist/screens/create/priority_screen.dart';
 import 'package:mymedialist/screens/create/score_screen.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -38,7 +38,7 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
       if (_formKey.currentState!.fields['comment']!.validate()) {
         context.read<MediaProvider>().comment = _formKey.currentState!.fields['comment']!.value.toString();
         await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
-        if (mounted) context.goNamed(PostViewPriority.routeName);
+        if (mounted) context.goNamed(PriorityScreen.routeName);
       }
     } catch (e) {
       Alert.show(text: e.toString());

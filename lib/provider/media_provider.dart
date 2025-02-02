@@ -28,7 +28,9 @@ class MediaProvider extends ChangeNotifier{
   double _score = 5;
   String _comment = '';
 
+  //* Data util para el flujo
   bool _thereIsMoreInfo = false;
+  bool _isPendingPriority = false;
 
   //* General Getters and Setters
   List<Media> get mediaList => _mediaList;
@@ -103,6 +105,12 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  bool get isPendingPriority => _isPendingPriority;
+  set isPendingPriority(bool newValue){
+    _isPendingPriority = newValue;
+    notifyListeners();
+  }
+
   Future<List<Media>> getMedia({ required int limit, required int page, int? categoryId } ) async {
     try {
       Response response = await ApiService.request('/medias?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
@@ -131,6 +139,7 @@ class MediaProvider extends ChangeNotifier{
      _postViewPriority = 0;
      _score = 5;
      _thereIsMoreInfo = false;
+     _isPendingPriority = false;
   }
 
 }

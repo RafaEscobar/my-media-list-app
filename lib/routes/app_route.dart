@@ -5,8 +5,7 @@ import 'package:mymedialist/screens/auth/auth_screen.dart';
 import 'package:mymedialist/screens/auth/splash_screen.dart';
 import 'package:mymedialist/screens/create/caps_screen.dart';
 import 'package:mymedialist/screens/create/comment_screen.dart';
-import 'package:mymedialist/screens/create/pending_priority.dart';
-import 'package:mymedialist/screens/create/post_view_priority.dart';
+import 'package:mymedialist/screens/create/priority_screen.dart';
 import 'package:mymedialist/screens/create/score_screen.dart';
 import 'package:mymedialist/screens/create/season_screen.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
@@ -55,14 +54,9 @@ class AppRoute {
                 builder: ( BuildContext context, GoRouterState state) => const CommentScreen(),
               ),
               GoRoute(
-                path: PendingPriority.routeName,
-                name: PendingPriority.routeName,
-                builder: ( BuildContext context, GoRouterState state ) => PendingPriority()
-              ),
-              GoRoute(
-                path: PostViewPriority.routeName,
-                name: PostViewPriority.routeName,
-                builder: (BuildContext context, GoRouterState state) => const PostViewPriority(),
+                path: PriorityScreen.routeName,
+                name: PriorityScreen.routeName,
+                builder: ( BuildContext context, GoRouterState state ) => PriorityScreen()
               ),
               GoRoute(
                 path: CapsScreen.routeName,
