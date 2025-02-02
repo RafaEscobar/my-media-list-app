@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mymedialist/main.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mymedialist/models/priority.dart';
 import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/screens/main/details_screens.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:provider/provider.dart';
@@ -10,12 +11,11 @@ class PriorityCard extends StatelessWidget {
   const PriorityCard({super.key, required this.priority});
   final Priority priority;
 
-  Future<void> _onSelectPriority() async {
+  Future<void> _onSelectPriority(BuildContext context) async {
     try {
-      navigatorKey.currentState!.context.read<MediaProvider>().pendingPriorityId = priority.id;
+      context.read<MediaProvider>().pendingPriorityId = priority.id;
       await Loader.runLoad(asyncFunction: () async => Future.delayed(const Duration(milliseconds: 300)) );
-      //! Aqui redireccionamos hacia la vista de detalle
-      Alert.show(text: "Redireccionando...");
+      if (context.mounted) context.goNamed(DetailsScreens.routeName);
     } catch (e) {
       Alert.show(text: e.toString());
     }
@@ -34,7 +34,7 @@ class PriorityCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: _onSelectPriority,
+          onTap: () => _onSelectPriority(context),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             child: Row(

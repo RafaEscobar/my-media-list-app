@@ -11,6 +11,7 @@ import 'package:mymedialist/screens/create/season_screen.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
 import 'package:mymedialist/screens/create/title_screen.dart';
 import 'package:mymedialist/screens/create/type_screen.dart';
+import 'package:mymedialist/screens/main/details_screens.dart';
 import 'package:mymedialist/screens/main/home_screen.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/services/preferences.dart';
@@ -67,6 +68,11 @@ class AppRoute {
                 path: SeasonScreen.routeName,
                 name: SeasonScreen.routeName,
                 builder: ( BuildContext context, GoRouterState state) => const SeasonScreen(),
+              ),
+              GoRoute(
+                path: DetailsScreens.routeName,
+                name: DetailsScreens.routeName,
+                builder: ( BuildContext context, GoRouterState state) => const DetailsScreens(),
               ),
             ]
           ),

@@ -36,6 +36,7 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
   Future<void> _onNextStep() async {
     try {
       if (_formKey.currentState!.fields['comment']!.validate()) {
+        _commentFocusNode.unfocus();
         context.read<MediaProvider>().comment = _formKey.currentState!.fields['comment']!.value.toString();
         await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
         if (mounted) context.goNamed(PriorityScreen.routeName);

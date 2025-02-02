@@ -55,26 +55,28 @@ class PriorityScreen extends StatelessWidget with CancelCreationMixin {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SizedBox(height: 10),
-                Text(
-                  mediaProvider.isPendingPriority ? '¿Qué tan prioritario es?' : '¿Cuándo darle un vistazo de nuevo?',
-                  style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                  textAlign: TextAlign.center,
+                Column(
+                  children: [
+                    Text(
+                      mediaProvider.isPendingPriority ? '¿Qué tan prioritario es?' : '¿Cuándo darle un vistazo de nuevo?',
+                      style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 10),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: mediaProvider.isPendingPriority ? priorityProvider.pendingPriorityList.length : postViewProvider.postViewPriorityList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return PriorityCard(
+                          priority: mediaProvider.isPendingPriority ?
+                            priorityProvider.pendingPriorityList[index] :
+                            postViewProvider.postViewPriorityList[index]
+                        );
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(height: 20,)
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: mediaProvider.isPendingPriority ? priorityProvider.pendingPriorityList.length : postViewProvider.postViewPriorityList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return PriorityCard(
-                      priority: mediaProvider.isPendingPriority ?
-                        priorityProvider.pendingPriorityList[index] :
-                        postViewProvider.postViewPriorityList[index]
-                    );
-                  },
-                  separatorBuilder: (context, index) => const SizedBox(height: 20,)
-                ),
-                const SizedBox(height: 20,),
                 BottomButtons(
                   textBtnLeft: 'Regresar',
                   actionBtnL: () => _onPreviousStep(context),
