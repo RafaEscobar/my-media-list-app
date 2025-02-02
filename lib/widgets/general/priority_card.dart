@@ -14,7 +14,7 @@ class PriorityCard extends StatelessWidget {
   Future<void> _onSelectPriority(BuildContext context) async {
     try {
       context.read<MediaProvider>().pendingPriorityId = priority.id;
-      await Loader.runLoad(asyncFunction: () async => Future.delayed(const Duration(milliseconds: 300)) );
+      // *  Llamada a la creación
       if (context.mounted) context.goNamed(DetailsScreens.routeName);
     } catch (e) {
       Alert.show(text: e.toString());

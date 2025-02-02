@@ -143,6 +143,14 @@ class MediaProvider extends ChangeNotifier{
     }
   }
 
+  Future<bool> createMedia(){
+    try {
+      Response response = ApiService.request('/')
+    } catch (e) {
+      Alert.show(text: e.toString());
+    }
+  }
+
   void deleteData(){
      _type = '';
      _subtype = '';
