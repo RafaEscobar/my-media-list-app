@@ -6,6 +6,7 @@ import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/provider/pending_priority_provider.dart';
 import 'package:mymedialist/screens/create/caps_screen.dart';
 import 'package:mymedialist/screens/create/status_screen.dart';
+import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/priority_card.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
@@ -16,12 +17,16 @@ class PendingPriority extends StatelessWidget with CancelCreationMixin {
   final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
 
   void _onPreviousStep() {
-    if (_mediaProvider.subtype == 'Saga') {
-      (_mediaProvider.thereIsMoreInfo) ?
-        navigatorKey.currentState!.context.goNamed(CapsScreen.routeName) :
+    try {
+      if (_mediaProvider.subtype == 'Saga') {
+        (_mediaProvider.thereIsMoreInfo) ?
+          navigatorKey.currentState!.context.goNamed(CapsScreen.routeName) :
+          navigatorKey.currentState!.context.goNamed(StatusScreen.routeName);
+      } else if (_mediaProvider.subtype == 'Media') {
         navigatorKey.currentState!.context.goNamed(StatusScreen.routeName);
-    } else if (_mediaProvider.subtype == 'Media') {
-      navigatorKey.currentState!.context.goNamed(StatusScreen.routeName);
+      }
+    } catch (e) {
+      Alert.show(text: e.toString());
     }
   }
 

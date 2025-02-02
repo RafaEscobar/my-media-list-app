@@ -23,7 +23,8 @@ class MediaProvider extends ChangeNotifier{
   String _subtype = '';
   String _title = '';
   Status? _status;
-  int _priorityId = 0;
+  int _pendingPriorityId = 0;
+  int _postViewPriority = 0;
   double _score = 5;
   String _comment = '';
 
@@ -72,9 +73,15 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  int get priorityId => _priorityId;
-  set priorityId(int newPriorityId){
-    _priorityId = newPriorityId;
+  int get pendingPriorityId => _pendingPriorityId;
+  set pendingPriorityId(int newPriorityId){
+    _pendingPriorityId = newPriorityId;
+    notifyListeners();
+  }
+
+  int get postViewPriority => _postViewPriority;
+  set postViewPriority(int newPriorityId){
+    _postViewPriority = newPriorityId;
     notifyListeners();
   }
 
@@ -120,7 +127,8 @@ class MediaProvider extends ChangeNotifier{
      _title = '';
      _comment = '';
      _categoryId = 0;
-     _priorityId = 0;
+     _pendingPriorityId = 0;
+     _postViewPriority = 0;
      _score = 5;
      _thereIsMoreInfo = false;
   }
