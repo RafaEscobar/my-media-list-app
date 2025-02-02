@@ -48,38 +48,41 @@ class PriorityScreen extends StatelessWidget with CancelCreationMixin {
           if (didPop) return;
           showModal();
         },
-        child: Container(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-          color: Colors.white,
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              const SizedBox(height: 10),
-              Text(
-                mediaProvider.isPendingPriority ? '¿Qué tan prioritario es?' : '¿Cuándo darle un vistazo de nuevo?',
-                style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
-              ListView.separated(
-                shrinkWrap: true,
-                itemCount: mediaProvider.isPendingPriority ? priorityProvider.pendingPriorityList.length : postViewProvider.postViewPriorityList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return PriorityCard(
-                    priority: mediaProvider.isPendingPriority ?
-                      priorityProvider.pendingPriorityList[index] :
-                      postViewProvider.postViewPriorityList[index]
-                  );
-                },
-                separatorBuilder: (context, index) => const SizedBox(height: 20,)
-              ),
-              const SizedBox(height: 20,),
-              BottomButtons(
-                textBtnLeft: 'Regresar',
-                actionBtnL: () => _onPreviousStep(context),
-                onlyOneBtn: true,
-              )
-            ],
+        child: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            color: Colors.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(height: 10),
+                Text(
+                  mediaProvider.isPendingPriority ? '¿Qué tan prioritario es?' : '¿Cuándo darle un vistazo de nuevo?',
+                  style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 10),
+                ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: mediaProvider.isPendingPriority ? priorityProvider.pendingPriorityList.length : postViewProvider.postViewPriorityList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return PriorityCard(
+                      priority: mediaProvider.isPendingPriority ?
+                        priorityProvider.pendingPriorityList[index] :
+                        postViewProvider.postViewPriorityList[index]
+                    );
+                  },
+                  separatorBuilder: (context, index) => const SizedBox(height: 20,)
+                ),
+                const SizedBox(height: 20,),
+                BottomButtons(
+                  textBtnLeft: 'Regresar',
+                  actionBtnL: () => _onPreviousStep(context),
+                  onlyOneBtn: true,
+                  margin: const EdgeInsets.only(bottom: 10),
+                )
+              ],
+            ),
           ),
         ),
       ),

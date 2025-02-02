@@ -81,58 +81,63 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (didPop, _) {
-           if (didPop) return;
-            showModal();
-        },
+      body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-          width: size.width,
           color: Colors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
+          child: PopScope(
+            canPop: false,
+            onPopInvokedWithResult: (didPop, _) {
+               if (didPop) return;
+                showModal();
+            },
+            child: Container(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              width: size.width,
+              color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(height: 10,),
-                  Text(
-                    _buildTitle(),
-                    style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 20,),
-                  FormBuilder(
-                    key: _formKey,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Input(
-                        initialValue: context.watch<MediaProvider>().title,
-                        maxLength: 52,
-                        showMaxLenght: false,
-                        focusNode: _titleFocusNode,
-                        obscureText: false,
-                        name: 'title',
-                        textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.blueGrey.shade600),
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(errorText: 'El título es obligatorio.'),
-                          FormBuilderValidators.maxLength(52, errorText: 'El título debe ser más corto.'),
-                          FormBuilderValidators.minLength(3, errorText: 'El título es muy corto')
-                        ]),
+                  Column(
+                    children: [
+                      Text(
+                        _buildTitle(),
+                        style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
+                      const SizedBox(height: 20,),
+                      FormBuilder(
+                        key: _formKey,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Input(
+                            initialValue: context.watch<MediaProvider>().title,
+                            maxLength: 52,
+                            showMaxLenght: false,
+                            focusNode: _titleFocusNode,
+                            obscureText: false,
+                            name: 'title',
+                            textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.blueGrey.shade600),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(errorText: 'El título es obligatorio.'),
+                              FormBuilderValidators.maxLength(52, errorText: 'El título debe ser más corto.'),
+                              FormBuilderValidators.minLength(3, errorText: 'El título es muy corto')
+                            ]),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  BottomButtons(
+                    textBtnLeft: 'Regresar',
+                    textBtnRight: 'Continuar',
+                    actionBtnL: _previusStep,
+                    actionBtnR: _nextStep,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    margin:  const EdgeInsets.only(bottom: 10),
                   )
                 ],
               ),
-              BottomButtons(
-                textBtnLeft: 'Regresar',
-                textBtnRight: 'Continuar',
-                actionBtnL: _previusStep,
-                actionBtnR: _nextStep,
-                padding: const EdgeInsets.symmetric(vertical: 8),
-              )
-            ],
+            ),
           ),
         ),
       )

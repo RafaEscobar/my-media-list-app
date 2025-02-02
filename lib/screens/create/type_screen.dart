@@ -27,7 +27,6 @@ class _TypeScreenState extends State<TypeScreen> {
         color: Colors.white,
         child: Column(
           children: [
-            const SizedBox(height: 20,),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Text(
