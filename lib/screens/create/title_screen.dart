@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/screens/create/status_screen.dart';
+import 'package:mymedialist/screens/create/add_image_screen.dart';
+
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/input.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
@@ -38,7 +39,7 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
       if (_validateTitle()) {
         _mediaProvider.title = _formKey.currentState!.fields['title']!.value.toString();
         await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
-        if (mounted) context.goNamed(StatusScreen.routeName);
+        if (mounted) context.goNamed(AddImageScreen.routeName);
       }
     } catch (e) {
       Alert.show(text: e.toString());

@@ -31,7 +31,7 @@ class MediaProvider extends ChangeNotifier{
   int _numCaps = 0;
   int? _categoryId;
   double _score = 5;
-  File? _mediaImage;
+  File _mediaImage = File('');
 
   //* Data util para el flujo
   bool _thereIsMoreInfo = false;
@@ -137,7 +137,7 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  File get mediaImage => _mediaImage!;
+  File get mediaImage => _mediaImage;
   set mediaImage(File newImage){
     _mediaImage = newImage;
     notifyListeners();

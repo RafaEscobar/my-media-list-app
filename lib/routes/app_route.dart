@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/auth/auth_screen.dart';
 import 'package:mymedialist/screens/auth/splash_screen.dart';
+import 'package:mymedialist/screens/create/add_image_screen.dart';
 import 'package:mymedialist/screens/create/num_caps.dart';
 import 'package:mymedialist/screens/create/comment_screen.dart';
 import 'package:mymedialist/screens/create/priority_screen.dart';
@@ -74,6 +75,11 @@ class AppRoute {
                 name: DetailsScreens.routeName,
                 builder: ( BuildContext context, GoRouterState state) => const DetailsScreens(),
               ),
+              GoRoute(
+                path: AddImageScreen.routeName,
+                name: AddImageScreen.routeName,
+                builder: (BuildContext context, GoRouterState state) => const AddImageScreen(),
+              )
             ]
           ),
           GoRoute(
