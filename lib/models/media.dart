@@ -4,20 +4,22 @@ class Media {
   final String title;
   final double score;
   final String comment;
-  final String category;
-  final String status;
-  final String priority;
-  final String imagePath;
+  final int categoryId;
+  final int statusId;
+  final int pendingPriorityId;
+  final int postViewPriorityId;
+  final String image;
 
   Media({
     this.id = 0,
     this.title = '',
     this.score = 0.0,
     this.comment = '',
-    this.category = '',
-    this.status = '',
-    this.priority = '',
-    this.imagePath = ''
+    this.categoryId = 0,
+    this.statusId = 0,
+    this.pendingPriorityId = 0,
+    this.postViewPriorityId = 0,
+    this.image = ''
   });
 
   factory Media.fromJson(Map<String, dynamic> json) => Media(
@@ -25,10 +27,11 @@ class Media {
     title: json['title'] ?? '',
     score: json['score'] ?? 0.0,
     comment: json[''] ?? '',
-    category: json['category'] ?? '',
-    status: json['status'] ?? '',
-    priority: json['priority'] ?? '',
-    imagePath: json['imageUrl'] ?? '',
+    categoryId: json['category'] ?? 0,
+    statusId: json['status'] ?? 0,
+    pendingPriorityId: json['pending_priority_id'] ?? 0,
+    postViewPriorityId: json['post_view_priority_id'] ?? 0,
+    image: json['imageUrl'] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
@@ -36,10 +39,11 @@ class Media {
     "title": title,
     "score": score,
     "comment": comment,
-    "category": category,
-    "status": status,
-    "priority": priority,
-    "imagePath": imagePath
+    "category_id": categoryId,
+    "status_id": statusId,
+    "pending_priority_id": pendingPriorityId,
+    "post_view_priority_id": postViewPriorityId,
+    "image": image
   };
 
 }

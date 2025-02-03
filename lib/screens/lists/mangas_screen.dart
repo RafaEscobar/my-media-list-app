@@ -61,7 +61,7 @@ class _MangasScreenState extends State<MangasScreen> {
         builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: ( BuildContext context, Media manga, int index) {
           return Center(
             child: MediaCard(
-              imagePath: manga.imagePath.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
+              imagePath: manga.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
               name: manga.title,
               score: manga.score
             ),

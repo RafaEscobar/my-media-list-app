@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mymedialist/models/media.dart';
 import 'package:mymedialist/models/priority.dart';
+import 'package:mymedialist/models/saga.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/main/details_screens.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -13,7 +15,28 @@ class PriorityCard extends StatelessWidget {
   Future<void> _onSelectPriority(BuildContext context) async {
     try {
       context.read<MediaProvider>().pendingPriorityId = priority.id;
-      // *  Llamada a la creación
+      if (context.read<MediaProvider>().type == 'Media') {
+        Media(
+          title: context.read<MediaProvider>().title,
+          score: context.read<MediaProvider>().score,
+          comment: context.read<MediaProvider>().comment,
+          categoryId: context.read<MediaProvider>().categoryId,
+          statusId: context.read<MediaProvider>().status.id,
+          pendingPriorityId: context.read<MediaProvider>().pendingPriorityId,
+          postViewPriorityId: context.read<MediaProvider>().postViewPriority,
+        );
+      } else if (context.read<MediaProvider>().type == 'Saga') {
+        Saga(
+          title: context.read<MediaProvider>().title,
+          numCaps: context.read<MediaProvider>().numCaps,
+          season: context.read<MediaProvider>().season,
+          comment: context.read<MediaProvider>().comment,
+          categoryId: context.read<MediaProvider>().categoryId,
+          statusId: context.read<MediaProvider>().status.id,
+          pendingPriorityId: context.read<MediaProvider>().pendingPriorityId,
+          postViewPriorityId: context.read<MediaProvider>().postViewPriority
+        );
+      }
       if (context.mounted) context.goNamed(DetailsScreens.routeName);
     } catch (e) {
       Alert.show(text: e.toString());
