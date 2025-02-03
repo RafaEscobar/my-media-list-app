@@ -4,7 +4,6 @@ import 'package:mymedialist/models/priority.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/main/details_screens.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:provider/provider.dart';
 
 class PriorityCard extends StatelessWidget {

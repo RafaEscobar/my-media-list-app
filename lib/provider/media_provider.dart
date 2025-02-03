@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymedialist/main.dart';
@@ -29,10 +31,14 @@ class MediaProvider extends ChangeNotifier{
   int _numCaps = 0;
   int? _categoryId;
   double _score = 5;
+  File? _mediaImage;
 
   //* Data util para el flujo
   bool _thereIsMoreInfo = false;
   bool _isPendingPriority = false;
+
+  //* Id del media
+  int _mediaId = 0;
 
   //* General Getters and Setters
   List<Media> get mediaList => _mediaList;
@@ -125,6 +131,18 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  int get mediaId => _mediaId;
+  set mediaId(int newMediaId){
+    _mediaId = newMediaId;
+    notifyListeners();
+  }
+
+  File get mediaImage => _mediaImage!;
+  set mediaImage(File newImage){
+    _mediaImage = newImage;
+    notifyListeners();
+  }
+
   Future<List<Media>> getMedia({ required int limit, required int page, int? categoryId } ) async {
     try {
       Response response = await ApiService.request('/medias?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
@@ -143,11 +161,21 @@ class MediaProvider extends ChangeNotifier{
     }
   }
 
-  Future<bool> createMedia(){
+  Future<bool> createMedia() async {
     try {
-      Response response = ApiService.request('/')
+      Response response = await ApiService.request('/medias', auth: appProvider.userInfo.token);
+      if (response.statusCode == 201) {
+        _mediaId = response.data['data']['id'];
+        return true;
+      } else if (response.statusCode == 422) {
+        Alert.show(text: response.statusMessage!);
+      } else {
+        Alert.show(text: "Error al intentar generar el registro, ${response.statusCode}");
+      }
+      return false;
     } catch (e) {
       Alert.show(text: e.toString());
+      throw Exception(e.toString());
     }
   }
 
@@ -162,6 +190,7 @@ class MediaProvider extends ChangeNotifier{
      _score = 5;
      _thereIsMoreInfo = false;
      _isPendingPriority = false;
+     _mediaId = 0;
   }
 
 }
