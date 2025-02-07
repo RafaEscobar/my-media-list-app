@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mymedialist/enum/category_enum.dart';
-import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/category_model.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/screens/create/steps/title_step.dart';
+import 'package:mymedialist/utils/entertainment.dart';
 import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/tap_widget.dart';
@@ -28,7 +28,10 @@ class _MediaTypeCardState extends State<MediaTypeCard> {
   Future<void> _nextStep() async {
     try {
       _saveTypes();
-      _handleCategoryId();
+      Entertainment.saveField(
+        value: widget.category.id,
+        fieldName: "category_id"
+      );
       await Redirect.redirectWithLoader(TitleScreen.routeName, context);
     } catch (e) {
       Alert.show(text: e.toString());
@@ -38,14 +41,6 @@ class _MediaTypeCardState extends State<MediaTypeCard> {
   void _saveTypes(){
     entityProvider.category = widget.category.category;
     entityProvider.type = widget.category.subtype;
-  }
-
-  void _handleCategoryId(){
-    if (entityProvider.type == TypeEnum.media.name) {
-      entityProvider.mediaData['category_id'] = widget.category.id;
-    } else if (entityProvider.type == TypeEnum.saga.name) {
-      entityProvider.sagaData['category_id'] = widget.category.id;
-    }
   }
 
   @override
@@ -66,7 +61,7 @@ class _MediaTypeCardState extends State<MediaTypeCard> {
             SizedBox(
               height: 120,
               child: SvgPicture.network(
-                widget.category.imageUrl.replaceAll('http://localhost:8000', 'https://fcd7-207-248-115-158.ngrok-free.app'),
+                widget.category.imageUrl,
                 fit: BoxFit.contain,
                 colorFilter: ColorFilter.mode(Colors.blueGrey.shade600, BlendMode.srcIn),
               ),

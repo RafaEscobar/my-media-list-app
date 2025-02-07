@@ -3,11 +3,12 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/category_enum.dart';
+import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/steps/add_image_step.dart';
-
+import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/input.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
@@ -27,37 +28,32 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
   final _formKey = GlobalKey<FormBuilderState>();
   final FocusNode _titleFocusNode = FocusNode();
 
-  String _buildTitle() {
-    String title = CategoryEnum.values[_entityProvider.categoryId-1].name;
-    return (_mediaProvider.categoryId == CategoryEnum.movies.identifier || _mediaProvider.categoryId == CategoryEnum.series.identifier) ?
-      "Ingresa el título de la $title" :
-      "Ingresa el título del $title";
-  }
-
   Future<void> _nextStep() async {
-    _titleFocusNode.unfocus();
     try {
+      _titleFocusNode.unfocus();
       if (_validateTitle()) {
-        _mediaProvider.title = _formKey.currentState!.fields['title']!.value.toString();
-        await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
-        if (mounted) context.goNamed(AddImageScreen.routeName);
+        _handleTitle();
+        Redirect.redirectWithLoader(AddImageScreen.routeName, context);
       }
     } catch (e) {
       Alert.show(text: e.toString());
     }
   }
 
-  void _previusStep() {
-    context.read<MediaProvider>().title = '';
-    context.pop();
-  }
-
   bool _validateTitle() => _formKey.currentState!.fields['title']!.validate();
+
+  void _handleTitle({bool isNext = true}) {
+    if (_entityProvider.type == TypeEnum.media.name) {
+      _entityProvider.mediaData['title'] = isNext ? _formKey.currentState!.fields['title']!.value.toString() : '';
+    } else if (_entityProvider.type == TypeEnum.saga.name){
+      _entityProvider.sagaData['title'] = isNext ? _formKey.currentState!.fields['title']!.value.toString() : '';
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    _mediaProvider = context.read<MediaProvider>();
+    _entityProvider = context.read<EntertainmentEntityProvider>();
   }
 
   @override
@@ -102,7 +98,7 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
                   Column(
                     children: [
                       Text(
-                        _buildTitle(),
+                        "¿Cómo se llama?",
                         style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
                         textAlign: TextAlign.center,
                       ),
