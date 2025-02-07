@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/provider/category_provider.dart';
+import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/provider/pending_priority_provider.dart';
 import 'package:mymedialist/provider/post_view_priority_provider.dart';
@@ -25,12 +26,13 @@ class MyApp extends StatelessWidget
   Widget build(BuildContext context){
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AppProvider(),),
-        ChangeNotifierProvider(create: (context) => MediaProvider(),),
-        ChangeNotifierProvider(create: (context) => CategoryProvider(),),
-        ChangeNotifierProvider(create: (context) => StatusProvider(),),
-        ChangeNotifierProvider(create: (context) => PendingPriorityProvider(),),
-        ChangeNotifierProvider(create: (context) => PostViewPriorityProvider(),)
+        ChangeNotifierProvider(create: (_) => AppProvider(),),
+        ChangeNotifierProvider(create: (_) => MediaProvider(),),
+        ChangeNotifierProvider(create: (_) => CategoryProvider(),),
+        ChangeNotifierProvider(create: (_) => StatusProvider(),),
+        ChangeNotifierProvider(create: (_) => PendingPriorityProvider(),),
+        ChangeNotifierProvider(create: (_) => PostViewPriorityProvider(),),
+        ChangeNotifierProvider(create: (_) => EntertainmentEntityProvider(),)
       ],
       builder: (_, __) {
         return MaterialApp.router(
