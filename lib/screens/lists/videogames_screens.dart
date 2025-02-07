@@ -61,7 +61,7 @@ class _VideogamesScreensState extends State<VideogamesScreens> {
         builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: (BuildContext context, Media game, int index) {
           return Center(
             child: MediaCard(
-              imagePath: game.imagePath.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
+              imagePath: game.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
               name: game.title,
               score: game.score
             ),

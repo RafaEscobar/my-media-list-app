@@ -67,14 +67,14 @@ class AppProvider extends ChangeNotifier{
   Future<bool> makeLogout() async {
     try {
       bool isUnloged = await logout();
-      return (isUnloged) ? _onLogoutSuccess() : _onLogoutFailure();
+      return (isUnloged) ? localLogout() : _onLogoutFailure();
     } catch (e) {
       Alert.show(text: e.toString());
       return false;
     }
   }
 
-  bool _onLogoutSuccess(){
+  bool localLogout(){
     userInfo = User();
     Preferences.userInfo = User();
     Preferences.rememberme = false;

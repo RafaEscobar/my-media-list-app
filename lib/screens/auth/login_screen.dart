@@ -6,6 +6,7 @@ import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/services/preferences.dart';
+import 'package:mymedialist/utils/call.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 import 'package:mymedialist/widgets/general/input.dart';
@@ -22,10 +23,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin{
+  //* NodeFocus
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocuesNode = FocusNode();
+  //* Key by form
   final _formKey = GlobalKey<FormBuilderState>();
-  static AppProvider appProvider = navigatorKey.currentContext!.read<AppProvider>();
+  //* Providers
+  final AppProvider _appProvider = navigatorKey.currentContext!.read<AppProvider>();
+  //* Global variables
   bool rememberme = true;
 
   @override
@@ -38,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   Future<void> onSubmit() async {
     try {
       _removeFocus();
-      if (_validateForm()) (await _generateLogin()) ? _onLoginSucces() : _onLogginFailure();
+      if (_validateForm()) (await _generateLogin()) ? await _onLoginSucces() : _onLogginFailure();
     } catch (e) {
       Alert.show(text: e.toString());
     }
@@ -49,21 +54,23 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     _passwordFocuesNode.unfocus();
   }
 
+  bool _validateForm() => _formKey.currentState!.saveAndValidate();
+
   Future<bool> _generateLogin() async {
     bool? isLogged;
-    await Loader().runLoad( asyncFunction: () async => isLogged = await appProvider.login(credentials: _getCredentials()) );
+    await Loader.runLoad( asyncFunction: () async => isLogged = await _appProvider.login(credentials: _getCredentials()) );
     return isLogged!;
   }
-
-  bool _validateForm() => _formKey.currentState!.saveAndValidate();
 
   Map<String, dynamic> _getCredentials() => {
     'email': _formKey.currentState!.fields['email']!.value.toString(),
     'password': _formKey.currentState!.fields['password']!.value.toString()
   };
 
-  void _onLoginSucces(){
+  Future<void> _onLoginSucces() async {
     Preferences.rememberme = rememberme;
+    await Call.firstCalls();
+    if (!mounted) return;
     context.goNamed(MainNavigation.routeName);
   }
 

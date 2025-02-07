@@ -17,6 +17,10 @@ class Input extends StatefulWidget {
     this.onTap,
     this.validator,
     this.onEditingComplete,
+    this.initialValue,
+    this.inputDecoration,
+     this.controller,
+    this.maxLines = 1,
     this.showMaxLenght = false,
     this.isPassword = false,
     required this.focusNode,
@@ -42,6 +46,10 @@ class Input extends StatefulWidget {
   final bool isPassword;
   final String name;
   final Function()? onEditingComplete;
+  final String? initialValue;
+  final int maxLines;
+  final InputDecoration? inputDecoration;
+  final TextEditingController? controller;
 
   @override
   State<Input> createState() => _InputState();
@@ -61,6 +69,9 @@ class _InputState extends State<Input> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      controller: widget.controller,
+      maxLines: widget.maxLines,
+      initialValue: widget.initialValue,
       focusNode: widget.focusNode,
       keyboardType: widget.keyboardType,
       obscureText: obscureText,
@@ -68,7 +79,7 @@ class _InputState extends State<Input> {
       maxLength: widget.maxLength,
       onTap: widget.onTap,
       validator: widget.validator,
-      decoration: InputDecoration(
+      decoration: widget.inputDecoration == null ? InputDecoration(
         counterText: widget.showMaxLenght ? null : '',
         hintText: widget.hintText,
         hintStyle: widget.hintStyle,
@@ -93,7 +104,7 @@ class _InputState extends State<Input> {
           onPressed: changeObscureText,
           icon: Icon(obscureText ? Icons.visibility : Icons.visibility_off)
         ) : null
-      ),
+      ) : widget.inputDecoration!,
       name: widget.name,
       onEditingComplete: widget.onEditingComplete,
     );
