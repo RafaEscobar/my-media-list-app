@@ -8,6 +8,7 @@ import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/screens/create/steps/title_step.dart';
 import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
+import 'package:mymedialist/widgets/general/tap_widget.dart';
 import 'package:provider/provider.dart';
 
 class MediaTypeCard extends StatefulWidget {
@@ -23,7 +24,8 @@ class MediaTypeCard extends StatefulWidget {
 
 class _MediaTypeCardState extends State<MediaTypeCard> {
   late EntertainmentEntityProvider entityProvider;
-  Future<void> nextStep() async {
+
+  Future<void> _nextStep() async {
     try {
       _saveTypes();
       _handleCategoryId();
@@ -54,40 +56,28 @@ class _MediaTypeCardState extends State<MediaTypeCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Material(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(10),
-          onTap: nextStep,
-          splashColor: Colors.blue.shade50,
-          child: SizedBox(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  height: 120,
-                  child: SvgPicture.network(
-                    widget.category.imageUrl.replaceAll('http://localhost:8000', 'https://fcd7-207-248-115-158.ngrok-free.app'),
-                    fit: BoxFit.contain,
-                    colorFilter: ColorFilter.mode(Colors.blueGrey.shade600, BlendMode.srcIn),
-                  ),
-                ),
-                Text(
-                  CategoryEnum.values[widget.category.id-1].name[0].toUpperCase() + CategoryEnum.values[widget.category.id-1].name.substring(1),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.blueGrey.shade600),
-                ),
-              ],
-            )
-          ),
-        ),
+    return TapWidget(
+      borderRadius: BorderRadius.circular(10),
+      onTap: _nextStep,
+      body: SizedBox(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SizedBox(
+              height: 120,
+              child: SvgPicture.network(
+                widget.category.imageUrl.replaceAll('http://localhost:8000', 'https://fcd7-207-248-115-158.ngrok-free.app'),
+                fit: BoxFit.contain,
+                colorFilter: ColorFilter.mode(Colors.blueGrey.shade600, BlendMode.srcIn),
+              ),
+            ),
+            Text(
+              CategoryEnum.values[widget.category.id-1].name[0].toUpperCase() + CategoryEnum.values[widget.category.id-1].name.substring(1),
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.blueGrey.shade600),
+            ),
+          ],
+        )
       ),
     );
   }
