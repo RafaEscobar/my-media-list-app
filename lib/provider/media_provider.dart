@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/media.dart';
+import 'package:mymedialist/models/saga.dart';
 import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/services/api_service.dart';
@@ -32,6 +33,8 @@ class MediaProvider extends ChangeNotifier{
   int? _categoryId;
   double _score = 5;
   File _mediaImage = File('');
+  Media _media = Media();
+  Saga _saga = Saga();
 
   //* Data util para el flujo
   bool _thereIsMoreInfo = false;
@@ -143,6 +146,18 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  Media get media => _media;
+  set media(Media newMedia){
+    _media = newMedia;
+    notifyListeners();
+  }
+
+  Saga get saga => _saga;
+  set saga(Saga newSaga){
+    _saga = newSaga;
+    notifyListeners();
+  }
+
   Future<List<Media>> getMedia({ required int limit, required int page, int? categoryId } ) async {
     try {
       Response response = await ApiService.request('/medias?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
@@ -163,7 +178,21 @@ class MediaProvider extends ChangeNotifier{
 
   Future<bool> createMedia() async {
     try {
-      Response response = await ApiService.request('/medias', auth: appProvider.userInfo.token);
+      Map<String, dynamic> body = _media.toJson();
+      body['user_id'] = appProvider.userInfo.id;
+      body['image'] = MultipartFile.fromFile(mediaImage.path, filename: "${title}_image");
+      FormData formData = FormData.fromMap({
+        ...body,
+        'image': await MultipartFile.fromFile(
+          mediaImage.path,
+          filename: "${title}_image.jpg",
+        ),
+      });
+      Response response = await ApiService.request(
+        '/medias',
+        auth: appProvider.userInfo.token,
+        body: formData,
+      );
       if (response.statusCode == 201) {
         _mediaId = response.data['data']['id'];
         return true;

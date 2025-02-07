@@ -6,8 +6,8 @@ class Media {
   final String comment;
   final int categoryId;
   final int statusId;
-  final int pendingPriorityId;
-  final int postViewPriorityId;
+  final int? pendingPriorityId;
+  final int? postViewPriorityId;
   final String image;
 
   Media({
@@ -17,8 +17,8 @@ class Media {
     this.comment = '',
     this.categoryId = 0,
     this.statusId = 0,
-    this.pendingPriorityId = 0,
-    this.postViewPriorityId = 0,
+    this.pendingPriorityId,
+    this.postViewPriorityId,
     this.image = ''
   });
 
@@ -29,8 +29,8 @@ class Media {
     comment: json[''] ?? '',
     categoryId: json['category'] ?? 0,
     statusId: json['status'] ?? 0,
-    pendingPriorityId: json['pending_priority_id'] ?? 0,
-    postViewPriorityId: json['post_view_priority_id'] ?? 0,
+    pendingPriorityId: json['pending_priority_id'],
+    postViewPriorityId: json['post_view_priority_id'],
     image: json['imageUrl'] ?? '',
   );
 

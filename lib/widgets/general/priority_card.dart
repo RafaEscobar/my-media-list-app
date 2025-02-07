@@ -14,29 +14,31 @@ class PriorityCard extends StatelessWidget {
 
   Future<void> _onSelectPriority(BuildContext context) async {
     try {
-      context.read<MediaProvider>().pendingPriorityId = priority.id;
-      if (context.read<MediaProvider>().type == 'Media') {
-        Media(
-          title: context.read<MediaProvider>().title,
-          score: context.read<MediaProvider>().score,
-          comment: context.read<MediaProvider>().comment,
-          categoryId: context.read<MediaProvider>().categoryId,
-          statusId: context.read<MediaProvider>().status.id,
-          pendingPriorityId: context.read<MediaProvider>().pendingPriorityId,
-          postViewPriorityId: context.read<MediaProvider>().postViewPriority,
+      MediaProvider mediaProvider = context.read<MediaProvider>();
+      mediaProvider.pendingPriorityId = priority.id;
+      if (context.read<MediaProvider>().subtype == 'Media') {
+          mediaProvider.media = Media(
+          title: mediaProvider.title,
+          score: mediaProvider.score,
+          comment: mediaProvider.comment,
+          categoryId: mediaProvider.categoryId,
+          statusId: mediaProvider.status.id,
+          pendingPriorityId: mediaProvider.pendingPriorityId == 0 ? null : mediaProvider.pendingPriorityId,
+          postViewPriorityId: mediaProvider.postViewPriority == 0 ? null : mediaProvider.postViewPriority,
         );
-      } else if (context.read<MediaProvider>().type == 'Saga') {
-        Saga(
-          title: context.read<MediaProvider>().title,
-          numCaps: context.read<MediaProvider>().numCaps,
-          season: context.read<MediaProvider>().season,
-          comment: context.read<MediaProvider>().comment,
-          categoryId: context.read<MediaProvider>().categoryId,
-          statusId: context.read<MediaProvider>().status.id,
-          pendingPriorityId: context.read<MediaProvider>().pendingPriorityId,
-          postViewPriorityId: context.read<MediaProvider>().postViewPriority
+      } else if (mediaProvider.subtype == 'Saga') {
+        mediaProvider.saga = Saga(
+          title: mediaProvider.title,
+          numCaps: mediaProvider.numCaps,
+          season: mediaProvider.season,
+          comment: mediaProvider.comment,
+          categoryId: mediaProvider.categoryId,
+          statusId: mediaProvider.status.id,
+          pendingPriorityId: mediaProvider.pendingPriorityId,
+          postViewPriorityId: mediaProvider.postViewPriority
         );
       }
+      await context.read<MediaProvider>().createMedia();
       if (context.mounted) context.goNamed(DetailsScreens.routeName);
     } catch (e) {
       Alert.show(text: e.toString());
