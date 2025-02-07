@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/category_enum.dart';
+import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/category_model.dart';
-import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/screens/create/title_screen.dart';
+import 'package:mymedialist/provider/entertainment_entity_provider.dart';
+import 'package:mymedialist/screens/create/steps/title_step.dart';
+import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:provider/provider.dart';
 
 class MediaTypeCard extends StatefulWidget {
@@ -22,18 +22,34 @@ class MediaTypeCard extends StatefulWidget {
 }
 
 class _MediaTypeCardState extends State<MediaTypeCard> {
+  late EntertainmentEntityProvider entityProvider;
   Future<void> nextStep() async {
     try {
-      final MediaProvider mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
-      mediaProvider.categoryId = widget.category.id;
-      mediaProvider.type = widget.category.category;
-      mediaProvider.subtype = widget.category.subtype;
-      await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
-      if (!mounted) return;
-      navigatorKey.currentState!.context.goNamed(TitleScreen.routeName);
+      _saveTypes();
+      _handleCategoryId();
+      await Redirect.redirectWithLoader(TitleScreen.routeName, context);
     } catch (e) {
       Alert.show(text: e.toString());
     }
+  }
+
+  void _saveTypes(){
+    entityProvider.category = widget.category.category;
+    entityProvider.type = widget.category.subtype;
+  }
+
+  void _handleCategoryId(){
+    if (entityProvider.type == TypeEnum.media.name) {
+      entityProvider.mediaData['category_id'] = widget.category.id;
+    } else if (entityProvider.type == TypeEnum.saga.name) {
+      entityProvider.sagaData['category_id'] = widget.category.id;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    entityProvider = navigatorKey.currentState!.context.read<EntertainmentEntityProvider>();
   }
 
   @override

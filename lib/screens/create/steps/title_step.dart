@@ -4,8 +4,9 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
+import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/screens/create/add_image_screen.dart';
+import 'package:mymedialist/screens/create/steps/add_image_step.dart';
 
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/input.dart';
@@ -22,12 +23,12 @@ class TitleScreen extends StatefulWidget {
 }
 
 class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
-  late MediaProvider _mediaProvider;
+  late EntertainmentEntityProvider _entityProvider;
   final _formKey = GlobalKey<FormBuilderState>();
   final FocusNode _titleFocusNode = FocusNode();
 
   String _buildTitle() {
-    String title = CategoryEnum.values[_mediaProvider.categoryId-1].name;
+    String title = CategoryEnum.values[_entityProvider.categoryId-1].name;
     return (_mediaProvider.categoryId == CategoryEnum.movies.identifier || _mediaProvider.categoryId == CategoryEnum.series.identifier) ?
       "Ingresa el título de la $title" :
       "Ingresa el título del $title";

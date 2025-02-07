@@ -1,11 +1,7 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/media.dart';
-import 'package:mymedialist/models/saga.dart';
-import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/services/api_service.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -17,144 +13,11 @@ class MediaProvider extends ChangeNotifier{
   List<Media> _mediaList = [];
   // Variable to connect with AppProvider
   final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
-  // Current step in process to create a media register
-  int _currentStep = 0;
-
-  //* Data to create a media register
-  String _type = '';
-  String _subtype = '';
-  String _title = '';
-  String _comment = '';
-  Status? _status;
-  int _pendingPriorityId = 0;
-  int _postViewPriority = 0;
-  int _season = 0;
-  int _numCaps = 0;
-  int? _categoryId;
-  double _score = 5;
-  File _mediaImage = File('');
-  Media _media = Media();
-  Saga _saga = Saga();
-
-  //* Data util para el flujo
-  bool _thereIsMoreInfo = false;
-  bool _isPendingPriority = false;
-
-  //* Id del media
-  int _mediaId = 0;
 
   //* General Getters and Setters
   List<Media> get mediaList => _mediaList;
   set mediaList(List<Media> newMediaList){
     _mediaList = newMediaList;
-    notifyListeners();
-  }
-  int get currentStep => _currentStep;
-  set currentStep(int newStep){
-    _currentStep = newStep;
-    notifyListeners();
-  }
-
-  //* Getters and Settets to create a media register
-  int get categoryId => _categoryId!;
-  set categoryId(int newCategoryId){
-    _categoryId = newCategoryId;
-    notifyListeners();
-  }
-
-  String get type => _type;
-  set type(String newValue){
-    _type = newValue;
-    notifyListeners();
-  }
-
-  String get subtype => _subtype;
-  set subtype(String newValue){
-    _subtype = newValue;
-    notifyListeners();
-  }
-
-  String get title => _title;
-  set title(String newTitle){
-    _title = newTitle;
-    notifyListeners();
-  }
-
-  Status get status => _status!;
-  set status(Status newStatus){
-    _status = newStatus;
-    notifyListeners();
-  }
-
-  int get pendingPriorityId => _pendingPriorityId;
-  set pendingPriorityId(int newPriorityId){
-    _pendingPriorityId = newPriorityId;
-    notifyListeners();
-  }
-
-  int get postViewPriority => _postViewPriority;
-  set postViewPriority(int newPriorityId){
-    _postViewPriority = newPriorityId;
-    notifyListeners();
-  }
-
-  double get score => _score;
-  set score(double newScore){
-    _score = newScore;
-    notifyListeners();
-  }
-
-  String get comment => _comment;
-  set comment(String newComment) {
-    _comment = newComment;
-    notifyListeners();
-  }
-
-  bool get thereIsMoreInfo => _thereIsMoreInfo;
-  set thereIsMoreInfo(bool newValue){
-    _thereIsMoreInfo = newValue;
-    notifyListeners();
-  }
-
-  bool get isPendingPriority => _isPendingPriority;
-  set isPendingPriority(bool newValue){
-    _isPendingPriority = newValue;
-    notifyListeners();
-  }
-
-  int get season => _season;
-  set season(int newValue){
-    _season = newValue;
-    notifyListeners();
-  }
-
-  int get numCaps => _numCaps;
-  set numCaps(int newValue){
-    _numCaps = newValue;
-    notifyListeners();
-  }
-
-  int get mediaId => _mediaId;
-  set mediaId(int newMediaId){
-    _mediaId = newMediaId;
-    notifyListeners();
-  }
-
-  File get mediaImage => _mediaImage;
-  set mediaImage(File newImage){
-    _mediaImage = newImage;
-    notifyListeners();
-  }
-
-  Media get media => _media;
-  set media(Media newMedia){
-    _media = newMedia;
-    notifyListeners();
-  }
-
-  Saga get saga => _saga;
-  set saga(Saga newSaga){
-    _saga = newSaga;
     notifyListeners();
   }
 
@@ -175,51 +38,4 @@ class MediaProvider extends ChangeNotifier{
       throw Exception(e.toString());
     }
   }
-
-  Future<bool> createMedia() async {
-    try {
-      Map<String, dynamic> body = _media.toJson();
-      body['user_id'] = appProvider.userInfo.id;
-      body['image'] = MultipartFile.fromFile(mediaImage.path, filename: "${title}_image");
-      FormData formData = FormData.fromMap({
-        ...body,
-        'image': await MultipartFile.fromFile(
-          mediaImage.path,
-          filename: "${title}_image.jpg",
-        ),
-      });
-      Response response = await ApiService.request(
-        '/medias',
-        auth: appProvider.userInfo.token,
-        body: formData,
-      );
-      if (response.statusCode == 201) {
-        _mediaId = response.data['data']['id'];
-        return true;
-      } else if (response.statusCode == 422) {
-        Alert.show(text: response.statusMessage!);
-      } else {
-        Alert.show(text: "Error al intentar generar el registro, ${response.statusCode}");
-      }
-      return false;
-    } catch (e) {
-      Alert.show(text: e.toString());
-      throw Exception(e.toString());
-    }
-  }
-
-  void deleteData(){
-     _type = '';
-     _subtype = '';
-     _title = '';
-     _comment = '';
-     _categoryId = 0;
-     _pendingPriorityId = 0;
-     _postViewPriority = 0;
-     _score = 5;
-     _thereIsMoreInfo = false;
-     _isPendingPriority = false;
-     _mediaId = 0;
-  }
-
 }
