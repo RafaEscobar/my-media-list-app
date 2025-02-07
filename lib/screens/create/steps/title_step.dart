@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:go_router/go_router.dart';
-import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
-import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/steps/add_image_step.dart';
+import 'package:mymedialist/utils/entertainment.dart';
 import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/input.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -24,15 +21,19 @@ class TitleScreen extends StatefulWidget {
 }
 
 class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
-  late EntertainmentEntityProvider _entityProvider;
   final _formKey = GlobalKey<FormBuilderState>();
   final FocusNode _titleFocusNode = FocusNode();
+  late String _title;
+  late EntertainmentEntityProvider _entityProvider;
 
   Future<void> _nextStep() async {
     try {
       _titleFocusNode.unfocus();
       if (_validateTitle()) {
-        _handleTitle();
+        Entertainment.saveField(
+          value: _formKey.currentState!.fields['title']!.value.toString(),
+          fieldName: 'title',
+        );
         Redirect.redirectWithLoader(AddImageScreen.routeName, context);
       }
     } catch (e) {
@@ -40,26 +41,26 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
     }
   }
 
+  void _onPreviousStep() => Entertainment.saveField(
+    value: '',
+    fieldName: 'title',
+  );
+
   bool _validateTitle() => _formKey.currentState!.fields['title']!.validate();
 
-  void _handleTitle({bool isNext = true}) {
-    if (_entityProvider.type == TypeEnum.media.name) {
-      _entityProvider.mediaData['title'] = isNext ? _formKey.currentState!.fields['title']!.value.toString() : '';
-    } else if (_entityProvider.type == TypeEnum.saga.name){
-      _entityProvider.sagaData['title'] = isNext ? _formKey.currentState!.fields['title']!.value.toString() : '';
-    }
+  @override
+  void dispose() {
+    _titleFocusNode.dispose();
+    super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
     _entityProvider = context.read<EntertainmentEntityProvider>();
-  }
-
-  @override
-  void dispose() {
-    _titleFocusNode.dispose();
-    super.dispose();
+     _title =  (_entityProvider.type == TypeEnum.media.name) ?
+        _entityProvider.mediaData['title'] :
+        _entityProvider.sagaData['title'];
   }
 
   /*
@@ -108,7 +109,7 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Input(
-                            initialValue: context.watch<MediaProvider>().title,
+                            initialValue: _title,
                             maxLength: 52,
                             showMaxLenght: false,
                             focusNode: _titleFocusNode,
@@ -128,7 +129,7 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
                   BottomButtons(
                     textBtnLeft: 'Regresar',
                     textBtnRight: 'Continuar',
-                    actionBtnL: _previusStep,
+                    actionBtnL: _onPreviousStep,
                     actionBtnR: _nextStep,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     margin:  const EdgeInsets.only(bottom: 10),

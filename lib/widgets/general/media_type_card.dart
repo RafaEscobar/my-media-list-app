@@ -29,8 +29,8 @@ class _MediaTypeCardState extends State<MediaTypeCard> {
     try {
       _saveTypes();
       Entertainment.saveField(
+        fieldName: "category_id",
         value: widget.category.id,
-        fieldName: "category_id"
       );
       await Redirect.redirectWithLoader(TitleScreen.routeName, context);
     } catch (e) {
