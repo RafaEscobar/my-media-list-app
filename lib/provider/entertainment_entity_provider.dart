@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymedialist/enum/type_enum.dart';
@@ -16,13 +17,13 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   //* Data to create a media register
   Map<String, dynamic> _mediaData = {
     "title": '',
-    "score": '',
+    "score": 5,
     "comment": '',
     "category_id": null,
     "status_id": null,
     "pending_priority_id": null,
     "post_view_priority_id": null,
-    "image": '',
+    "image": null,
     "user_id": navigatorKey.currentState!.context.read<AppProvider>()
   };
 
@@ -36,7 +37,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     'status_id': null,
     'pending_priority_id': null,
     'post_view_priority_id': null,
-    'image': '',
+    'image': null,
     "user_id": navigatorKey.currentState!.context.read<AppProvider>()
   };
 
@@ -45,6 +46,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   String _type = '';
   bool _shouldAddMoreInfo = false;
   bool _isPendingPriority = false;
+  File _temporaryImage = File('');
 
   //* Getter y setter to _currentStep
   int get currentStep => _currentStep;
@@ -95,6 +97,13 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //* Getter y setter to _temporaryImage
+  File get temporaryImage => _temporaryImage;
+  set temporaryImage(File newImage){
+    _temporaryImage = newImage;
+    notifyListeners();
+  }
+
   Future<void> createMedia(BuildContext context) async {
     try {
       Response response = await _sendRequest(context);
@@ -128,14 +137,16 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   void deleteData(){
     _currentStep = 0;
     _mediaData = {
-      "title": '',
-      "score": '',
-      "comment": '',
-      "category_id": null,
-      "status_id": null,
-      "pending_priority_id": null,
-      "post_view_priority_id": null,
-      "image": ''
+      'title': '',
+      'num_caps': null,
+      'season': null,
+      'final_comment': '',
+      'category_id': null,
+      'status_id': null,
+      'pending_priority_id': null,
+      'post_view_priority_id': null,
+      'image': null,
+      "user_id": navigatorKey.currentState!.context.read<AppProvider>()
     };
     _sagaData = {
       'title': '',
@@ -152,6 +163,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     _category = '';
     _shouldAddMoreInfo = false;
     _isPendingPriority = false;
+    temporaryImage = File('');
   }
 
 }

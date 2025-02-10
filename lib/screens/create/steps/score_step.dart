@@ -62,8 +62,7 @@ class _ScoreScreenState extends State<ScoreScreen> with CancelCreationMixin {
   void initState() {
     super.initState();
     _entityProvider = navigatorKey.currentState!.context.read<EntertainmentEntityProvider>();
-    _currentValue = _entityProvider.type == TypeEnum.media.name ?
-      _entityProvider.mediaData['score'] : _entityProvider.sagaData['score'];
+    _currentValue = _entityProvider.mediaData['score'].toDouble();
   }
 
   @override

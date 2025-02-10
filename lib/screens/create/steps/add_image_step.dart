@@ -28,28 +28,17 @@ class AddImageScreen extends StatefulWidget {
 class _AddImageScreenState extends State<AddImageScreen> with CancelCreationMixin{
   late Widget modalBody;
   late EntertainmentEntityProvider _entityProvider;
-  late MultipartFile? _localImage;
 
   Future<void> _pickImage(ImageSource source) async {
     try {
       Navigator.of(context).pop();
       final picker = ImagePicker();
-      final newImage = await picker.pickImage(source: source);
-      if (null != newImage) {
-        Entertainment.saveField(
-          value: _buildImage(newImage),
-          fieldName: 'image'
-        );
-      }
+      final currentImage = await picker.pickImage(source: source);
+      if (null != currentImage) setState(() => context.read<EntertainmentEntityProvider>().temporaryImage = File(currentImage.path));
     } catch (e) {
       Alert.show(text: e.toString(), contentWidth: 200);
     }
-  }
-
-  Future<MultipartFile> _buildImage(XFile image) {
-    String title = _entityProvider.type == TypeEnum.media.name ? _entityProvider.mediaData['title'] : _entityProvider.sagaData['title'];
-    return MultipartFile.fromFile(image.path, filename: "${title}_image");
-  }
+  } 
 
   void _selectTypeResource() {
     try {
@@ -67,17 +56,23 @@ class _AddImageScreenState extends State<AddImageScreen> with CancelCreationMixi
 
   Future<void> _navigateToNextStep() async {
     try {
-      _validateImage() ?
-        await Redirect.redirectWithLoader(StatusScreen.routeName, context) :
-        Alert.show(text: 'Debes seleccionar una imagen', contentWidth: 300, background: Colors.red.shade300, centeredText: true, textColor: Colors.white, textSize: 18);
+      if (context.read<EntertainmentEntityProvider>().temporaryImage.path.isNotEmpty) {
+        Entertainment.saveField(
+          value: _buildImage(),
+          fieldName: 'image'
+        );
+        await Redirect.redirectWithLoader(StatusScreen.routeName, context);
+      } else {
+          Alert.show(text: 'Debes seleccionar una imagen', contentWidth: 300, background: Colors.red.shade300, centeredText: true, textColor: Colors.white, textSize: 18);
+        }
     } catch (e) {
       Alert.show(text: e.toString());
     }
   }
 
-  bool _validateImage() {
-    File imageFile = (_entityProvider.type == TypeEnum.media.name) ? _entityProvider.mediaData['image'] : _entityProvider.sagaData['image'];
-    return imageFile.path.isEmpty;
+  Future<MultipartFile> _buildImage() {
+    String title = _entityProvider.type == TypeEnum.media.name ? _entityProvider.mediaData['title'] : _entityProvider.sagaData['title'];
+    return MultipartFile.fromFile(context.read<EntertainmentEntityProvider>().temporaryImage.path, filename: "${title}_image");
   }
 
   Future<void> _navigateToPreviousStep() async => Redirect.redirectWithLoader(TitleScreen.routeName, context);
@@ -86,7 +81,6 @@ class _AddImageScreenState extends State<AddImageScreen> with CancelCreationMixi
   void initState() {
     super.initState();
     _entityProvider = context.read<EntertainmentEntityProvider>();
-    _localImage = (_entityProvider.type == TypeEnum.media.name) ? _entityProvider.mediaData['image'] : _entityProvider.sagaData['image'];
     modalBody = Container(
       padding: const EdgeInsets.only(left: 20),
       child: Column(
@@ -139,11 +133,11 @@ class _AddImageScreenState extends State<AddImageScreen> with CancelCreationMixi
                 children: [
                   Column(
                     children: [
-                      const FormTitle(title: "¿Dónde buscamos la imagen?"),
+                      const FormTitle(title: "Agreguemos una imagen de portada"),
                       const SizedBox(height: 40,),
-                      (null ==_localImage) ?
+                      (context.watch<EntertainmentEntityProvider>().temporaryImage.path.isEmpty) ?
                         const RoundImage(imagePath: "assets/images/default.jpeg", width: 200, height: 200, type: 'asset',) :
-                        RoundImage(imageFilePath: File(_localImage!.filename!) , width: 200, height: 200, type: 'file', borderRadius: BorderRadius.circular(70),)
+                        RoundImage(imageFilePath: File(context.read<EntertainmentEntityProvider>().temporaryImage.path), width: 200, height: 200, type: 'file', borderRadius: BorderRadius.circular(70),)
                     ],
                   ),
                   Column(

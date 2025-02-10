@@ -42,10 +42,13 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
     }
   }
 
-  void _onPreviousStep() => Entertainment.saveField(
-    value: '',
-    fieldName: 'title',
-  );
+  void _onPreviousStep() {
+    Navigator.of(context).pop();
+    Entertainment.saveField(
+      value: '',
+      fieldName: 'title',
+    );
+  }
 
   bool _validateTitle() => _formKey.currentState!.fields['title']!.validate();
 
@@ -99,6 +102,7 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
                 children: [
                   Column(
                     children: [
+                      const SizedBox(height: 10,),
                       const FormTitle(title: '¿Cómo se llama?'),
                       const SizedBox(height: 20,),
                       FormBuilder(
@@ -129,7 +133,7 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
                     actionBtnL: _onPreviousStep,
                     actionBtnR: _nextStep,
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    margin:  const EdgeInsets.only(bottom: 10),
+                    margin:  const EdgeInsets.only(bottom: 20),
                   )
                 ],
               ),

@@ -54,35 +54,45 @@ class PriorityScreen extends StatelessWidget with CancelCreationMixin {
         },
         child: SafeArea(
           child: Container(
-            padding: const EdgeInsets.only(left: 20, right: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             color: Colors.white,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  children: [
-                    FormTitle(title: entityProvider.isPendingPriority ? '¿Qué tan prioritario es?' : '¿Cuándo darle un vistazo de nuevo?'),
-                    const SizedBox(height: 10),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: entityProvider.isPendingPriority ? priorityProvider.pendingPriorityList.length : postViewProvider.postViewPriorityList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return PriorityCard(
-                          priority: entityProvider.isPendingPriority ?
-                            priorityProvider.pendingPriorityList[index] :
-                            postViewProvider.postViewPriorityList[index]
-                        );
-                      },
-                      separatorBuilder: (context, index) => const SizedBox(height: 20,)
+                FormTitle(
+                  title: entityProvider.isPendingPriority
+                      ? '¿Qué tan prioritario es?'
+                      : '¿Cuándo darle un vistazo de nuevo?',
+                ),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: entityProvider.isPendingPriority
+                              ? priorityProvider.pendingPriorityList.length
+                              : postViewProvider.postViewPriorityList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return PriorityCard(
+                              priority: entityProvider.isPendingPriority
+                                  ? priorityProvider.pendingPriorityList[index]
+                                  : postViewProvider.postViewPriorityList[index],
+                            );
+                          },
+                          separatorBuilder: (context, index) => const SizedBox(height: 20),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
                 BottomButtons(
                   textBtnLeft: 'Regresar',
                   actionBtnL: () => _onPreviousStep(context),
                   onlyOneBtn: true,
-                  margin: const EdgeInsets.only(bottom: 10),
-                )
+                  margin: const EdgeInsets.only(bottom: 8, top: 8),
+                ),
               ],
             ),
           ),
