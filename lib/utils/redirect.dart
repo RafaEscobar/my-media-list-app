@@ -12,8 +12,8 @@ class Redirect {
     navigatorKey.currentState!.context.goNamed(AuthScreen.routeName);
   }
 
-  static Future<void> redirectWithLoader(String routeName, BuildContext context) async {
+  static Future<void> redirectWithLoader(String routeName, BuildContext context, {Map<String, String> params = const {}}) async {
     await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
-    if (context.mounted) context.goNamed(routeName);
+    if (context.mounted) context.goNamed(routeName, pathParameters: params);
   }
 }

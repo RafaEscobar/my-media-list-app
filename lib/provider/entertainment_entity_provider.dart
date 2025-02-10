@@ -1,5 +1,13 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mymedialist/enum/type_enum.dart';
+import 'package:mymedialist/main.dart';
+import 'package:mymedialist/provider/app_provider.dart';
+import 'package:mymedialist/screens/main/details_screens.dart';
+import 'package:mymedialist/services/api_service.dart';
+import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
+import 'package:provider/provider.dart';
 
 class EntertainmentEntityProvider extends ChangeNotifier {
   // Current step in process to create a media register
@@ -14,7 +22,8 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     "status_id": null,
     "pending_priority_id": null,
     "post_view_priority_id": null,
-    "image": ''
+    "image": '',
+    "user_id": navigatorKey.currentState!.context.read<AppProvider>()
   };
 
   //* Data to create a saga register
@@ -27,7 +36,8 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     'status_id': null,
     'pending_priority_id': null,
     'post_view_priority_id': null,
-    'image': ''
+    'image': '',
+    "user_id": navigatorKey.currentState!.context.read<AppProvider>()
   };
 
   //* Important variables to the create flow
@@ -85,37 +95,33 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> createMedia() async {
+  Future<void> createMedia(BuildContext context) async {
     try {
-      /*
-      Map<String, dynamic> body = _media.toJson();
-      body['user_id'] = appProvider.userInfo.id;
-      body['image'] = MultipartFile.fromFile(mediaImage.path, filename: "${title}_image");
-      FormData formData = FormData.fromMap({
-        ...body,
-        'image': await MultipartFile.fromFile(
-          mediaImage.path,
-          filename: "${title}_image.jpg",
-        ),
-      });
-      Response response = await ApiService.request(
-        '/medias',
-        auth: appProvider.userInfo.token,
-        body: formData,
-      );
-      if (response.statusCode == 201) {
-        _mediaId = response.data['data']['id'];
-        return true;
-      } else if (response.statusCode == 422) {
-        Alert.show(text: response.statusMessage!);
-      } else {
-        Alert.show(text: "Error al intentar generar el registro, ${response.statusCode}");
-      }
-      return false;
-      */
+      Response response = await _sendRequest(context);
+      if (context.mounted) _handleResponse(response, context);
     } catch (e) {
       Alert.show(text: e.toString());
       throw Exception(e.toString());
+    }
+  }
+
+  Future<Response> _sendRequest(BuildContext context) async {
+    AppProvider appProvider = context.read<AppProvider>();
+    FormData formData = FormData.fromMap((_type == TypeEnum.media.name) ? mediaData : sagaData);
+    return await ApiService.request(
+      '/medias',
+      auth: appProvider.userInfo.token,
+      body: formData,
+    );
+  }
+
+  void _handleResponse(Response response, BuildContext context){
+    if (response.statusCode == 201) {
+      if (context.mounted) Redirect.redirectWithLoader(DetailsScreens.routeName, context, params: {'entityId': response.data['data']['id']});
+    } else if (response.statusCode == 422) {
+      Alert.show(text: response.statusMessage!);
+    } else {
+      Alert.show(text: "Error al intentar generar el registro, ${response.statusCode}");
     }
   }
 

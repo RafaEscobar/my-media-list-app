@@ -73,7 +73,7 @@ class AppRoute {
               GoRoute(
                 path: DetailsScreens.routeName,
                 name: DetailsScreens.routeName,
-                builder: ( BuildContext context, GoRouterState state) => const DetailsScreens(),
+                builder: ( BuildContext context, GoRouterState state) => DetailsScreens(entityId: int.parse(state.pathParameters['entityId']!),),
               ),
               GoRoute(
                 path: AddImageScreen.routeName,

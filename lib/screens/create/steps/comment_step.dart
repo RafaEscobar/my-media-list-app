@@ -11,8 +11,8 @@ import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/utils/entertainment.dart';
 import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
+import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/general/input.dart';
-import 'package:mymedialist/widgets/general/title_step.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -85,7 +85,7 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
                 Column(
                   children: [
                     const SizedBox(height: 10,),
-                    const TitleStep(title: 'Comentario final:'),
+                    const FormTitle(title: 'Comentario final:'),
                     const SizedBox(height: 20,),
                     FormBuilder(
                       key: _formKey,

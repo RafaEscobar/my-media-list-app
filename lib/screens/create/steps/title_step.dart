@@ -8,8 +8,8 @@ import 'package:mymedialist/screens/create/steps/add_image_step.dart';
 import 'package:mymedialist/utils/entertainment.dart';
 import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
+import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/general/input.dart';
-import 'package:mymedialist/widgets/general/title_step.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -99,7 +99,7 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
                 children: [
                   Column(
                     children: [
-                      const TitleStep(title: '¿Cómo se llama?',),
+                      const FormTitle(title: '¿Cómo se llama?'),
                       const SizedBox(height: 20,),
                       FormBuilder(
                         key: _formKey,

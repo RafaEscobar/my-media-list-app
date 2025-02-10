@@ -1,16 +1,18 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
-import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/screens/create/steps/status_step.dart';
 import 'package:mymedialist/screens/create/steps/title_step.dart';
+import 'package:mymedialist/utils/entertainment.dart';
+import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/bottom_sheet_widget.dart';
 import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/general/forms/round_image.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/general/tap_widget.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
@@ -25,18 +27,28 @@ class AddImageScreen extends StatefulWidget {
 
 class _AddImageScreenState extends State<AddImageScreen> with CancelCreationMixin{
   late Widget modalBody;
+  late EntertainmentEntityProvider _entityProvider;
+  late MultipartFile? _localImage;
 
   Future<void> _pickImage(ImageSource source) async {
-    try { 
+    try {
       Navigator.of(context).pop();
       final picker = ImagePicker();
-      final pickedImage = await picker.pickImage(source: source);
-      if (null != pickedImage) {
-        if (mounted) context.read<MediaProvider>().mediaImage = File(pickedImage.path);
+      final newImage = await picker.pickImage(source: source);
+      if (null != newImage) {
+        Entertainment.saveField(
+          value: _buildImage(newImage),
+          fieldName: 'image'
+        );
       }
     } catch (e) {
       Alert.show(text: e.toString(), contentWidth: 200);
     }
+  }
+
+  Future<MultipartFile> _buildImage(XFile image) {
+    String title = _entityProvider.type == TypeEnum.media.name ? _entityProvider.mediaData['title'] : _entityProvider.sagaData['title'];
+    return MultipartFile.fromFile(image.path, filename: "${title}_image");
   }
 
   void _selectTypeResource() {
@@ -55,22 +67,26 @@ class _AddImageScreenState extends State<AddImageScreen> with CancelCreationMixi
 
   Future<void> _navigateToNextStep() async {
     try {
-      if (context.read<MediaProvider>().mediaImage.path.isEmpty) {
+      _validateImage() ?
+        await Redirect.redirectWithLoader(StatusScreen.routeName, context) :
         Alert.show(text: 'Debes seleccionar una imagen', contentWidth: 300, background: Colors.red.shade300, centeredText: true, textColor: Colors.white, textSize: 18);
-      } else {
-        await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 300)) );
-        if (mounted) context.goNamed(StatusScreen.routeName);
-      }
     } catch (e) {
       Alert.show(text: e.toString());
     }
   }
 
-  void _navigateToPreviousStep() => context.goNamed(TitleScreen.routeName);
+  bool _validateImage() {
+    File imageFile = (_entityProvider.type == TypeEnum.media.name) ? _entityProvider.mediaData['image'] : _entityProvider.sagaData['image'];
+    return imageFile.path.isEmpty;
+  }
+
+  Future<void> _navigateToPreviousStep() async => Redirect.redirectWithLoader(TitleScreen.routeName, context);
 
   @override
   void initState() {
     super.initState();
+    _entityProvider = context.read<EntertainmentEntityProvider>();
+    _localImage = (_entityProvider.type == TypeEnum.media.name) ? _entityProvider.mediaData['image'] : _entityProvider.sagaData['image'];
     modalBody = Container(
       padding: const EdgeInsets.only(left: 20),
       child: Column(
@@ -125,9 +141,9 @@ class _AddImageScreenState extends State<AddImageScreen> with CancelCreationMixi
                     children: [
                       const FormTitle(title: "¿Dónde buscamos la imagen?"),
                       const SizedBox(height: 40,),
-                        context.watch<MediaProvider>().mediaImage.path.isEmpty ?
-                            const RoundImage(imagePath: "assets/images/default.jpeg", width: 200, height: 200, type: 'asset',) :
-                            RoundImage(imageFilePath:context.watch<MediaProvider>().mediaImage , width: 200, height: 200, type: 'file', borderRadius: BorderRadius.circular(70),)
+                      (null ==_localImage) ?
+                        const RoundImage(imagePath: "assets/images/default.jpeg", width: 200, height: 200, type: 'asset',) :
+                        RoundImage(imageFilePath: File(_localImage!.filename!) , width: 200, height: 200, type: 'file', borderRadius: BorderRadius.circular(70),)
                     ],
                   ),
                   Column(

@@ -8,7 +8,7 @@ import 'package:mymedialist/screens/create/steps/status_step.dart';
 import 'package:mymedialist/utils/entertainment.dart';
 import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
-import 'package:mymedialist/widgets/general/title_step.dart';
+import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +74,7 @@ class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
                 Expanded(
                   child: Column(
                     children: [
-                      const TitleStep(title: '¿Cuántos capítulos tiene?'),
+                      const FormTitle(title: '¿Cuántos capítulos tiene?'),
                       const SizedBox(height: 20,),
                       SizedBox(
                         height: 260,

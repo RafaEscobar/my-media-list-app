@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymedialist/models/priority.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
-import 'package:mymedialist/screens/main/details_screens.dart';
 import 'package:mymedialist/utils/entertainment.dart';
-import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +16,7 @@ class PriorityCard extends StatelessWidget {
         value: priority.id,
         fieldName: entityProvider.isPendingPriority ? 'pending_priority_id' : 'post_view_priority_id'
       );
-      await entityProvider.createMedia();
-      if (context.mounted) await Redirect.redirectWithLoader(DetailsScreens.routeName, context);
+      await entityProvider.createMedia(context);
     } catch (e) {
       Alert.show(text: e.toString());
     }
