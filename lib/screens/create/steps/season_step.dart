@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
-import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/screens/create/steps/caps_step.dart';
 import 'package:mymedialist/screens/create/steps/status_step.dart';
+import 'package:mymedialist/utils/entertainment.dart';
+import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:provider/provider.dart';
 
 class SeasonScreen extends StatefulWidget {
   const SeasonScreen({super.key});
@@ -23,15 +21,17 @@ class _SeasonScreenState extends State<SeasonScreen> with CancelCreationMixin {
 
   Future<void> _navigateToNextStep() async {
     try {
-      context.read<MediaProvider>().season = _currentValue;
-      await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 300)) );
-      if (mounted) context.goNamed(NumCaps.routeName);
+      Entertainment.saveField(
+        value: _currentValue,
+        fieldName: 'season'
+      );
+      await Redirect.redirectWithLoader(NumCaps.routeName, context);
     } catch (e) {
       Alert.show(text: e.toString());
     }
   }
 
-  void _navigateToPreviousStep() => context.goNamed(StatusScreen.routeName);
+  Future<void> _navigateToPreviousStep() async => Redirect.redirectWithLoader(StatusScreen.routeName, context);
 
   @override
   Widget build(BuildContext context) {

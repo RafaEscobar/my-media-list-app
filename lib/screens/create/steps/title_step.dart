@@ -9,6 +9,7 @@ import 'package:mymedialist/utils/entertainment.dart';
 import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/input.dart';
+import 'package:mymedialist/widgets/general/title_step.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -98,11 +99,7 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
                 children: [
                   Column(
                     children: [
-                      Text(
-                        "¿Cómo se llama?",
-                        style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                        textAlign: TextAlign.center,
-                      ),
+                      const TitleStep(title: '¿Cómo se llama?',),
                       const SizedBox(height: 20,),
                       FormBuilder(
                         key: _formKey,

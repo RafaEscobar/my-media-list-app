@@ -10,6 +10,7 @@ import 'package:mymedialist/screens/create/steps/status_step.dart';
 import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/priority_card.dart';
+import 'package:mymedialist/widgets/general/title_step.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -60,11 +61,7 @@ class PriorityScreen extends StatelessWidget with CancelCreationMixin {
               children: [
                 Column(
                   children: [
-                    Text(
-                      entityProvider.isPendingPriority ? '¿Qué tan prioritario es?' : '¿Cuándo darle un vistazo de nuevo?',
-                      style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                      textAlign: TextAlign.center,
-                    ),
+                    TitleStep(title: entityProvider.isPendingPriority ? '¿Qué tan prioritario es?' : '¿Cuándo darle un vistazo de nuevo?'),
                     const SizedBox(height: 10),
                     ListView.separated(
                       shrinkWrap: true,
