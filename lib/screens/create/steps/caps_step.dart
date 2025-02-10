@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
-import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/screens/create/steps/priority_screen.dart';
 import 'package:mymedialist/screens/create/steps/score_step.dart';
 import 'package:mymedialist/screens/create/steps/season_step.dart';
 import 'package:mymedialist/screens/create/steps/status_step.dart';
+import 'package:mymedialist/utils/entertainment.dart';
+import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
@@ -22,25 +22,38 @@ class NumCaps extends StatefulWidget {
 
 class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
   int _currentValue = 1;
+  late EntertainmentEntityProvider _entityProvider;
 
   Future<void> _navigateToNextStep() async {
     try {
-      MediaProvider mediaProvider = context.read<MediaProvider>();
-      mediaProvider.numCaps = _currentValue;
-      if (mediaProvider.status.status == 'Pendiente' || mediaProvider.status.status == 'En emisión') {
-        mediaProvider.isPendingPriority = true;
-        await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 300)) );
-        if (mounted) context.goNamed(PriorityScreen.routeName);
-      } else {
-        await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 300)) );
-        if (mounted) context.goNamed(ScoreScreen.routeName);
-      }
+      Entertainment.saveField(
+        value: _currentValue,
+        fieldName: 'num_caps'
+      );
+      _handleRedirect();
     } catch (e) {
       Alert.show(text: e.toString());
     }
   }
 
-  void _navigateToPreviousStep() => (context.read<MediaProvider>().type == 'Manga') ? context.goNamed(StatusScreen.routeName) : context.goNamed(SeasonScreen.routeName);
+  Future<void> _handleRedirect() async {
+    _entityProvider.isPendingPriority = Entertainment.isInProcessStatus();
+    if (_entityProvider.isPendingPriority) {
+      Redirect.redirectWithLoader(PriorityScreen.routeName, context);
+    } else {
+      Redirect.redirectWithLoader(ScoreScreen.routeName, context);
+    }
+  }
+
+  Future<void> _navigateToPreviousStep() async => (_entityProvider.category == 'Manga') ?
+    await Redirect.redirectWithLoader(StatusScreen.routeName, context) :
+    await Redirect.redirectWithLoader(SeasonScreen.routeName, context);
+
+  @override
+  void initState() {
+    super.initState();
+    _entityProvider = context.read<EntertainmentEntityProvider>();
+  }
 
   @override
   Widget build(BuildContext context) {
