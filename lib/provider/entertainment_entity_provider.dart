@@ -143,7 +143,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
       'image': ''
     };
     _type = '';
-    _subtype = '';
+    _category = '';
     _shouldAddMoreInfo = false;
     _isPendingPriority = false;
   }

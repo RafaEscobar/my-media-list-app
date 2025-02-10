@@ -21,10 +21,10 @@ class TitleScreen extends StatefulWidget {
 }
 
 class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
+  late EntertainmentEntityProvider _entityProvider;
   final _formKey = GlobalKey<FormBuilderState>();
   final FocusNode _titleFocusNode = FocusNode();
   late String _title;
-  late EntertainmentEntityProvider _entityProvider;
 
   Future<void> _nextStep() async {
     try {
