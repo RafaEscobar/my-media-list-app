@@ -29,7 +29,7 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
     try {
       Entertainment.saveField(
         value: widget.status,
-        fieldName: 'status'
+        fieldName: 'status_id'
       );
       _handleRedirect();
     } catch (e) {

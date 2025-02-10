@@ -36,7 +36,7 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
         _commentFocusNode.unfocus();
         Entertainment.saveField(
           value: _formKey.currentState!.fields['comment']!.value.toString(),
-          fieldName: 'final_comment'
+          fieldName: (_entityProvider.type == TypeEnum.media.name) ? 'comment' : 'final_comment'
         );
         Redirect.redirectWithLoader(PriorityScreen.routeName, context);
       }
