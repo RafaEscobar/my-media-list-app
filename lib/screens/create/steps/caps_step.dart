@@ -8,6 +8,7 @@ import 'package:mymedialist/screens/create/steps/status_step.dart';
 import 'package:mymedialist/utils/entertainment.dart';
 import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
+import 'package:mymedialist/widgets/general/title_step.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
@@ -73,11 +74,7 @@ class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
                 Expanded(
                   child: Column(
                     children: [
-                      Text(
-                        "¿Cuántos capítulos tiene?",
-                        style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                        textAlign: TextAlign.center,
-                      ),
+                      const TitleStep(title: '¿Cuántos capítulos tiene?'),
                       const SizedBox(height: 20,),
                       SizedBox(
                         height: 260,
