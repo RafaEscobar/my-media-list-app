@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
-import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/provider/pending_priority_provider.dart';
 import 'package:mymedialist/provider/post_view_priority_provider.dart';
 import 'package:mymedialist/screens/create/steps/caps_step.dart';
 import 'package:mymedialist/screens/create/steps/comment_step.dart';
 import 'package:mymedialist/screens/create/steps/status_step.dart';
+import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/priority_card.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
@@ -18,29 +19,31 @@ class PriorityScreen extends StatelessWidget with CancelCreationMixin {
 
   void _onPreviousStep(BuildContext context) {
     try {
-      MediaProvider mediaProvider = context.read<MediaProvider>();
-      (mediaProvider.isPendingPriority) ? _navigateToPending(context) : _navigateToPostView(context);
+      (context.read<EntertainmentEntityProvider>().isPendingPriority) ? _navigateToPending(context) : _navigateToPostView(context);
     } catch (e) {
       Alert.show(text: e.toString());
     }
   }
 
-  void _navigateToPending(BuildContext context){
-    MediaProvider mediaProvider = context.read<MediaProvider>();
-    if (mediaProvider.subtype == 'Saga') {
-      (mediaProvider.thereIsMoreInfo) ? context.goNamed(NumCaps.routeName) : context.goNamed(StatusScreen.routeName);
-    } else if (mediaProvider.subtype == 'Media') {
-      context.goNamed(StatusScreen.routeName);
+  Future<void> _navigateToPending(BuildContext context) async {
+    EntertainmentEntityProvider entityProvider = context.read<EntertainmentEntityProvider>();
+    if (entityProvider.type == TypeEnum.saga.name) {
+      await Redirect.redirectWithLoader(
+        entityProvider.shouldAddMoreInfo ? NumCaps.routeName : StatusScreen.routeName,
+        context
+      );
+    } else if (entityProvider.type == TypeEnum.media.name) {
+      await Redirect.redirectWithLoader(StatusScreen.routeName, context);
     }
   }
 
-  void _navigateToPostView(BuildContext context) => context.goNamed(CommentScreen.routeName);
+  Future<void> _navigateToPostView(BuildContext context) async => await Redirect.redirectWithLoader(CommentScreen.routeName, context);
 
   @override
   Widget build(BuildContext context) {
     PostViewPriorityProvider postViewProvider = context.read<PostViewPriorityProvider>();
     PendingPriorityProvider priorityProvider = context.read<PendingPriorityProvider>();
-    MediaProvider mediaProvider = context.read<MediaProvider>();
+    EntertainmentEntityProvider entityProvider = context.read<EntertainmentEntityProvider>();
     return Scaffold(
       body: PopScope(
         canPop: false,
@@ -58,17 +61,17 @@ class PriorityScreen extends StatelessWidget with CancelCreationMixin {
                 Column(
                   children: [
                     Text(
-                      mediaProvider.isPendingPriority ? '¿Qué tan prioritario es?' : '¿Cuándo darle un vistazo de nuevo?',
+                      entityProvider.isPendingPriority ? '¿Qué tan prioritario es?' : '¿Cuándo darle un vistazo de nuevo?',
                       style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 10),
                     ListView.separated(
                       shrinkWrap: true,
-                      itemCount: mediaProvider.isPendingPriority ? priorityProvider.pendingPriorityList.length : postViewProvider.postViewPriorityList.length,
+                      itemCount: entityProvider.isPendingPriority ? priorityProvider.pendingPriorityList.length : postViewProvider.postViewPriorityList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return PriorityCard(
-                          priority: mediaProvider.isPendingPriority ?
+                          priority: entityProvider.isPendingPriority ?
                             priorityProvider.pendingPriorityList[index] :
                             postViewProvider.postViewPriorityList[index]
                         );
