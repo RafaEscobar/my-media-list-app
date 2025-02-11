@@ -1,15 +1,16 @@
 class Saga {
   Saga({
     this.id = 0,
-    this.title = '',
-    this.numCaps = 0,
-    this.season = 0,
-    this.comment = '',
-    this.categoryId = 0,
-    this.statusId = 0,
-    this.pendingPriorityId = 0,
-    this.postViewPriorityId = 0,
-    this.image = '',
+    required this.title,
+    required this.numCaps,
+    required this.season,
+    required this.comment,
+    required this.score,
+    required this.categoryId,
+    required this.statusId,
+    required this.pendingPriorityId,
+    required this.postViewPriorityId,
+    required this.image,
   });
 
   final int id;
@@ -17,10 +18,11 @@ class Saga {
   final int numCaps;
   final int season;
   final String comment;
+  final double score;
   final int categoryId;
   final int statusId;
-  final int pendingPriorityId;
-  final int postViewPriorityId;
+  final int? pendingPriorityId;
+  final int? postViewPriorityId;
   final String image;
 
   factory Saga.fromJson(Map<String, dynamic> json) => Saga(
@@ -29,6 +31,7 @@ class Saga {
     numCaps: json['num_caps'] ?? 0,
     season: json['season'] ?? 0,
     comment: json['final_comment'] ?? '',
+    score: json['score'].toDouble() ?? double.parse("0.0"),
     categoryId: json['category_id'] ?? 0,
     statusId: json['status_id'] ?? 0,
     pendingPriorityId: json['pending_priority_id'] ?? 0,

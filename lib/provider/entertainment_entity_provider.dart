@@ -120,7 +120,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     AppProvider appProvider = context.read<AppProvider>();
     FormData formData = FormData.fromMap((_type == TypeEnum.media.name) ? mediaData : sagaData);
     return await ApiService.request(
-      '/medias',
+      _type == TypeEnum.media.name ? '/medias' : '/sagas',
       auth: appProvider.userInfo.token,
       body: formData,
     );

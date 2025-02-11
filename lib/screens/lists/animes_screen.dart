@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/main.dart';
-import 'package:mymedialist/models/media.dart';
-import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/models/saga.dart';
+import 'package:mymedialist/provider/saga_provider.dart';
 import 'package:mymedialist/widgets/general/media_card.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +16,8 @@ class AnimesScreen extends StatefulWidget {
 
 class _AnimesScreenState extends State<AnimesScreen> {
   final int _limit = 5;
-  final PagingController<int, Media> _pagingController = PagingController(firstPageKey: 1);
-  final MediaProvider mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
+  final PagingController<int, Saga> _pagingController = PagingController(firstPageKey: 1);
+  final SagaProvider sagaProvider = navigatorKey.currentState!.context.read<SagaProvider>();
 
   @override
   void initState() {
@@ -29,13 +29,13 @@ class _AnimesScreenState extends State<AnimesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Media> mediaList = await mediaProvider.getMedia(limit: _limit, page: pageKey, categoryId: CategoryEnum.animes.identifier);
-      bool isLastPage = mediaList.length < _limit;
+      List<Saga> sagaList = await sagaProvider.getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.animes.identifier);
+      bool isLastPage = sagaList.length < _limit;
       if (isLastPage) {
-        _pagingController.appendLastPage(mediaList);
+        _pagingController.appendLastPage(sagaList);
       } else {
         int nextPageKey = ++pageKey;
-        _pagingController.appendPage(mediaList, nextPageKey);
+        _pagingController.appendPage(sagaList, nextPageKey);
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -46,7 +46,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: PagedGridView<int, Media>(
+      child: PagedGridView<int, Saga>(
         pagingController: _pagingController,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -54,7 +54,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
           mainAxisSpacing: 10,
           childAspectRatio: 2/2.6
         ),
-        builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: (BuildContext context, Media anime, int index) {
+        builderDelegate: PagedChildBuilderDelegate<Saga>(itemBuilder: (BuildContext context, Saga anime, int index) {
           return Center(
             child: MediaCard(
               imagePath: anime.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
