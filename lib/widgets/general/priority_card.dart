@@ -3,6 +3,7 @@ import 'package:mymedialist/models/priority.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/utils/entertainment.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
+import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:provider/provider.dart';
 
 class PriorityCard extends StatelessWidget {
@@ -16,7 +17,7 @@ class PriorityCard extends StatelessWidget {
         value: priority.id,
         fieldName: entityProvider.isPendingPriority ? 'pending_priority_id' : 'post_view_priority_id'
       );
-      await entityProvider.createMedia(context);
+      await Loader.runLoad(asyncFunction: () async => await entityProvider.createMedia(context));
     } catch (e) {
       Alert.show(text: e.toString());
     }

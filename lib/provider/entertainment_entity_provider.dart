@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/main/details_screens.dart';
 import 'package:mymedialist/services/api_service.dart';
-import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:provider/provider.dart';
 
@@ -135,7 +135,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
 
   void _handleResponse(Response response, BuildContext context){
     if (response.statusCode == 201) {
-      if (context.mounted) Redirect.redirectWithLoader(DetailsScreens.routeName, context, params: {'entityId': "${response.data['data']['id']}"});
+      if (context.mounted) context.goNamed(DetailsScreens.routeName, pathParameters: {'entityId': "${response.data['data']['id']}"});
     } else if (response.statusCode == 422) {
       Alert.show(text: response.statusMessage!);
     } else {
