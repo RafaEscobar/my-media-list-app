@@ -139,16 +139,15 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   void deleteData(){
     _currentStep = 0;
     _mediaData = {
-      'title': '',
-      'num_caps': null,
-      'season': null,
-      'final_comment': '',
-      'category_id': null,
-      'status_id': null,
-      'pending_priority_id': null,
-      'post_view_priority_id': null,
-      'image': null,
-      "user_id": navigatorKey.currentState!.context.read<AppProvider>()
+      "title": '',
+      "score": 5,
+      "comment": '',
+      "category_id": null,
+      "status_id": null,
+      "pending_priority_id": null,
+      "post_view_priority_id": null,
+      "image": null,
+      "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id
     };
     _sagaData = {
       'title': '',
@@ -159,13 +158,15 @@ class EntertainmentEntityProvider extends ChangeNotifier {
       'status_id': null,
       'pending_priority_id': null,
       'post_view_priority_id': null,
-      'image': ''
+      'image': null,
+      "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id
     };
     _type = '';
     _category = '';
     _shouldAddMoreInfo = false;
     _isPendingPriority = false;
-    temporaryImage = File('');
+    _temporaryImage = File('');
+    _status = Status();
   }
 
 }

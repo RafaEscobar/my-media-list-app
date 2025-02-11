@@ -84,7 +84,7 @@ class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
                           itemHeight: 80,
                           infiniteLoop: true,
                           minValue: 1,
-                          maxValue: 500,
+                          maxValue: 64,
                           value: _currentValue,
                           onChanged: (value) => setState(() => _currentValue = value),
                         ),

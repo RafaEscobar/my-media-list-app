@@ -66,7 +66,7 @@ class _SeasonScreenState extends State<SeasonScreen> with CancelCreationMixin {
                           itemHeight: 80,
                           infiniteLoop: true,
                           minValue: 1,
-                          maxValue: 50,
+                          maxValue: 12,
                           value: _currentValue,
                           onChanged: (value) => setState(() => _currentValue = value),
                         ),

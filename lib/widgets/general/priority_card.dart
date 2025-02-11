@@ -21,6 +21,7 @@ class PriorityCard extends StatelessWidget {
         fieldName: entityProvider.isPendingPriority ? 'pending_priority_id' : 'post_view_priority_id'
       );
       await Loader.runLoad(asyncFunction: () async => currentId = await entityProvider.createMedia(context));
+      entityProvider.deleteData();
       if (context.mounted) if (currentId != 0) context.goNamed(DetailsScreens.routeName, pathParameters: {'entityId': "$currentId"});
     } catch (e) {
       Alert.show(text: e.toString());
