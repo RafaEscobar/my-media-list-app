@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
-import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/screens/create/num_caps.dart';
-import 'package:mymedialist/screens/create/comment_screen.dart';
-import 'package:mymedialist/screens/create/status_screen.dart';
+import 'package:mymedialist/provider/entertainment_entity_provider.dart';
+import 'package:mymedialist/screens/create/steps/caps_step.dart';
+import 'package:mymedialist/screens/create/steps/comment_step.dart';
+import 'package:mymedialist/screens/create/steps/status_step.dart';
 import 'package:mymedialist/theme/app_theme.dart';
+import 'package:mymedialist/utils/entertainment.dart';
+import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/button.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
+import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -22,36 +24,45 @@ class ScoreScreen extends StatefulWidget {
 }
 
 class _ScoreScreenState extends State<ScoreScreen> with CancelCreationMixin {
-  double _currentValue = navigatorKey.currentState!.context.read<MediaProvider>().score;
-  final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
+  late double _currentValue;
+  late EntertainmentEntityProvider _entityProvider;
 
   void _onLess() => setState(() => _currentValue -= 0.1);
   void _onPlus() => setState(() => _currentValue += 0.1);
 
   Future<void> _onNextStep() async {
     try {
-      _mediaProvider.score = _currentValue;
-      await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
-      if (mounted) context.goNamed(CommentScreen.routeName);
+      Entertainment.saveField(
+        value: double.parse(_currentValue.toStringAsFixed(1)),
+        fieldName: 'score'
+      );
+      await Redirect.redirectWithLoader(CommentScreen.routeName, context);
     } catch (e) {
       Alert.show(text: e.toString());
     }
   }
 
-  void _onPreviousStep(){
+  Future<void> _onPreviousStep() async {
     try {
-      if (_mediaProvider.subtype == 'Media') {
-        context.goNamed(StatusScreen.routeName);
-      } else if(_mediaProvider.subtype == 'Saga') {
-        if (_mediaProvider.thereIsMoreInfo) {
-          context.goNamed(NumCaps.routeName);
+      if (_entityProvider.type == TypeEnum.media.name) {
+        await Redirect.redirectWithLoader(StatusScreen.routeName, context);
+      } else if(_entityProvider.type == TypeEnum.saga.name) {
+        if (_entityProvider.shouldAddMoreInfo) {
+          await Redirect.redirectWithLoader(NumCaps.routeName, context);
         } else {
-          context.goNamed(StatusScreen.routeName);
+          await Redirect.redirectWithLoader(StatusScreen.routeName, context);
         }
       }
     } catch (e) {
       Alert.show(text: e.toString());
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _entityProvider = navigatorKey.currentState!.context.read<EntertainmentEntityProvider>();
+    _currentValue = _entityProvider.mediaData['score'].toDouble();
   }
 
   @override
@@ -73,11 +84,7 @@ class _ScoreScreenState extends State<ScoreScreen> with CancelCreationMixin {
                 Column(
                   children: [
                     const SizedBox(height: 10,),
-                    Text(
-                      "¿Qué calificación obtuvo?",
-                      style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                      textAlign: TextAlign.center,
-                    ),
+                    const FormTitle(title: '¿Qué calificación obtuvo?'),
                     const SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

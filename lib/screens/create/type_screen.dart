@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/category_provider.dart';
+import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/general/media_type_card.dart';
 import 'package:provider/provider.dart';
 
@@ -27,14 +28,7 @@ class _TypeScreenState extends State<TypeScreen> {
         color: Colors.white,
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Text(
-                '¿Qué vas a calificar?',
-                style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 28, fontWeight: FontWeight.w700),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            const FormTitle(title: '¿Qué vas a calificar?'),
             const SizedBox(height: 20,),
             Expanded(
               child: Container(
@@ -59,3 +53,4 @@ class _TypeScreenState extends State<TypeScreen> {
     );
   }
 }
+

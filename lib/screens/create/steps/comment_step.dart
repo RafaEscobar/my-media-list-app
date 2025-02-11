@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:go_router/go_router.dart';
+import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
-import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/screens/create/priority_screen.dart';
-import 'package:mymedialist/screens/create/score_screen.dart';
+import 'package:mymedialist/provider/entertainment_entity_provider.dart';
+import 'package:mymedialist/screens/create/steps/priority_screen.dart';
+import 'package:mymedialist/screens/create/steps/score_step.dart';
 import 'package:mymedialist/theme/app_theme.dart';
+import 'package:mymedialist/utils/entertainment.dart';
+import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
+import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/general/input.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +28,35 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
   final FocusNode _commentFocusNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
   late TextEditingController _commentController;
+  late EntertainmentEntityProvider _entityProvider;
+
+  Future<void> _onNextStep() async {
+    try {
+      if (_validateComment()) {
+        _commentFocusNode.unfocus();
+        Entertainment.saveField(
+          value: _formKey.currentState!.fields['comment']!.value.toString(),
+          fieldName: (_entityProvider.type == TypeEnum.media.name) ? 'comment' : 'final_comment'
+        );
+        Redirect.redirectWithLoader(PriorityScreen.routeName, context);
+      }
+    } catch (e) {
+      Alert.show(text: e.toString());
+    }
+  }
+
+  bool _validateComment() => _formKey.currentState!.fields['comment']!.validate();
+
+  Future<void> _onPreviousStep() async => await Redirect.redirectWithLoader(ScoreScreen.routeName, context);
+
+  @override
+  void initState() {
+    super.initState();
+    _entityProvider = navigatorKey.currentState!.context.read<EntertainmentEntityProvider>();
+    _commentController = TextEditingController(
+      text: (_entityProvider.type == TypeEnum.media.name) ? _entityProvider.mediaData['comment'] : _entityProvider.sagaData['final_comment']
+    );
+  }
 
   @override
   void dispose() {
@@ -33,26 +64,6 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
     _commentFocusNode.dispose();
   }
 
-  Future<void> _onNextStep() async {
-    try {
-      if (_formKey.currentState!.fields['comment']!.validate()) {
-        _commentFocusNode.unfocus();
-        context.read<MediaProvider>().comment = _formKey.currentState!.fields['comment']!.value.toString();
-        await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
-        if (mounted) context.goNamed(PriorityScreen.routeName);
-      }
-    } catch (e) {
-      Alert.show(text: e.toString());
-    }
-  }
-
-  void _onPreviousStep() => context.goNamed(ScoreScreen.routeName);
-
-  @override
-  void initState() {
-    super.initState();
-    _commentController = TextEditingController(text: navigatorKey.currentState!.context.read<MediaProvider>().comment);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +84,7 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
                 Column(
                   children: [
                     const SizedBox(height: 10,),
-                    Text(
-                      "Comentario final:",
-                      style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                      textAlign: TextAlign.center,
-                    ),
+                    const FormTitle(title: 'Comentario final:'),
                     const SizedBox(height: 20,),
                     FormBuilder(
                       key: _formKey,

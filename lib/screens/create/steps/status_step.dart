@@ -3,7 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/status_provider.dart';
-import 'package:mymedialist/screens/create/add_image_screen.dart';
+import 'package:mymedialist/screens/create/steps/add_image_step.dart';
+import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/general/media_status_card.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
@@ -34,11 +35,7 @@ class StatusScreen extends StatelessWidget with CancelCreationMixin {
                   child: Column(
                     children: [
                       const SizedBox(height: 10,),
-                      Text(
-                        "¿Cuál es el estatus actual del contenido?",
-                        style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 26, fontWeight: FontWeight.w700),
-                        textAlign: TextAlign.center,
-                      ),
+                      const FormTitle(title: '¿Cuál es el estatus actual del contenido?'),
                       Expanded(
                         child: GridView.builder(
                           itemCount: _statusProvider.statusList.length,

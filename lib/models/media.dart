@@ -12,20 +12,20 @@ class Media {
 
   Media({
     this.id = 0,
-    this.title = '',
-    this.score = 0.0,
-    this.comment = '',
-    this.categoryId = 0,
-    this.statusId = 0,
+    required this.title,
+    required this.score,
+    required this.comment,
+    required this.categoryId,
+    required this.statusId,
     this.pendingPriorityId,
     this.postViewPriorityId,
-    this.image = ''
+    required this.image
   });
 
   factory Media.fromJson(Map<String, dynamic> json) => Media(
     id: json['id'] ?? 0,
     title: json['title'] ?? '',
-    score: json['score'] ?? 0.0,
+    score: json['score'].toDouble() ?? double.parse("0.0"),
     comment: json[''] ?? '',
     categoryId: json['category'] ?? 0,
     statusId: json['status'] ?? 0,

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/models/status.dart';
-import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/screens/create/priority_screen.dart';
-import 'package:mymedialist/screens/create/score_screen.dart';
-import 'package:mymedialist/screens/create/season_screen.dart';
+import 'package:mymedialist/provider/entertainment_entity_provider.dart';
+import 'package:mymedialist/screens/create/steps/priority_screen.dart';
+import 'package:mymedialist/screens/create/steps/score_step.dart';
+import 'package:mymedialist/screens/create/steps/season_step.dart';
+import 'package:mymedialist/utils/entertainment.dart';
+import 'package:mymedialist/utils/redirect.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/bottom_sheet_widget.dart';
-import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -20,30 +21,32 @@ class MediaStatusCard extends StatefulWidget {
 }
 
 class _MediaStatusCardState extends State<MediaStatusCard> {
+  late EntertainmentEntityProvider _entityProvider;
   late Widget modalBody;
   late Widget modalFooter;
 
   void nextStep() {
     try {
-      context.read<MediaProvider>().status = widget.status;
-      redirectTo();
+      _saveAllStatus();
+      _handleRedirect();
     } catch (e) {
       Alert.show(text: e.toString());
     }
   }
 
-  void redirectTo() => (context.read<MediaProvider>().subtype == 'Media') ? _onMedia() : _onSaga();
-
-  void _onMedia() {
-    if (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión') {
-      context.read<MediaProvider>().isPendingPriority = true;
-      context.goNamed(PriorityScreen.routeName);
-    } else {
-      context.read<MediaProvider>().isPendingPriority = false;
-      context.goNamed(ScoreScreen.routeName);
-    }
+  void _saveAllStatus() {
+    Entertainment.saveField(
+      value: widget.status.id,
+      fieldName: 'status_id'
+    );
+    _entityProvider.status = widget.status;
+    _entityProvider.isPendingPriority = Entertainment.isInProcessStatus();
   }
 
+  //* #1 - Sí el estatus es de tipo -Media- llamamos al hanldeRedirect ya que no requiere mayor procesamiento
+  void _handleRedirect() => _entityProvider.type == TypeEnum.media.name ? _executeRedirect() : _onSaga();
+
+  //* 2B - Execute the modal to ask if we need to add more info
   void _onSaga() => BottomSheetWidget.open(
     title: '¿Quieres agregar más información?',
     body: modalBody,
@@ -52,26 +55,26 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
     withCloseIcon: false
   );
 
+  //* 2B.1 - Set the context variable: -shouldAddMoreInfo- in true
+  //* set Evaluate if the status is Pending or Post View
+  //* and finally execute the redirect to SeasonScreen
   Future<void> _onMoreInfo() async {
     Navigator.of(context).pop();
-    context.read<MediaProvider>().thereIsMoreInfo = true;
-    context.read<MediaProvider>().isPendingPriority = (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión');
-    await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
-    if (mounted) context.goNamed(SeasonScreen.routeName);
+    _entityProvider.shouldAddMoreInfo = true;
+    Redirect.redirectWithLoader(SeasonScreen.routeName, context);
   }
+
   Future<void> _onDenyMoreInfo() async {
     Navigator.of(context).pop();
-    context.read<MediaProvider>().thereIsMoreInfo = false;
-    await Loader.runLoad(asyncFunction: () async => await Future.delayed(const Duration(milliseconds: 400)), secondsDelayed: 0);
-    if (!mounted) return;
-    if (context.read<MediaProvider>().status.status == 'Pendiente' || context.read<MediaProvider>().status.status == 'En emisión') {
-      context.read<MediaProvider>().isPendingPriority = true;
-      context.goNamed(PriorityScreen.routeName);
-    } else {
-      context.read<MediaProvider>().isPendingPriority = false;
-      context.goNamed(ScoreScreen.routeName);
-    }
+    Redirect.redirectWithLoader(PriorityScreen.routeName, context);
   }
+
+  //* 2A - Evaluate if the status is Pending or Post View
+  //* And execute the redirect to the corresponding view
+  void _executeRedirect() => (_entityProvider.isPendingPriority) ?
+    Redirect.redirectWithLoader(PriorityScreen.routeName, context) :
+    Redirect.redirectWithLoader(ScoreScreen.routeName, context);
+
 
   /*
   * Inicializamos modalFooter y modalBody en el initState sin problema alguno
@@ -85,6 +88,7 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
   @override
   void initState() {
     super.initState();
+  _entityProvider = context.read<EntertainmentEntityProvider>();
     modalFooter = BottomButtons(
       textBtnLeft: 'No',
       actionBtnL: _onDenyMoreInfo,
@@ -124,7 +128,8 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
           borderRadius: BorderRadius.circular(10),
           onTap: nextStep,
           splashColor: Colors.blue.shade50,
-          child: SizedBox(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             width: 200,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

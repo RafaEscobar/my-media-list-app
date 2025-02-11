@@ -15,6 +15,7 @@ class BottomButtons extends StatelessWidget{
     this.splashBtnR = Colors.white,
     this.onlyOneBtn = false,
     this.textBtnRight = "Continuar",
+    this.textSize = 22,
     this.actionBtnR,
     required this.textBtnLeft,
     required this.actionBtnL,
@@ -33,6 +34,7 @@ class BottomButtons extends StatelessWidget{
   final Function() actionBtnL;
   final Function()? actionBtnR;
   final bool onlyOneBtn;
+  final double textSize;
 
   @override
   Widget build(BuildContext context){
@@ -44,6 +46,7 @@ class BottomButtons extends StatelessWidget{
         children: [
           Expanded(
             child: Button(
+              textSize: textSize,
               text: textBtnLeft,
               textWeight: FontWeight.w500,
               backgroundSplash: splashBtnL,
@@ -58,6 +61,7 @@ class BottomButtons extends StatelessWidget{
             visible: !onlyOneBtn,
             child: Expanded(
               child: Button(
+                textSize: textSize,
                 text: textBtnRight,
                 textWeight: FontWeight.w500,
                 backgroundSplash: splashBtnR,
