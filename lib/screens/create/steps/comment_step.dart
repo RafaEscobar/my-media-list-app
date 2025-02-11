@@ -62,7 +62,6 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
   void dispose() {
     super.dispose();
     _commentFocusNode.dispose();
-    _commentFocusNode.dispose();
   }
 
 

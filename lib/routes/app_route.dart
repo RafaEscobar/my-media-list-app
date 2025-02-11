@@ -71,7 +71,7 @@ class AppRoute {
                 builder: ( BuildContext context, GoRouterState state) => const SeasonScreen(),
               ),
               GoRoute(
-                path: DetailsScreens.routeName,
+                path: "${DetailsScreens.routeName}/:entityId",
                 name: DetailsScreens.routeName,
                 builder: ( BuildContext context, GoRouterState state) => DetailsScreens(entityId: int.parse(state.pathParameters['entityId']!),),
               ),

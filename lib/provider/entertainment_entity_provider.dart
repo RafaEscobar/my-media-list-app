@@ -135,7 +135,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
 
   void _handleResponse(Response response, BuildContext context){
     if (response.statusCode == 201) {
-      if (context.mounted) Redirect.redirectWithLoader(DetailsScreens.routeName, context, params: {'entityId': response.data['data']['id']});
+      if (context.mounted) Redirect.redirectWithLoader(DetailsScreens.routeName, context, params: {'entityId': "${response.data['data']['id']}"});
     } else if (response.statusCode == 422) {
       Alert.show(text: response.statusMessage!);
     } else {
