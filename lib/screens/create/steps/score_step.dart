@@ -3,7 +3,6 @@ import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
-import 'package:mymedialist/screens/create/steps/caps_step.dart';
 import 'package:mymedialist/screens/create/steps/comment_step.dart';
 import 'package:mymedialist/screens/create/steps/status_step.dart';
 import 'package:mymedialist/theme/app_theme.dart';
@@ -46,12 +45,6 @@ class _ScoreScreenState extends State<ScoreScreen> with CancelCreationMixin {
     try {
       if (_entityProvider.type == TypeEnum.media.name) {
         await Redirect.redirectWithLoader(StatusScreen.routeName, context);
-      } else if(_entityProvider.type == TypeEnum.saga.name) {
-        if (_entityProvider.shouldAddMoreInfo) {
-          await Redirect.redirectWithLoader(NumCaps.routeName, context);
-        } else {
-          await Redirect.redirectWithLoader(StatusScreen.routeName, context);
-        }
       }
     } catch (e) {
       Alert.show(text: e.toString());

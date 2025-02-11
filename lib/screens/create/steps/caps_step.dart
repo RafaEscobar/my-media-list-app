@@ -4,8 +4,8 @@ import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/screens/create/modal_widgets/input_body.dart';
 import 'package:mymedialist/screens/create/modal_widgets/input_footer.dart';
+import 'package:mymedialist/screens/create/steps/comment_step.dart';
 import 'package:mymedialist/screens/create/steps/priority_screen.dart';
-import 'package:mymedialist/screens/create/steps/score_step.dart';
 import 'package:mymedialist/screens/create/steps/season_step.dart';
 import 'package:mymedialist/screens/create/steps/status_step.dart';
 import 'package:mymedialist/theme/app_theme.dart';
@@ -52,7 +52,7 @@ class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
     if (_entityProvider.isPendingPriority) {
       Redirect.redirectWithLoader(PriorityScreen.routeName, context);
     } else {
-      Redirect.redirectWithLoader(ScoreScreen.routeName, context);
+      Redirect.redirectWithLoader(CommentScreen.routeName, context);
     }
   }
 
