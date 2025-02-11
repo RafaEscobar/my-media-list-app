@@ -59,7 +59,7 @@ class _AddImageScreenState extends State<AddImageScreen> with CancelCreationMixi
       if (context.read<EntertainmentEntityProvider>().temporaryImage.path.isNotEmpty) {
         String title = _entityProvider.type == TypeEnum.media.name ? _entityProvider.mediaData['title'] : _entityProvider.sagaData['title'];
         Entertainment.saveField(
-          value: await MultipartFile.fromFile(context.read<EntertainmentEntityProvider>().temporaryImage.path, filename: "${title}_image.jpg"),
+          value: await MultipartFile.fromFile(context.read<EntertainmentEntityProvider>().temporaryImage.path, filename: "${title}_image"),
           fieldName: 'image'
         );
         if (mounted) await Redirect.redirectWithLoader(StatusScreen.routeName, context);
