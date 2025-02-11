@@ -151,8 +151,8 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     };
     _sagaData = {
       'title': '',
-      'num_caps': null,
-      'season': null,
+      'num_caps': 1,
+      'season': 1,
       'final_comment': '',
       'category_id': null,
       'status_id': null,
