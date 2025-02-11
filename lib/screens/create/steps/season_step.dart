@@ -27,8 +27,8 @@ class SeasonScreen extends StatefulWidget {
 class _SeasonScreenState extends State<SeasonScreen> with CancelCreationMixin {
   final FocusNode _seasonFocusNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
-  final int _maxValue = 12;
   late int _currentValue;
+  final int _maxValue = 12;
   bool openModal = false;
 
   Future<void> _navigateToNextStep() async {
@@ -94,7 +94,7 @@ class _SeasonScreenState extends State<SeasonScreen> with CancelCreationMixin {
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 30,),
-                          (_maxValue <= entityProvider.sagaData['season']) ?
+                          (_maxValue < entityProvider.sagaData['season']) ?
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 40),
                               child: Text(

@@ -28,7 +28,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   //* Data to create a saga register
   Map<String, dynamic> _sagaData = {
     'title': '',
-    'num_caps': null,
+    'num_caps': 1,
     'season': 1,
     'final_comment': '',
     'category_id': null,
