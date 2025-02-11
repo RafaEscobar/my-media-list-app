@@ -25,7 +25,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     "pending_priority_id": null,
     "post_view_priority_id": null,
     "image": null,
-    "user_id": navigatorKey.currentState!.context.read<AppProvider>()
+    "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id
   };
 
   //* Data to create a saga register
@@ -39,7 +39,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     'pending_priority_id': null,
     'post_view_priority_id': null,
     'image': null,
-    "user_id": navigatorKey.currentState!.context.read<AppProvider>()
+    "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id
   };
 
   //* Important variables to the create flow

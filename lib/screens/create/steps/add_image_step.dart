@@ -38,7 +38,7 @@ class _AddImageScreenState extends State<AddImageScreen> with CancelCreationMixi
     } catch (e) {
       Alert.show(text: e.toString(), contentWidth: 200);
     }
-  } 
+  }
 
   void _selectTypeResource() {
     try {
@@ -57,22 +57,18 @@ class _AddImageScreenState extends State<AddImageScreen> with CancelCreationMixi
   Future<void> _navigateToNextStep() async {
     try {
       if (context.read<EntertainmentEntityProvider>().temporaryImage.path.isNotEmpty) {
+        String title = _entityProvider.type == TypeEnum.media.name ? _entityProvider.mediaData['title'] : _entityProvider.sagaData['title'];
         Entertainment.saveField(
-          value: _buildImage(),
+          value: await MultipartFile.fromFile(context.read<EntertainmentEntityProvider>().temporaryImage.path, filename: "${title}_image.jpg"),
           fieldName: 'image'
         );
-        await Redirect.redirectWithLoader(StatusScreen.routeName, context);
+        if (mounted) await Redirect.redirectWithLoader(StatusScreen.routeName, context);
       } else {
           Alert.show(text: 'Debes seleccionar una imagen', contentWidth: 300, background: Colors.red.shade300, centeredText: true, textColor: Colors.white, textSize: 18);
         }
     } catch (e) {
       Alert.show(text: e.toString());
     }
-  }
-
-  Future<MultipartFile> _buildImage() {
-    String title = _entityProvider.type == TypeEnum.media.name ? _entityProvider.mediaData['title'] : _entityProvider.sagaData['title'];
-    return MultipartFile.fromFile(context.read<EntertainmentEntityProvider>().temporaryImage.path, filename: "${title}_image");
   }
 
   Future<void> _navigateToPreviousStep() async => Redirect.redirectWithLoader(TitleScreen.routeName, context);

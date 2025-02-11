@@ -33,7 +33,7 @@ class _ScoreScreenState extends State<ScoreScreen> with CancelCreationMixin {
   Future<void> _onNextStep() async {
     try {
       Entertainment.saveField(
-        value: _currentValue,
+        value: double.parse(_currentValue.toStringAsFixed(1)),
         fieldName: 'score'
       );
       await Redirect.redirectWithLoader(CommentScreen.routeName, context);

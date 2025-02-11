@@ -54,7 +54,7 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
     super.initState();
     _entityProvider = navigatorKey.currentState!.context.read<EntertainmentEntityProvider>();
     _commentController = TextEditingController(
-      text: (_entityProvider.type == TypeEnum.media.name) ? _entityProvider.mediaData['final_comment'] : _entityProvider.sagaData['final_comment']
+      text: (_entityProvider.type == TypeEnum.media.name) ? _entityProvider.mediaData['comment'] : _entityProvider.sagaData['final_comment']
     );
   }
 
