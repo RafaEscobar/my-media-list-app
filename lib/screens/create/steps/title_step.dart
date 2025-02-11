@@ -43,11 +43,8 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
   }
 
   void _onPreviousStep() {
+    _entityProvider.deleteData();
     Navigator.of(context).pop();
-    Entertainment.saveField(
-      value: '',
-      fieldName: 'title',
-    );
   }
 
   bool _validateTitle() => _formKey.currentState!.fields['title']!.validate();
