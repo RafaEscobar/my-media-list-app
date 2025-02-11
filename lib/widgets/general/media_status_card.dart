@@ -27,14 +27,20 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
 
   void nextStep() {
     try {
-      Entertainment.saveField(
-        value: widget.status,
-        fieldName: 'status_id'
-      );
+      _saveAllStatus();
       _handleRedirect();
     } catch (e) {
       Alert.show(text: e.toString());
     }
+  }
+
+  void _saveAllStatus() {
+    Entertainment.saveField(
+      value: widget.status.id,
+      fieldName: 'status_id'
+    );
+    _entityProvider.status = widget.status;
+    _entityProvider.isPendingPriority = Entertainment.isInProcessStatus();
   }
 
   //* #1 - Sí el estatus es de tipo -Media- llamamos al hanldeRedirect ya que no requiere mayor procesamiento
@@ -55,23 +61,19 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
   Future<void> _onMoreInfo() async {
     Navigator.of(context).pop();
     _entityProvider.shouldAddMoreInfo = true;
-    _entityProvider.isPendingPriority = Entertainment.isInProcessStatus();
     Redirect.redirectWithLoader(SeasonScreen.routeName, context);
   }
 
   Future<void> _onDenyMoreInfo() async {
     Navigator.of(context).pop();
-    _handleRedirect();
+    Redirect.redirectWithLoader(PriorityScreen.routeName, context);
   }
 
   //* 2A - Evaluate if the status is Pending or Post View
   //* And execute the redirect to the corresponding view
-  void _executeRedirect(){
-    _entityProvider.isPendingPriority = Entertainment.isInProcessStatus();
-    (_entityProvider.isPendingPriority) ?
-      Redirect.redirectWithLoader(PriorityScreen.routeName, context) :
-      Redirect.redirectWithLoader(ScoreScreen.routeName, context);
-  }
+  void _executeRedirect() => (_entityProvider.isPendingPriority) ?
+    Redirect.redirectWithLoader(PriorityScreen.routeName, context) :
+    Redirect.redirectWithLoader(ScoreScreen.routeName, context);
 
 
   /*
@@ -126,7 +128,8 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
           borderRadius: BorderRadius.circular(10),
           onTap: nextStep,
           splashColor: Colors.blue.shade50,
-          child: SizedBox(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             width: 200,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

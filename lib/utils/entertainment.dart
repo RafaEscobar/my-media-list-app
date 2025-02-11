@@ -16,5 +16,5 @@ class Entertainment {
     }
   }
 
-  static bool isInProcessStatus() =>  _entityProvider.mediaData['status'] == 'Pendiente' || _entityProvider.mediaData['status'] == 'En emisión';
+  static bool isInProcessStatus() =>  _entityProvider.status.status == 'Pendiente' || _entityProvider.status.status == 'En emisión';
 }

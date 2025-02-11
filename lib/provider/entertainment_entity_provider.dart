@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/main.dart';
+import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/main/details_screens.dart';
 import 'package:mymedialist/services/api_service.dart';
@@ -47,6 +48,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   bool _shouldAddMoreInfo = false;
   bool _isPendingPriority = false;
   File _temporaryImage = File('');
+  Status _status = Status();
 
   //* Getter y setter to _currentStep
   int get currentStep => _currentStep;
@@ -101,6 +103,13 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   File get temporaryImage => _temporaryImage;
   set temporaryImage(File newImage){
     _temporaryImage = newImage;
+    notifyListeners();
+  }
+
+  //* Getter y setter to _status
+  Status get status => _status;
+  set status(Status newStatus){
+    _status = newStatus;
     notifyListeners();
   }
 
