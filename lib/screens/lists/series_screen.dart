@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/main.dart';
-import 'package:mymedialist/models/media.dart';
-import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/models/saga.dart';
+import 'package:mymedialist/provider/saga_provider.dart';
 import 'package:mymedialist/widgets/general/media_card.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +16,8 @@ class SeriesScreen extends StatefulWidget {
 
 class _SeriesScreenState extends State<SeriesScreen> {
   final int _limit = 10;
-  final PagingController<int, Media> _pagingController = PagingController(firstPageKey: 1);
-  final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
+  final PagingController<int, Saga> _pagingController = PagingController(firstPageKey: 1);
+  final SagaProvider _sagaProvider = navigatorKey.currentState!.context.read<SagaProvider>();
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _SeriesScreenState extends State<SeriesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Media> serieList = await _mediaProvider.getMedia(
+      List<Saga> serieList = await _sagaProvider.getSaga(
         limit: _limit,
         page: pageKey,
         categoryId: CategoryEnum.series.identifier
@@ -58,7 +58,7 @@ class _SeriesScreenState extends State<SeriesScreen> {
           mainAxisSpacing: 10,
           childAspectRatio: 2/2.6
         ),
-        builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: ( BuildContext context, Media serie, int index) {
+        builderDelegate: PagedChildBuilderDelegate<Saga>(itemBuilder: ( BuildContext context, Saga serie, int index) {
           return Center(
             child: MediaCard(
               imagePath: serie.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),

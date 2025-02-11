@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/main.dart';
-import 'package:mymedialist/models/media.dart';
-import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/models/saga.dart';
+import 'package:mymedialist/provider/saga_provider.dart';
 import 'package:mymedialist/widgets/general/media_card.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +16,8 @@ class VideogamesScreens extends StatefulWidget {
 
 class _VideogamesScreensState extends State<VideogamesScreens> {
   final _limit = 10;
-  final PagingController<int, Media> _pagingController = PagingController(firstPageKey: 1);
-  final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
+  final PagingController<int, Saga> _pagingController = PagingController(firstPageKey: 1);
+  final SagaProvider _sagaProvider = navigatorKey.currentState!.context.read<SagaProvider>();
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _VideogamesScreensState extends State<VideogamesScreens> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Media> gameList = await _mediaProvider.getMedia(
+      List<Saga> gameList = await _sagaProvider.getSaga(
         limit: _limit,
         page: pageKey,
         categoryId: CategoryEnum.videogames.identifier
@@ -58,7 +58,7 @@ class _VideogamesScreensState extends State<VideogamesScreens> {
           mainAxisSpacing: 10,
           childAspectRatio: 2/2.6
         ),
-        builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: (BuildContext context, Media game, int index) {
+        builderDelegate: PagedChildBuilderDelegate<Saga>(itemBuilder: (BuildContext context, Saga game, int index) {
           return Center(
             child: MediaCard(
               imagePath: game.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
