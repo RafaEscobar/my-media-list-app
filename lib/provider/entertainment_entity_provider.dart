@@ -1,14 +1,11 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/app_provider.dart';
-import 'package:mymedialist/screens/main/details_screens.dart';
 import 'package:mymedialist/services/api_service.dart';
-import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:provider/provider.dart';
 
 class EntertainmentEntityProvider extends ChangeNotifier {
@@ -113,14 +110,10 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createMedia(BuildContext context) async {
-    try {
-      Response response = await _sendRequest(context);
-      if (context.mounted) _handleResponse(response, context);
-    } catch (e) {
-      Alert.show(text: e.toString());
-      throw Exception(e.toString());
-    }
+  Future<int> createMedia(BuildContext context) async {
+    Response response = await _sendRequest(context);
+    if (context.mounted) return _handleResponse(response, context);
+    throw Exception("Contexto no disponible");
   }
 
   Future<Response> _sendRequest(BuildContext context) async {
@@ -133,13 +126,13 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     );
   }
 
-  void _handleResponse(Response response, BuildContext context){
+  int _handleResponse(Response response, BuildContext context){
     if (response.statusCode == 201) {
-      if (context.mounted) context.goNamed(DetailsScreens.routeName, pathParameters: {'entityId': "${response.data['data']['id']}"});
+      return response.data['data']['id'];
     } else if (response.statusCode == 422) {
-      Alert.show(text: response.statusMessage!);
+      throw Exception('La solicitud presenta errores, error: ${response.statusCode}');
     } else {
-      Alert.show(text: "Error al intentar generar el registro, ${response.statusCode}");
+      throw Exception("Error al intentar generar el registro, ${response.statusCode}");
     }
   }
 

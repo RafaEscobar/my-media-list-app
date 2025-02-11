@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mymedialist/models/priority.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
+import 'package:mymedialist/screens/main/details_screens.dart';
 import 'package:mymedialist/utils/entertainment.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
@@ -12,12 +14,14 @@ class PriorityCard extends StatelessWidget {
 
   Future<void> _onSelectPriority(BuildContext context) async {
     try {
+      int currentId = 0;
       EntertainmentEntityProvider entityProvider = context.read<EntertainmentEntityProvider>();
       Entertainment.saveField(
         value: priority.id,
         fieldName: entityProvider.isPendingPriority ? 'pending_priority_id' : 'post_view_priority_id'
       );
-      await Loader.runLoad(asyncFunction: () async => await entityProvider.createMedia(context));
+      await Loader.runLoad(asyncFunction: () async => currentId = await entityProvider.createMedia(context));
+      if (context.mounted) if (currentId != 0) context.goNamed(DetailsScreens.routeName, pathParameters: {'entityId': "$currentId"});
     } catch (e) {
       Alert.show(text: e.toString());
     }
