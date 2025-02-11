@@ -29,7 +29,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   Map<String, dynamic> _sagaData = {
     'title': '',
     'num_caps': null,
-    'season': null,
+    'season': 1,
     'final_comment': '',
     'category_id': null,
     'status_id': null,

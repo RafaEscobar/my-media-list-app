@@ -11,6 +11,7 @@ class Button extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
     this.borderRadius = 10,
     this.buttonWidth = 100,
+    this.buttonHeight = 46,
     this.action,
     this.textWeight,
   });
@@ -24,12 +25,14 @@ class Button extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final double borderRadius;
   final double buttonWidth;
+  final double buttonHeight;
   final FontWeight? textWeight;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: buttonWidth,
+      height: buttonHeight,
       color: Colors.white,
       child: Material(
         color: background,
