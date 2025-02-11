@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiService {
   static Future<Response> request(
@@ -20,7 +21,7 @@ class ApiService {
       validateStatus: (status) {
         return true;
       },
-      baseUrl: "https://0e2d-189-136-124-21.ngrok-free.app/api"
+      baseUrl: dotenv.env['BASE_URL']!
     ));
 
     try {
