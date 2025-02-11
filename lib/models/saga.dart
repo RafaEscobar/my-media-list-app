@@ -31,7 +31,7 @@ class Saga {
     numCaps: json['num_caps'] ?? 0,
     season: json['season'] ?? 0,
     comment: json['final_comment'] ?? '',
-    score: json['score'].toDouble() ?? double.parse("0.0"),
+    score: json['score'] != null ? json['score'].toDouble() : double.parse("0.0"),
     categoryId: json['category_id'] ?? 0,
     statusId: json['status_id'] ?? 0,
     pendingPriorityId: json['pending_priority_id'] ?? 0,

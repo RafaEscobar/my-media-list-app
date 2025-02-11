@@ -58,7 +58,7 @@ class MediaCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '$score/10',
+                        score != 0 ? '$score/10' : '---' ,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w800,
