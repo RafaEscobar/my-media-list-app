@@ -37,7 +37,7 @@ class _SeasonScreenState extends State<SeasonScreen> with CancelCreationMixin {
         value: !openModal ? _currentValue : int.parse(_formKey.currentState!.fields['season']!.value.toString()),
         fieldName: 'season'
       );
-      await Redirect.redirectWithLoader(NumCaps.routeName, context);
+      await Redirect.redirectWithLoader(CapsStep.routeName, context);
     } catch (e) {
       Alert.show(text: e.toString());
     }

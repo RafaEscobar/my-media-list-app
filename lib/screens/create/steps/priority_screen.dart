@@ -30,7 +30,7 @@ class PriorityScreen extends StatelessWidget with CancelCreationMixin {
     EntertainmentEntityProvider entityProvider = context.read<EntertainmentEntityProvider>();
     if (entityProvider.type == TypeEnum.saga.name) {
       await Redirect.redirectWithLoader(
-        entityProvider.shouldAddMoreInfo ? NumCaps.routeName : StatusScreen.routeName,
+        entityProvider.shouldAddMoreInfo ? CapsStep.routeName : StatusScreen.routeName,
         context
       );
     } else if (entityProvider.type == TypeEnum.media.name) {

@@ -53,7 +53,7 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
       await Redirect.redirectWithLoader(
         (_entityProvider.type == TypeEnum.media.name) ? ScoreScreen.routeName :
           (_entityProvider.shouldAddMoreInfo) ?
-            NumCaps.routeName :
+            CapsStep.routeName :
             StatusScreen.routeName
       , context);
   }

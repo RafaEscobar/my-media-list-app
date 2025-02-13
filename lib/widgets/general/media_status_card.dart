@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
+import 'package:mymedialist/screens/create/steps/caps_step.dart';
 import 'package:mymedialist/screens/create/steps/comment_step.dart';
 import 'package:mymedialist/screens/create/steps/priority_screen.dart';
 import 'package:mymedialist/screens/create/steps/score_step.dart';
@@ -62,7 +63,9 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
   Future<void> _onMoreInfo() async {
     Navigator.of(context).pop();
     _entityProvider.shouldAddMoreInfo = true;
-    Redirect.redirectWithLoader(SeasonScreen.routeName, context);
+    (_entityProvider.category == 'Mangas') ?
+      Redirect.redirectWithLoader(CapsStep.routeName, context) :
+      Redirect.redirectWithLoader(SeasonScreen.routeName, context);
   }
 
   Future<void> _onDenyMoreInfo() async {

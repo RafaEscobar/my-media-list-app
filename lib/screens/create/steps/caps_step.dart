@@ -19,15 +19,15 @@ import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
-class NumCaps extends StatefulWidget {
-  const NumCaps({super.key});
+class CapsStep extends StatefulWidget {
+  const CapsStep({super.key});
   static const String routeName = 'num-caps';
 
   @override
-  State<NumCaps> createState() => _NumCapsState();
+  State<CapsStep> createState() => _CapsStepState();
 }
 
-class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
+class _CapsStepState extends State<CapsStep> with CancelCreationMixin {
   late EntertainmentEntityProvider _entityProvider;
   final FocusNode _capsFocusNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
@@ -64,9 +64,11 @@ class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
     }
   }
 
-  Future<void> _navigateToPreviousStep() async => (_entityProvider.category == 'Manga') ?
+  Future<void> _navigateToPreviousStep() async {
+    (_entityProvider.category == 'Mangas') ?
     await Redirect.redirectWithLoader(StatusScreen.routeName, context) :
     await Redirect.redirectWithLoader(SeasonScreen.routeName, context);
+  }
 
   @override
   void initState() {

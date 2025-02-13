@@ -61,9 +61,9 @@ class AppRoute {
                 builder: ( BuildContext context, GoRouterState state ) => PriorityScreen()
               ),
               GoRoute(
-                path: NumCaps.routeName,
-                name: NumCaps.routeName,
-                builder: ( BuildContext context, GoRouterState state) => const NumCaps(),
+                path: CapsStep.routeName,
+                name: CapsStep.routeName,
+                builder: ( BuildContext context, GoRouterState state) => const CapsStep(),
               ),
               GoRoute(
                 path: SeasonScreen.routeName,
