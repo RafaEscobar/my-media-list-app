@@ -21,7 +21,7 @@ class Saga extends Entity{
   factory Saga.fromJson(Map<String, dynamic> json) => Saga(
     id: json['id'] ?? 0,
     title: json['title'] ?? '',
-    score: json['score'].toDouble() ?? double.parse('0.0'),
+    score: json['score'] != null ? json['score'].toDouble() : double.parse('0.0'),
     comment: json['final_comment'] ?? '' ,
     categoryId: json['category_id'] ?? 0 ,
     statusId: json['status_id'] ?? 0,

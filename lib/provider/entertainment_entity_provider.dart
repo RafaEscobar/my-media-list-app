@@ -15,7 +15,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   //* Data to create a media register
   Map<String, dynamic> _mediaData = {
     "title": '',
-    "score": 5,
+    "score": null,
     "comment": '',
     "category_id": null,
     "status_id": null,
@@ -29,6 +29,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   Map<String, dynamic> _sagaData = {
     'title': '',
     'num_caps': 1,
+    "score": null,
     'season': 1,
     'final_comment': '',
     'category_id': null,
@@ -140,7 +141,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     _currentStep = 0;
     _mediaData = {
       "title": '',
-      "score": 5,
+      "score": null,
       "comment": '',
       "category_id": null,
       "status_id": null,
@@ -152,6 +153,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     _sagaData = {
       'title': '',
       'num_caps': 1,
+      "score": null,
       'season': 1,
       'final_comment': '',
       'category_id': null,

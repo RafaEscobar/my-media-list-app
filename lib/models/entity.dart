@@ -24,7 +24,7 @@ class Entity {
   factory Entity.fromJson(Map<String, dynamic> json) => Entity(
     id: json['id'] ?? 0,
     title: json['title'] ?? '',
-    score: json['score'].toDouble() ?? double.parse('0.0'),
+    score: json['score'] != null ? json['score'].toDouble() : double.parse('0.0'),
     comment: json['comment'] ?? '' ,
     categoryId: json['category_id'] ?? 0,
     statusId: json['status_id'] ?? 0,
