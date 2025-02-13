@@ -74,7 +74,7 @@ class _CapsStepState extends State<CapsStep> with CancelCreationMixin {
   void initState() {
     super.initState();
     _entityProvider = context.read<EntertainmentEntityProvider>();
-    _currentValue = (_maxValue >= context.read<EntertainmentEntityProvider>().sagaData['num_caps']) ?
+    _currentValue = (context.read<EntertainmentEntityProvider>().sagaData['num_caps'] != null && _maxValue >= context.read<EntertainmentEntityProvider>().sagaData['num_caps']) ?
       context.read<EntertainmentEntityProvider>().sagaData['num_caps'] : 1;
   }
 

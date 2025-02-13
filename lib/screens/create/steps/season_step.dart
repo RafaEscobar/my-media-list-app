@@ -56,9 +56,7 @@ class _SeasonScreenState extends State<SeasonScreen> with CancelCreationMixin {
   @override
   void initState() {
     super.initState();
-    dynamic nose = context.read<EntertainmentEntityProvider>().sagaData['season'];
-    print(nose);
-    _currentValue = (_maxValue >= context.read<EntertainmentEntityProvider>().sagaData['season']) ?
+    _currentValue = (context.read<EntertainmentEntityProvider>().sagaData['season'] != null &&_maxValue >= context.read<EntertainmentEntityProvider>().sagaData['season']) ?
       context.read<EntertainmentEntityProvider>().sagaData['season'] : 1;
   }
 

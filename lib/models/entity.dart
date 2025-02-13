@@ -3,21 +3,23 @@ class Entity {
   final String title;
   final double score;
   final String comment;
-  final int categoryId;
-  final int statusId;
-  final int? pendingPriorityId;
-  final int? postViewPriorityId;
+  final String category;
+  final String status;
+  final String? pendingPriority;
+  final String? postViewPriority;
   final String image;
+  final String? position;
 
   Entity({
     this.id = 0,
     required this.title,
     required this.score,
     required this.comment,
-    required this.categoryId,
-    required this.statusId,
-    this.pendingPriorityId,
-    this.postViewPriorityId,
+    required this.category,
+    required this.status,
+    this.pendingPriority,
+    this.postViewPriority,
+    this.position,
     required this.image
   });
 
@@ -26,10 +28,11 @@ class Entity {
     title: json['title'] ?? '',
     score: json['score'] != null ? json['score'].toDouble() : double.parse('0.0'),
     comment: json['comment'] ?? '' ,
-    categoryId: json['category_id'] ?? 0,
-    statusId: json['status_id'] ?? 0,
-    pendingPriorityId: json['pending_priority_id'],
-    postViewPriorityId: json['post_view_priority_id'],
+    category: json['category'] ?? '',
+    status: json['status'] ?? '',
+    pendingPriority: json['pending_priority'],
+    postViewPriority: json['post_view_priority'],
+    position: json['position'],
     image: json['imageUrl'] ?? ''
   );
 
@@ -38,10 +41,11 @@ class Entity {
     'title': title,
     'score': score,
     'comment': comment,
-    'category_id': categoryId,
-    'status_id': statusId,
-    'pending_priority_id': pendingPriorityId,
-    'post_view_priority_id': postViewPriorityId,
+    'category_id': category,
+    'status_id': status,
+    'pending_priority_id': pendingPriority,
+    'post_view_priority_id': postViewPriority,
+    'position': position,
     'image': image,
   };
 }
