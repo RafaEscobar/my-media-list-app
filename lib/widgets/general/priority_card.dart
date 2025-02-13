@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/models/priority.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
-import 'package:mymedialist/screens/main/details_screens.dart';
+import 'package:mymedialist/screens/details/entity_details_screens.dart';
 import 'package:mymedialist/utils/entertainment.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
@@ -22,7 +22,7 @@ class PriorityCard extends StatelessWidget {
       );
       await Loader.runLoad(asyncFunction: () async => currentId = await entityProvider.createMedia(context));
       entityProvider.deleteData();
-      if (context.mounted) if (currentId != 0) context.goNamed(DetailsScreens.routeName, pathParameters: {'entityId': "$currentId"});
+      if (context.mounted) if (currentId != 0) context.goNamed(EntityDetailsScreens.routeName, pathParameters: {'entityId': "$currentId"});
     } catch (e) {
       Alert.show(text: e.toString());
     }

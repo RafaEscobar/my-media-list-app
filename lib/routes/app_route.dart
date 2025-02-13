@@ -12,7 +12,7 @@ import 'package:mymedialist/screens/create/steps/season_step.dart';
 import 'package:mymedialist/screens/create/steps/status_step.dart';
 import 'package:mymedialist/screens/create/steps/title_step.dart';
 import 'package:mymedialist/screens/create/type_screen.dart';
-import 'package:mymedialist/screens/main/details_screens.dart';
+import 'package:mymedialist/screens/details/entity_details_screens.dart';
 import 'package:mymedialist/screens/main/home_screen.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/services/preferences.dart';
@@ -71,9 +71,9 @@ class AppRoute {
                 builder: ( BuildContext context, GoRouterState state) => const SeasonScreen(),
               ),
               GoRoute(
-                path: "${DetailsScreens.routeName}/:entityId",
-                name: DetailsScreens.routeName,
-                builder: ( BuildContext context, GoRouterState state) => DetailsScreens(entityId: int.parse(state.pathParameters['entityId']!),),
+                path: "${EntityDetailsScreens.routeName}/:entityId",
+                name: EntityDetailsScreens.routeName,
+                builder: ( BuildContext context, GoRouterState state) => EntityDetailsScreens(entityId: int.parse(state.pathParameters['entityId']!),),
               ),
               GoRoute(
                 path: AddImageScreen.routeName,

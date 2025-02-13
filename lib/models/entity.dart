@@ -1,4 +1,4 @@
-class Media {
+class Entity {
   final int id;
   final String title;
   final double score;
@@ -9,7 +9,7 @@ class Media {
   final int? postViewPriorityId;
   final String image;
 
-  Media({
+  Entity({
     this.id = 0,
     required this.title,
     required this.score,
@@ -21,28 +21,27 @@ class Media {
     required this.image
   });
 
-  factory Media.fromJson(Map<String, dynamic> json) => Media(
+  factory Entity.fromJson(Map<String, dynamic> json) => Entity(
     id: json['id'] ?? 0,
     title: json['title'] ?? '',
-    score: json['score'].toDouble() ?? double.parse("0.0"),
-    comment: json[''] ?? '',
-    categoryId: json['category'] ?? 0,
-    statusId: json['status'] ?? 0,
+    score: json['score'].toDouble() ?? double.parse('0.0'),
+    comment: json['comment'] ?? '' ,
+    categoryId: json['category_id'] ?? 0,
+    statusId: json['status_id'] ?? 0,
     pendingPriorityId: json['pending_priority_id'],
     postViewPriorityId: json['post_view_priority_id'],
-    image: json['imageUrl'] ?? '',
+    image: json['imageUrl'] ?? ''
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "score": score,
-    "comment": comment,
-    "category_id": categoryId,
-    "status_id": statusId,
-    "pending_priority_id": pendingPriorityId,
-    "post_view_priority_id": postViewPriorityId,
-    "image": image
+    'id': id,
+    'title': title,
+    'score': score,
+    'comment': comment,
+    'category_id': categoryId,
+    'status_id': statusId,
+    'pending_priority_id': pendingPriorityId,
+    'post_view_priority_id': postViewPriorityId,
+    'image': image,
   };
-
 }
