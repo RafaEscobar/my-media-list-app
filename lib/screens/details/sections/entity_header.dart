@@ -68,7 +68,7 @@ class EntityHeader extends StatelessWidget {
                   children: [
                     (currentEntity as Saga).numCaps != 0 ?
                     const Text('Capitulos: 12', style: TextStyle(fontSize: 12), maxLines: 2,) : Container(),
-                    (currentEntity as Saga).season != 0 ?
+                    ((currentEntity as Saga).season != 0) ?
                     const Text('Temporadas: 2', style: TextStyle(fontSize: 12), maxLines: 2,) : Container()
                   ],
                 ) : Container()

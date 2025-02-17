@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
-import 'package:mymedialist/screens/create/type_screen.dart';
 import 'package:mymedialist/screens/details/entity_details_screens.dart';
-//import 'package:mymedialist/screens/details/entity_details_screens.dart';
 import 'package:mymedialist/screens/main/grades_screen.dart';
 import 'package:mymedialist/screens/main/home_screen.dart';
 import 'package:mymedialist/screens/main/pendings_screen.dart';

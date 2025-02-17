@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/forms/form_title.dart';
 
 class EntityBody extends StatelessWidget{
-  const EntityBody({super.key});
+  const EntityBody({
+    super.key,
+    required this.currentEntity
+  });
+  final Entity currentEntity;
 
   @override
   Widget build(BuildContext context){
@@ -14,7 +19,7 @@ class EntityBody extends StatelessWidget{
       child: Column(
         spacing: 30,
         children: [
-          FormTitle(title: 'Titulo de la media', maxLines: 2,),
+          FormTitle(title: currentEntity.title, maxLines: 2,),
           Container(
             decoration: BoxDecoration(
               color: AppTheme.primary,
@@ -23,9 +28,9 @@ class EntityBody extends StatelessWidget{
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text("Categoria", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300, color: Colors.white),),
-                Text("/", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w200, color: Colors.white),),
-                Text("17/02/2025", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300, color: Colors.white),),
+                Text(currentEntity.category, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w300, color: Colors.white),),
+                const Text("/", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w200, color: Colors.white),),
+                Text("ate", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300, color: Colors.white),),
               ],
             ),
           ),

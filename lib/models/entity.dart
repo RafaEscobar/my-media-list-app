@@ -5,6 +5,7 @@ class Entity {
   final String comment;
   final String category;
   final String status;
+  final String creationDate; 
   final String? pendingPriority;
   final String? postViewPriority;
   final String image;
@@ -17,6 +18,7 @@ class Entity {
     required this.comment,
     required this.category,
     required this.status,
+    required this.creationDate,
     this.pendingPriority,
     this.postViewPriority,
     this.position,
@@ -30,6 +32,7 @@ class Entity {
     comment: json['comment'] ?? '' ,
     category: json['category'] ?? '',
     status: json['status'] ?? '',
+    creationDate: json['creation_date'] ?? '',
     pendingPriority: json['pending_priority'],
     postViewPriority: json['post_view_priority'],
     position: json['position'],
@@ -43,6 +46,7 @@ class Entity {
     'comment': comment,
     'category_id': category,
     'status_id': status,
+    'creationDate': creationDate,
     'pending_priority_id': pendingPriority,
     'post_view_priority_id': postViewPriority,
     'position': position,

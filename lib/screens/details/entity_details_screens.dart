@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/screens/details/sections/entity_body.dart';
 import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
@@ -6,10 +7,10 @@ import 'package:mymedialist/screens/details/sections/entity_header.dart';
 class EntityDetailsScreens extends StatelessWidget {
   const EntityDetailsScreens({
     super.key,
-    this.entityId
+    required this.entity
   });
   static const String routeName = 'details-screen';
-  final int? entityId;
+  final Entity entity;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +18,10 @@ class EntityDetailsScreens extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
-          child: const Column(
+          child: Column(
             children: [
-              EntityHeader(),
-              EntityBody(),
+              EntityHeader(currentEntity: entity,),
+              EntityBody(currentEntity: entity,),
               EntityCorousel()
             ],
           ),
