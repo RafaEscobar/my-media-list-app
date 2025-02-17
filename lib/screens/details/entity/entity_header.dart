@@ -4,8 +4,10 @@ import 'package:mymedialist/models/saga.dart';
 import 'package:mymedialist/widgets/general/forms/form_title.dart';
 
 class EntityHeader extends StatelessWidget {
-  const EntityHeader({super.key, required this.currentEntity});
-  final Entity currentEntity;
+  const EntityHeader({
+    super.key,  this.currentEntity
+  });
+  final Entity? currentEntity;
 
   @override
   Widget build(BuildContext context){
@@ -38,25 +40,25 @@ class EntityHeader extends StatelessWidget {
                     const FormTitle(title: 'Calificación', textSize: 24,),
                     Row(
                       children: [
-                        Text("${currentEntity.score}", style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w600),),
+                        Text('10', style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w600),),
                         const Icon(Icons.grade_outlined)
                       ],
                     ),
                   ],
                 ),
-                currentEntity is Saga && currentEntity.position != null ?
+                //*currentEntity is Saga && currentEntity.position != null ?
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const FormTitle(title: 'Posición', textSize: 20,),
-                      Text('#${currentEntity.position}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
+                      Text('#11', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
                     ],
-                  ) : Container(),
+                  ) ,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const FormTitle(title: 'Estatus', textSize: 20,),
-                    Text(currentEntity.status, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
+                    Text("status", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
                   ],
                 ),
                 const Row(

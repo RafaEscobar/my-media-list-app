@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mymedialist/screens/details/entity/entity_body.dart';
+import 'package:mymedialist/screens/details/entity/entity_header.dart';
 
 class EntityDetailsScreens extends StatelessWidget {
   const EntityDetailsScreens({
@@ -15,7 +17,8 @@ class EntityDetailsScreens extends StatelessWidget {
         padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
         child: const Column(
           children: [
-            
+            EntityHeader(),
+            EntityBody()
           ],
         ),
       )
