@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mymedialist/screens/details/entity/entity_body.dart';
-import 'package:mymedialist/screens/details/entity/entity_header.dart';
+import 'package:mymedialist/screens/details/sections/entity_body.dart';
+import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
+import 'package:mymedialist/screens/details/sections/entity_header.dart';
 
 class EntityDetailsScreens extends StatelessWidget {
   const EntityDetailsScreens({
@@ -13,13 +14,16 @@ class EntityDetailsScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
-        child: const Column(
-          children: [
-            EntityHeader(),
-            EntityBody()
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
+          child: const Column(
+            children: [
+              EntityHeader(),
+              EntityBody(),
+              EntityCorousel()
+            ],
+          ),
         ),
       )
     );

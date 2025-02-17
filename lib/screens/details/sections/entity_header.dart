@@ -5,9 +5,10 @@ import 'package:mymedialist/widgets/general/forms/form_title.dart';
 
 class EntityHeader extends StatelessWidget {
   const EntityHeader({
-    super.key,  this.currentEntity
+    super.key,
+    required this.currentEntity
   });
-  final Entity? currentEntity;
+  final Entity currentEntity;
 
   @override
   Widget build(BuildContext context){
@@ -23,7 +24,7 @@ class EntityHeader extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
-                  'https://lumiere-a.akamaihd.net/v1/images/romulus_payoff_poster_las_bc34960b.jpeg?region=0,0,770,1100',
+                  currentEntity.image,
                   fit: BoxFit.contain,
                 )
               )
@@ -40,34 +41,37 @@ class EntityHeader extends StatelessWidget {
                     const FormTitle(title: 'Calificación', textSize: 24,),
                     Row(
                       children: [
-                        Text('10', style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w600),),
+                        Text("${currentEntity.score}", style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w600),),
                         const Icon(Icons.grade_outlined)
                       ],
                     ),
                   ],
                 ),
-                //*currentEntity is Saga && currentEntity.position != null ?
+                currentEntity is Saga && currentEntity.position != null ?
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const FormTitle(title: 'Posición', textSize: 20,),
-                      Text('#11', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
+                      Text('#${currentEntity.position}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
                     ],
-                  ) ,
+                  ) : Container(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const FormTitle(title: 'Estatus', textSize: 20,),
-                    Text("status", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
+                    Text(currentEntity.status, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
                   ],
                 ),
-                const Row(
+                currentEntity is Saga ?
+                Row(
                   spacing: 10,
                   children: [
-                    Text('Capitulos: 12', style: TextStyle(fontSize: 12), maxLines: 2,),
-                    Text('Temporadas: 2', style: TextStyle(fontSize: 12), maxLines: 2,),
+                    (currentEntity as Saga).numCaps != 0 ?
+                    const Text('Capitulos: 12', style: TextStyle(fontSize: 12), maxLines: 2,) : Container(),
+                    (currentEntity as Saga).season != 0 ?
+                    const Text('Temporadas: 2', style: TextStyle(fontSize: 12), maxLines: 2,) : Container()
                   ],
-                )
+                ) : Container()
               ],
             ),
           )
