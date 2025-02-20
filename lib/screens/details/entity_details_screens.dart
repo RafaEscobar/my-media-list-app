@@ -22,7 +22,7 @@ class EntityDetailsScreens extends StatelessWidget {
             children: [
               EntityHeader(currentEntity: entity,),
               EntityBody(currentEntity: entity,),
-              EntityCorousel()
+              const EntityCorousel()
             ],
           ),
         ),

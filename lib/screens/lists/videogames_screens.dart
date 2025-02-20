@@ -60,11 +60,7 @@ class _VideogamesScreensState extends State<VideogamesScreens> {
         ),
         builderDelegate: PagedChildBuilderDelegate<Entity>(itemBuilder: (BuildContext context, Entity game, int index) {
           return Center(
-            child: MediaCard(
-              imagePath: game.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
-              name: game.title,
-              score: game.score
-            ),
+            child: MediaCard(entity: game,),
           );
         }),
       ),

@@ -60,11 +60,7 @@ class _SeriesScreenState extends State<SeriesScreen> {
         ),
         builderDelegate: PagedChildBuilderDelegate<Saga>(itemBuilder: ( BuildContext context, Saga serie, int index) {
           return Center(
-            child: MediaCard(
-              imagePath: serie.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
-              name: serie.title,
-              score: serie.score
-            ),
+            child: MediaCard(entity: serie),
           );
         }),
       ),

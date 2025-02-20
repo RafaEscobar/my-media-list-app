@@ -56,11 +56,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
         ),
         builderDelegate: PagedChildBuilderDelegate<Saga>(itemBuilder: (BuildContext context, Saga anime, int index) {
           return Center(
-            child: MediaCard(
-              imagePath: anime.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
-              name: anime.title,
-              score: anime.score,
-            ),
+            child: MediaCard(entity: anime),
           );
         },)
       )

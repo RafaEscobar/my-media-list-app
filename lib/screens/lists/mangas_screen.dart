@@ -60,11 +60,7 @@ class _MangasScreenState extends State<MangasScreen> {
         ),
         builderDelegate: PagedChildBuilderDelegate<Saga>(itemBuilder: ( BuildContext context, Saga manga, int index) {
           return Center(
-            child: MediaCard(
-              imagePath: manga.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
-              name: manga.title,
-              score: manga.score
-            ),
+            child: MediaCard(entity: manga),
           );
         }),
       ),

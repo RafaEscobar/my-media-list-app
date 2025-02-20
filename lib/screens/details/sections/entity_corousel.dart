@@ -14,7 +14,7 @@ class EntityCorousel extends StatelessWidget{
             fit: BoxFit.contain,
           ),
         ),
-        SizedBox(height: 20,)
+        const SizedBox(height: 20,)
       ],
     );
   }

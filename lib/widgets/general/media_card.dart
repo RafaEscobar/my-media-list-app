@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 
 class MediaCard extends StatelessWidget {
   const MediaCard({
     super.key,
-    required this.imagePath,
-    required this.name,
-    required this.score,
+    required this.entity
   });
-  final String imagePath;
-  final String name;
-  final double score;
+  final Entity entity;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class MediaCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
-                  imagePath,
+                  entity.image,
                   fit: BoxFit.contain,
                 )
               ),
@@ -58,7 +55,7 @@ class MediaCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        score != 0 ? '$score/10' : '---' ,
+                        entity.score != 0 ? '${entity.score}/10' : '---' ,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w800,
@@ -86,7 +83,7 @@ class MediaCard extends StatelessWidget {
                 ),
                 width: double.infinity,
                 child: Text(
-                  name,
+                  entity.title,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
