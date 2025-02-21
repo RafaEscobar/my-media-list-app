@@ -29,13 +29,14 @@ class _AnimesScreenState extends State<AnimesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Saga> sagaList = await sagaProvider.getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.animes.identifier);
-      bool isLastPage = sagaList.length < _limit;
+      SagaProvider sagaProvider = context.read<SagaProvider>();
+      await sagaProvider.getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.animes.identifier);
+      bool isLastPage = sagaProvider.sagaList.length < _limit;
       if (isLastPage) {
-        _pagingController.appendLastPage(sagaList);
+        _pagingController.appendLastPage(sagaProvider.sagaList);
       } else {
         int nextPageKey = ++pageKey;
-        _pagingController.appendPage(sagaList, nextPageKey);
+        _pagingController.appendPage(sagaProvider.sagaList, nextPageKey);
       }
     } catch (e) {
       throw Exception(e.toString());

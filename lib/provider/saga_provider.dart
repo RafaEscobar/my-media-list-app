@@ -12,21 +12,20 @@ class SagaProvider extends ChangeNotifier{
   final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
 
   //* General Getters and Setters
-  List<Saga> get mediaList => _sagaList;
-  set mediaList(List<Saga> newSagaList){
+  List<Saga> get sagaList => _sagaList;
+  set sagaList(List<Saga> newSagaList){
     _sagaList = newSagaList;
     notifyListeners();
   }
 
-  Future<List<Saga>> getSaga({ required int limit, required int page, int? categoryId } ) async {
+  Future<void> getSaga({ required int limit, required int page, int? categoryId } ) async {
     try {
+      _cleanList();
       Response response = await ApiService.request('/sagas?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
       if (response.statusCode == 200) {
-        List<Saga> mediaList = [];
         for( Map<String, dynamic> sagaJson in response.data['data'] ) {
-          mediaList.add(Saga.fromJson(sagaJson));
+          sagaList.add(Saga.fromJson(sagaJson));
         }
-        return mediaList;
       } else {
         Alert.show(text: 'Error al obtener el contenido.');
         throw Exception();
@@ -35,5 +34,7 @@ class SagaProvider extends ChangeNotifier{
       throw Exception(e.toString());
     }
   }
+
+  void _cleanList() => sagaList = [];
 
 }
