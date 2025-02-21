@@ -29,17 +29,18 @@ class _VideogamesScreensState extends State<VideogamesScreens> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Entity> gameList = await _mediaProvider.getMedia(
+      MediaProvider mediaProvider = context.read<MediaProvider>();
+      await _mediaProvider.getMedia(
         limit: _limit,
         page: pageKey,
         categoryId: CategoryEnum.videogames.identifier
       );
-      bool isLastPage = gameList.length < _limit;
+      bool isLastPage = mediaProvider.mediaList.length < _limit;
       if (isLastPage) {
-        _pagingController.appendLastPage(gameList);
+        _pagingController.appendLastPage(mediaProvider.mediaList);
       } else {
         int nextPageKey = ++pageKey;
-        _pagingController.appendPage(gameList, nextPageKey);
+        _pagingController.appendPage(mediaProvider.mediaList, nextPageKey);
       }
     } catch (e) {
       throw Exception(e.toString());

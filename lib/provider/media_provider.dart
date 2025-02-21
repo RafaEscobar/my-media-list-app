@@ -21,7 +21,7 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<List<Entity>> getMedia({ required int limit, required int page, int? categoryId } ) async {
+  Future<void> getMedia({ required int limit, required int page, int? categoryId } ) async {
     try {
       Response response = await ApiService.request('/medias?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
       if (response.statusCode == 200) {
@@ -29,7 +29,6 @@ class MediaProvider extends ChangeNotifier{
         for( Map<String, dynamic> mediaJson in response.data['data'] ) {
           mediaList.add(Entity.fromJson(mediaJson));
         }
-        return mediaList;
       } else {
         Alert.show(text: 'Error al obtener el contenido.');
         throw Exception();

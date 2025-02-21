@@ -29,17 +29,18 @@ class _MoviesScreenState extends State<MoviesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Entity> movieList = await _mediaProvider.getMedia(
+      MediaProvider mediaProvider = context.read<MediaProvider>();
+      await _mediaProvider.getMedia(
         limit: _limit,
         page: pageKey,
         categoryId: CategoryEnum.movies.identifier
       );
-      bool isLastPage = movieList.length < _limit;
+      bool isLastPage = mediaProvider.mediaList.length < _limit;
       if (isLastPage) {
-        _pagingController.appendLastPage(movieList);
+        _pagingController.appendLastPage(mediaProvider.mediaList);
       } else {
         int nextPageKey = ++pageKey;
-        _pagingController.appendPage(movieList, nextPageKey);
+        _pagingController.appendPage(mediaProvider.mediaList, nextPageKey);
       }
     } catch (e) {
       throw Exception(e.toString());
