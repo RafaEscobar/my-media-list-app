@@ -4,7 +4,6 @@ import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/provider/saga_provider.dart';
 import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
-import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:provider/provider.dart';
 
 class EntityDetailsScreens extends StatefulWidget {
@@ -28,13 +27,10 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
 
   void _getEntity() {
     try {
-      if (widget.entity != null ) {
-        entity = widget.type == TypeEnum.media.name ?
-          context.read<MediaProvider>().mediaList.firstWhere((media) => media.id == int.parse(widget.entityId!)) :
-          context.read<SagaProvider>().sagaList.firstWhere((saga) => saga.id == int.parse(widget.entityId!));
-      } else {
-        entity = widget.entity!;
-      }
+      if (widget.entity == null) entity = widget.entity!;
+      entity = widget.type == TypeEnum.media.name ?
+        context.read<MediaProvider>().mediaList.firstWhere((media) => media.id == int.parse(widget.entityId!)) :
+        context.read<SagaProvider>().sagaList.firstWhere((saga) => saga.id == int.parse(widget.entityId!));
     } catch (e) {
       print(e.toString());
     }

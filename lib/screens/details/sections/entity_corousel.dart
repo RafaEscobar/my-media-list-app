@@ -7,6 +7,7 @@ class EntityCorousel extends StatelessWidget{
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const Text("De aqui hacia abajo es el carousel"),
         SizedBox(
           width: 300,
           child: Image.network(
