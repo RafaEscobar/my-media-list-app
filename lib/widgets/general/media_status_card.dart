@@ -63,7 +63,7 @@ class _MediaStatusCardState extends State<MediaStatusCard> {
   Future<void> _onMoreInfo() async {
     Navigator.of(context).pop();
     _entityProvider.shouldAddMoreInfo = true;
-    (_entityProvider.category == 'Mangas') ?
+    (_entityProvider.category == 'Manga') ?
       Redirect.redirectWithLoader(CapsStep.routeName, context) :
       Redirect.redirectWithLoader(SeasonScreen.routeName, context);
   }

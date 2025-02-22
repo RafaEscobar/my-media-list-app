@@ -16,10 +16,14 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   int _currentStep = 0;
 
   //* Data to create a media register
-  Map<String, dynamic> _mediaData = { "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
+  Map<String, dynamic> _mediaData = {"user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
 
   //* Data to create a saga register
-  Map<String, dynamic> _sagaData = { "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
+  Map<String, dynamic> _sagaData = {
+    "num_caps": 1,
+    "season": 1,
+    "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id
+  };
 
   //* Important variables to the create flow
   String _category = '';
@@ -98,7 +102,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     if (context.mounted) nose = _handleResponse(response, context);
     print(nose);
     return nose!;
-    throw Exception("Contexto no disponible");
+    throw Exception("Contexto no disponible");  
   }
 
   Future<Response> _sendRequest(BuildContext context) async {
@@ -131,8 +135,8 @@ class EntertainmentEntityProvider extends ChangeNotifier {
 
   void deleteData(){
     _currentStep = 0;
-    _mediaData = { "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
-    _sagaData = { "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
+    _mediaData = {"user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
+    _sagaData = {"num_caps": 1, "season": 1, "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
     _type = '';
     _category = '';
     _shouldAddMoreInfo = false;
