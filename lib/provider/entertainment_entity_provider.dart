@@ -102,7 +102,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     if (context.mounted) nose = _handleResponse(response, context);
     print(nose);
     return nose!;
-    throw Exception("Contexto no disponible");  
+    throw Exception("Contexto no disponible");
   }
 
   Future<Response> _sendRequest(BuildContext context) async {
@@ -118,7 +118,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   Entity _handleResponse(Response response, BuildContext context){
     if (response.statusCode == 201) {
       try {
-        dynamic nose = Entity.fromJson(response.data['data']);
+        dynamic nose = Entity.fromJson(response.data['data']); 
         print(nose);
         //Entity nose = (type == TypeEnum.media.name) ? Entity.fromJson(nose) : Saga.fromJson(nose);
         return nose;
