@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/enum/category_enum.dart';
-import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/widgets/general/media_card.dart';
@@ -17,7 +16,6 @@ class MoviesScreen extends StatefulWidget {
 class _MoviesScreenState extends State<MoviesScreen> {
   final int _limit = 10;
   final PagingController<int, Entity> _pagingController = PagingController(firstPageKey: 1);
-  final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
 
   @override
   void initState() {
@@ -29,18 +27,13 @@ class _MoviesScreenState extends State<MoviesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      MediaProvider mediaProvider = context.read<MediaProvider>();
-      await _mediaProvider.getMedia(
-        limit: _limit,
-        page: pageKey,
-        categoryId: CategoryEnum.movies.identifier
-      );
-      bool isLastPage = mediaProvider.mediaList.length < _limit;
+      List<Entity> mediaList = await context.read<MediaProvider>().getMedia(limit: _limit, page: pageKey, categoryId: CategoryEnum.movies.identifier);
+      bool isLastPage = mediaList.length < _limit;
       if (isLastPage) {
-        _pagingController.appendLastPage(mediaProvider.mediaList);
+        _pagingController.appendLastPage(mediaList);
       } else {
         int nextPageKey = ++pageKey;
-        _pagingController.appendPage(mediaProvider.mediaList, nextPageKey);
+        _pagingController.appendPage(mediaList, nextPageKey);
       }
     } catch (e) {
       throw Exception(e.toString());

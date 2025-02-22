@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/enum/category_enum.dart';
-import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/saga.dart';
 import 'package:mymedialist/provider/saga_provider.dart';
 import 'package:mymedialist/widgets/general/media_card.dart';
@@ -17,7 +16,6 @@ class SeriesScreen extends StatefulWidget {
 class _SeriesScreenState extends State<SeriesScreen> {
   final int _limit = 10;
   final PagingController<int, Saga> _pagingController = PagingController(firstPageKey: 1);
-  final SagaProvider _sagaProvider = navigatorKey.currentState!.context.read<SagaProvider>();
 
   @override
   void initState() {
@@ -29,18 +27,13 @@ class _SeriesScreenState extends State<SeriesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      SagaProvider sagaProvider = context.read<SagaProvider>();
-      await _sagaProvider.getSaga(
-        limit: _limit,
-        page: pageKey,
-        categoryId: CategoryEnum.series.identifier
-      );
-      bool isLastPage = sagaProvider.sagaList.length < _limit;
+      List<Saga> sagaList = await context.read<SagaProvider>().getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.series.identifier);
+      bool isLastPage = sagaList.length < _limit;
       if (isLastPage) {
-        _pagingController.appendLastPage(sagaProvider.sagaList);
+        _pagingController.appendLastPage(sagaList);
       } else {
         int nextPageKey = ++pageKey;
-        _pagingController.appendPage(sagaProvider.sagaList, nextPageKey);
+        _pagingController.appendPage(sagaList, nextPageKey);
       }
     } catch (e) {
       throw Exception(e.toString());

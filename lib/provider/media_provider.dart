@@ -21,14 +21,15 @@ class MediaProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> getMedia({ required int limit, required int page, int? categoryId } ) async {
+  Future<List<Entity>> getMedia({ required int limit, required int page, int? categoryId } ) async {
     try {
-      _cleanList();
       Response response = await ApiService.request('/medias?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
       if (response.statusCode == 200) {
+        mediaList.clear();
         for( Map<String, dynamic> mediaJson in response.data['data'] ) {
           mediaList.add(Entity.fromJson(mediaJson));
         }
+        return mediaList;
       } else {
         Alert.show(text: 'Error al obtener el contenido.');
         throw Exception();
@@ -37,6 +38,4 @@ class MediaProvider extends ChangeNotifier{
       throw Exception(e.toString());
     }
   }
-
-  void _cleanList() => mediaList = [];
 }
