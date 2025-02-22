@@ -5,7 +5,7 @@ class Entity {
   final String comment;
   final String category;
   final String status;
-  final String creationDate; 
+  final String creationDate;
   final String? pendingPriority;
   final String? postViewPriority;
   final String image;
@@ -28,7 +28,7 @@ class Entity {
   factory Entity.fromJson(Map<String, dynamic> json) => Entity(
     id: json['id'] ?? 0,
     title: json['title'] ?? '',
-    score: json['score'] != null ? json['score'].toDouble() : double.parse('0.0'),
+    score: json['score'] != null ? double.parse(json['score']) : double.parse('0.0'),
     comment: json['comment'] ?? '' ,
     category: json['category'] ?? '',
     status: json['status'] ?? '',

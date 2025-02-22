@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/auth/auth_screen.dart';
 import 'package:mymedialist/screens/auth/splash_screen.dart';
@@ -71,12 +72,22 @@ class AppRoute {
                 builder: ( BuildContext context, GoRouterState state) => const SeasonScreen(),
               ),
               GoRoute(
-                path: "${EntityDetailsScreens.routeName}/:entityId",
+                path: EntityDetailsScreens.routeName,
                 name: EntityDetailsScreens.routeName,
-                builder: ( BuildContext context, GoRouterState state) => EntityDetailsScreens(
-                  state.pathParameters["entityId"] ?? '0',
-                  type: state.uri.queryParameters["type"],
-                ),
+                builder: (BuildContext context, GoRouterState state) {
+                  final entity = state.extra as Entity;
+                  return EntityDetailsScreens(entity: entity,);
+                }
+              ),
+              GoRoute(
+                path: "${EntityDetailsScreens.routeName}/:entityId",
+                name: "${EntityDetailsScreens.routeName}-details",
+                builder: ( BuildContext context, GoRouterState state) {
+                  return EntityDetailsScreens(
+                    entityId: state.pathParameters["entityId"] ?? '0',
+                    type: state.uri.queryParameters["type"],
+                  );
+                }
               ),
               GoRoute(
                 path: AddImageScreen.routeName,

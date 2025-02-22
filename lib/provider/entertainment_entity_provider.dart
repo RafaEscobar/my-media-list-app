@@ -3,9 +3,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/main.dart';
+import 'package:mymedialist/models/entity.dart';
+import 'package:mymedialist/models/saga.dart';
 import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/services/api_service.dart';
+import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:provider/provider.dart';
 
 class EntertainmentEntityProvider extends ChangeNotifier {
@@ -89,9 +92,12 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> createMedia(BuildContext context) async {
+  Future<Entity> createMedia(BuildContext context) async {
     Response response = await _sendRequest(context);
-    if (context.mounted) return _handleResponse(response, context);
+    Entity? nose;
+    if (context.mounted) nose = _handleResponse(response, context);
+    print(nose);
+    return nose!;
     throw Exception("Contexto no disponible");
   }
 
@@ -105,9 +111,17 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     );
   }
 
-  int _handleResponse(Response response, BuildContext context){
+  Entity _handleResponse(Response response, BuildContext context){ 
     if (response.statusCode == 201) {
-      return response.data['data']['id'];
+      try {
+        dynamic nose = Entity.fromJson(response.data['data']);
+        print(nose);
+        //Entity nose = (type == TypeEnum.media.name) ? Entity.fromJson(nose) : Saga.fromJson(nose);
+        return nose;
+      } catch (e) {
+        Alert.show(text: e.toString());
+        throw Exception(e.toString());
+      }
     } else if (response.statusCode == 422) {
       throw Exception('La solicitud presenta errores, error: ${response.statusCode}');
     } else {
