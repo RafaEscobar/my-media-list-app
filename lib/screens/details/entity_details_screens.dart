@@ -27,7 +27,9 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
 
   void _getEntity() {
     try {
-      if (widget.entity == null) entity = widget.entity!;
+      dynamic nose = widget.entity;
+      print(nose);
+      if (widget.entity != null) entity = widget.entity!;
       entity = widget.type == TypeEnum.media.name ?
         context.read<MediaProvider>().mediaList.firstWhere((media) => media.id == int.parse(widget.entityId!)) :
         context.read<SagaProvider>().sagaList.firstWhere((saga) => saga.id == int.parse(widget.entityId!));

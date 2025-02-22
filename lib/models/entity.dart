@@ -25,19 +25,21 @@ class Entity {
     required this.image
   });
 
-  factory Entity.fromJson(Map<String, dynamic> json) => Entity(
-    id: json['id'] ?? 0,
-    title: json['title'] ?? '',
-    score: json['score'] != null ? double.parse(json['score']) : double.parse('0.0'),
-    comment: json['comment'] ?? '' ,
-    category: json['category'] ?? '',
-    status: json['status'] ?? '',
-    creationDate: json['creation_date'] ?? '',
-    pendingPriority: json['pending_priority'],
-    postViewPriority: json['post_view_priority'],
-    position: json['position'],
-    image: json['imageUrl'] ?? ''
-  );
+  factory Entity.fromJson(Map<String, dynamic> json) {
+    return Entity(
+      id: json['id'] ?? 0,
+      title: json['title'] ?? '',
+      score: json['score'] != null ? (json['score']!).toDouble() : double.parse('0.0'),
+      comment: json['comment'] ?? '' ,
+      category: json['category'] ?? '',
+      status: json['status'] ?? '',
+      creationDate: json['creation_date'] ?? '',
+      pendingPriority: json['pending_priority'],
+      postViewPriority: json['post_view_priority'],
+      position: json['position'],
+      image: json['imageUrl'] ?? ''
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     'id': id,

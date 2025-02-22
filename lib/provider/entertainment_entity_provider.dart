@@ -111,7 +111,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     );
   }
 
-  Entity _handleResponse(Response response, BuildContext context){ 
+  Entity _handleResponse(Response response, BuildContext context){
     if (response.statusCode == 201) {
       try {
         dynamic nose = Entity.fromJson(response.data['data']);
