@@ -15,18 +15,29 @@ class PriorityCard extends StatelessWidget {
 
   Future<void> _onSelectPriority(BuildContext context) async {
     try {
-      Entity? newEntity;
       EntertainmentEntityProvider entityProvider = context.read<EntertainmentEntityProvider>();
-      Entertainment.saveField(
-        value: priority.id,
-        fieldName: entityProvider.isPendingPriority ? 'pending_priority_id' : 'post_view_priority_id'
-      );
-      await Loader.runLoad(asyncFunction: () async => newEntity = await entityProvider.createMedia(context));
-      entityProvider.deleteData();
-      if (context.mounted) context.goNamed(EntityDetailsScreens.routeName, extra: newEntity);
+      _savePriority(entityProvider);
+      await _sendRequest(entityProvider, context);
     } catch (e) {
-      Alert.show(text: e.toString());
+      Alert.show(text: e.toString(), contentWidth: 300, background: Colors.red, textColor: Colors.white);
     }
+  }
+
+  void _savePriority(EntertainmentEntityProvider entityProvider) => Entertainment.saveField(
+      value: priority.id,
+      fieldName: entityProvider.isPendingPriority ? 'pending_priority_id' : 'post_view_priority_id'
+    );
+
+  Future<void> _sendRequest(EntertainmentEntityProvider entityProvider, BuildContext context) async {
+    Entity? newEntity;
+    await Loader.runLoad(asyncFunction: () async {
+       await entityProvider.createMedia(context).then((value){
+        print(value);
+        newEntity = value;
+       });
+    });
+    entityProvider.deleteData();
+    if (context.mounted) context.goNamed(EntityDetailsScreens.routeName, extra: newEntity);
   }
 
   @override

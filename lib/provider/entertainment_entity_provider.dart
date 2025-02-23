@@ -8,7 +8,6 @@ import 'package:mymedialist/models/saga.dart';
 import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/services/api_service.dart';
-import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:provider/provider.dart';
 
 class EntertainmentEntityProvider extends ChangeNotifier {
@@ -97,35 +96,27 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   }
 
   Future<Entity> createMedia(BuildContext context) async {
-    Response response = await _sendRequest(context);
-    Entity? nose;
-    if (context.mounted) nose = _handleResponse(response, context);
-    print(nose);
-    return nose!;
-    throw Exception("Contexto no disponible");
+    try {
+      Response response = await _sendRequest(context);
+      if (context.mounted) return _handleResponse(response, context);
+      throw Exception("Error de contexto");
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   Future<Response> _sendRequest(BuildContext context) async {
-    AppProvider appProvider = context.read<AppProvider>();
     FormData formData = FormData.fromMap((_type == TypeEnum.media.name) ? mediaData : sagaData);
     return await ApiService.request(
       _type == TypeEnum.media.name ? '/medias' : '/sagas',
-      auth: appProvider.userInfo.token,
+      auth: context.read<AppProvider>().userInfo.token,
       body: formData,
     );
   }
 
   Entity _handleResponse(Response response, BuildContext context){
     if (response.statusCode == 201) {
-      try {
-        dynamic nose = Entity.fromJson(response.data['data']); 
-        print(nose);
-        //Entity nose = (type == TypeEnum.media.name) ? Entity.fromJson(nose) : Saga.fromJson(nose);
-        return nose;
-      } catch (e) {
-        Alert.show(text: e.toString());
-        throw Exception(e.toString());
-      }
+      return (type == TypeEnum.media.name) ? Entity.fromJson(response.data["data"]) : Saga.fromJson(response.data["data"]);
     } else if (response.statusCode == 422) {
       throw Exception('La solicitud presenta errores, error: ${response.statusCode}');
     } else {

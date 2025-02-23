@@ -25,8 +25,7 @@ class Entity {
     required this.image
   });
 
-  factory Entity.fromJson(Map<String, dynamic> json) {
-    return Entity(
+  factory Entity.fromJson(Map<String, dynamic> json) => Entity(
       id: json['id'] ?? 0,
       title: json['title'] ?? '',
       score: json['score'] != null ? (json['score']!).toDouble() : double.parse('0.0'),
@@ -39,7 +38,6 @@ class Entity {
       position: json['position'],
       image: json['imageUrl'] ?? ''
     );
-  }
 
   Map<String, dynamic> toJson() => {
     'id': id,
