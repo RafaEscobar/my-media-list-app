@@ -75,6 +75,8 @@ class AppRoute {
                 path: EntityDetailsScreens.routeName,
                 name: EntityDetailsScreens.routeName,
                 builder: (BuildContext context, GoRouterState state) {
+                  dynamic nose = state.extra;
+                  print(nose);
                   final entity = state.extra as Entity;
                   return EntityDetailsScreens(entity: entity,);
                 }

@@ -33,9 +33,11 @@ class PriorityCard extends StatelessWidget {
     await Loader.runLoad(asyncFunction: () async {
        await entityProvider.createMedia(context).then((value){
         print(value);
-        newEntity = value;
+         newEntity = value;
        });
     });
+    print(newEntity);
+    print('object');
     entityProvider.deleteData();
     if (context.mounted) context.goNamed(EntityDetailsScreens.routeName, extra: newEntity);
   }
