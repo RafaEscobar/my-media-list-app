@@ -19,8 +19,6 @@ class EntertainmentEntityProvider extends ChangeNotifier {
 
   //* Data to create a saga register
   Map<String, dynamic> _sagaData = {
-    "num_caps": 1,
-    "season": 1,
     "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id
   };
 
@@ -127,7 +125,7 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   void deleteData(){
     _currentStep = 0;
     _mediaData = {"user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
-    _sagaData = {"num_caps": 1, "season": 1, "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
+    _sagaData = {"user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
     _type = '';
     _category = '';
     _shouldAddMoreInfo = false;

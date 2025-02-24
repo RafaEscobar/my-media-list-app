@@ -18,7 +18,7 @@ class EntityBody extends StatelessWidget{
     return SizedBox(
       width: size.width,
       child: Column(
-        spacing: 30,
+        spacing: 22,
         children: [
           FormTitle(title: currentEntity.title, maxLines: 2,),
           Container(
@@ -29,9 +29,9 @@ class EntityBody extends StatelessWidget{
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(currentEntity.category, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w200, color: Colors.white),),
+                Text(currentEntity.category, style: const TextStyle(fontSize: 17, color: Colors.white),),
                 const Text("/", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w200, color: Colors.white),),
-                Text(DateFormat("dd/MM/yy").format(currentEntity.creationDate), style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w200, color: Colors.white),),
+                Text(DateFormat("dd/MM/yy").format(currentEntity.creationDate), style: const TextStyle(fontSize: 17,  color: Colors.white),),
               ],
             ),
           ),
@@ -43,8 +43,8 @@ class EntityBody extends StatelessWidget{
               fit: BoxFit.fitHeight
             ) :
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 22),
-              child: Text(currentEntity.comment, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w200,),),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(currentEntity.comment, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w200,),),
             ),
         ],
       ),

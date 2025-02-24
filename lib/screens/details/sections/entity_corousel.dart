@@ -5,17 +5,14 @@ class EntityCorousel extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        const Text("De aqui hacia abajo es el carousel"),
+        Text("Aquí va ira el carrousel"),
         SizedBox(
           width: 300,
-          child: Image.network(
-            'https://lumiere-a.akamaihd.net/v1/images/romulus_payoff_poster_las_bc34960b.jpeg?region=0,0,770,1100',
-            fit: BoxFit.contain,
-          ),
+          child: Placeholder()
         ),
-        const SizedBox(height: 20,)
+        SizedBox(height: 20,)
       ],
     );
   }

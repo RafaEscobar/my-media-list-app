@@ -94,7 +94,7 @@ class _SeasonScreenState extends State<SeasonScreen> with CancelCreationMixin {
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 30,),
-                          (_maxValue < entityProvider.sagaData['season']) ?
+                          (_maxValue < (entityProvider.sagaData['season'] ?? 1)) ?
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 40),
                               child: Text(

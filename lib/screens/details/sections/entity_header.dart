@@ -90,15 +90,20 @@ class EntityHeader extends StatelessWidget {
                       Text('#${currentEntity.position}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),),
                     ],
                   ),
-                if (currentEntity is Saga && (currentEntity as Saga).numCaps != 0 || (currentEntity as Saga).season != 0)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 12,
                   children: [
-                    if ((currentEntity as Saga).numCaps != 0)
-                    Text('Capitulos: ${(currentEntity as Saga).numCaps}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300), maxLines: 2,),
-                    if ((currentEntity as Saga).season != 0)
-                    Text('Temporadas: ${(currentEntity as Saga).season}', style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w300), maxLines: 2,)
+                    Text(
+                      "Capitulos: ${ (currentEntity as Saga).numCaps != 0 ? (currentEntity as Saga).numCaps : '-'}",
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
+                      maxLines: 2,
+                    ),
+                    Text(
+                      "Temporadas: ${((currentEntity as Saga).season != 0) ? (currentEntity as Saga).season : '-'}",
+                      style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w300),
+                      maxLines: 2,
+                    )
                   ],
                 )
               ],

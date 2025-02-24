@@ -106,7 +106,7 @@ class _CapsStepState extends State<CapsStep> with CancelCreationMixin {
                         children: [
                           const FormTitle(title: '¿Cuántos capítulos tiene?'),
                           const SizedBox(height: 20,),
-                          (_maxValue < _entityProvider.sagaData['num_caps']) ?
+                          (_maxValue < (_entityProvider.sagaData['num_caps'] ?? 1)) ?
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 40),
                             child: Text(
