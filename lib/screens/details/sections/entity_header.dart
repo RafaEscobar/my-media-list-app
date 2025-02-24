@@ -64,12 +64,20 @@ class EntityHeader extends StatelessWidget {
                   children: [
                     const FormTitle(title: 'Calificación', textSize: 24,),
                     (currentEntity.score != 0) ?
-                    Row(
-                      spacing: 2,
-                      children: [
-                        Text("${currentEntity.score}", style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w600),),
-                        const Icon(Icons.grade_outlined)
-                      ],
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: AppTheme.primary,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 2,
+                        children: [
+                          Text("${currentEntity.score}", style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w600, color: Colors.white),),
+                          const Icon(Icons.grade_outlined, color: Colors.white)
+                        ],
+                      ),
                     ) : const Text("---"),
                   ],
                 ),
