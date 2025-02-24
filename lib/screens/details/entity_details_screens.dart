@@ -55,14 +55,16 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
     print(nose);
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
-          child: Column(
-            children: [
-              EntityHeader(currentEntity: entity,),
-              EntityBody(currentEntity: entity,),
-              const EntityCorousel()
-            ],
+        child: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
+            child: Column(
+              children: [
+                EntityHeader(currentEntity: entity,),
+                EntityBody(currentEntity: entity,),
+                const EntityCorousel()
+              ],
+            ),
           ),
         ),
       )
