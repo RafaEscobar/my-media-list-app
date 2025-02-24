@@ -12,6 +12,8 @@ class EntityHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
+    dynamic nose = currentEntity;
+    print(nose);
     return SizedBox(
       height: 230,
       child: Row(
@@ -39,12 +41,13 @@ class EntityHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const FormTitle(title: 'Calificación', textSize: 24,),
+                    (currentEntity.score != 0) ?
                     Row(
                       children: [
                         Text("${currentEntity.score}", style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w600),),
                         const Icon(Icons.grade_outlined)
                       ],
-                    ),
+                    ) : const Text("---"),
                   ],
                 ),
                 currentEntity is Saga && currentEntity.position != null ?
@@ -52,14 +55,14 @@ class EntityHeader extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const FormTitle(title: 'Posición', textSize: 20,),
-                      Text('#${currentEntity.position}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
+                      Text('#${currentEntity.position}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),),
                     ],
                   ) : Container(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const FormTitle(title: 'Estatus', textSize: 20,),
-                    Text(currentEntity.status, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
+                    Text(currentEntity.status, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),),
                   ],
                 ),
                 currentEntity is Saga ?

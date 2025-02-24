@@ -5,7 +5,7 @@ class Entity {
   final String comment;
   final String category;
   final String status;
-  final String creationDate;
+  final DateTime creationDate;
   final String? pendingPriority;
   final String? postViewPriority;
   final String image;
@@ -25,19 +25,25 @@ class Entity {
     required this.image
   });
 
-  factory Entity.fromJson(Map<String, dynamic> json) => Entity(
-      id: json['id'] ?? 0,
-      title: json['title'] ?? '',
-      score: json['score'] != null ? (json['score']!).toDouble() : double.parse('0.0'),
-      comment: json['comment'] ?? '' ,
-      category: json['category'] ?? '',
-      status: json['status'] ?? '',
-      creationDate: json['creation_date'] ?? '',
-      pendingPriority: json['pending_priority'],
-      postViewPriority: json['post_view_priority'],
-      position: json['position'],
-      image: json['imageUrl'] ?? ''
-    );
+  factory Entity.fromJson(Map<String, dynamic> json) {
+    try {
+      return Entity(
+        id: json['id'] ?? 0,
+        title: json['title'] ?? '',
+        score: json['score'] != null ? (json['score']!).toDouble() : double.parse('0.0'),
+        comment: json['comment'] ?? '' ,
+        category: json['category'] ?? '',
+        status: json['status'] ?? '',
+        creationDate: json['creation_date'] != null ? DateTime.parse(json['creation_date']!) : DateTime.now(),
+        pendingPriority: json['pending_priority'],
+        postViewPriority: json['post_view_priority'],
+        position: json['position'],
+        image: json['imageUrl'] ?? ''
+      );
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 
   Map<String, dynamic> toJson() => {
     'id': id,

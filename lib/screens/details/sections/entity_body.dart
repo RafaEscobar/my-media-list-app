@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/theme/app_theme.dart';
@@ -30,12 +31,12 @@ class EntityBody extends StatelessWidget{
               children: [
                 Text(currentEntity.category, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w300, color: Colors.white),),
                 const Text("/", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w200, color: Colors.white),),
-                Text("ate", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300, color: Colors.white),),
+                Text(DateFormat("dd/MM/yy").format(currentEntity.creationDate), style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w300, color: Colors.white),),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text('LORE dwndeionde iednewo ndwedn ewdionew doinewdni ewediewndiewndewid diewdo iewndinwe ednewdnewi odnewiodew iond ewinod wiiendd oiewnd oiewnnd eoiwn ednio n', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300,),),
           ),
           Lottie.asset(

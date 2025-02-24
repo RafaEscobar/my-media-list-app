@@ -19,20 +19,26 @@ class Saga extends Entity{
   final int numCaps;
   final int season;
 
-  factory Saga.fromJson(Map<String, dynamic> json) => Saga(
-      id: json['id'] ?? 0,
-      title: json['title'] ?? '',
-      score: json['score'] != null ? json['score'].toDouble() : double.parse('0.0'),
-      comment: json['final_comment'] ?? '' ,
-      category: json['category'] ?? '' ,
-      status: json['status'] ?? '',
-      creationDate: json['creation_date'] ?? '',
-      pendingPriority: json['pending_priority'] ?? '',
-      postViewPriority: json['post_view_priority'] ?? '',
-      image: json['imageUrl'] ?? '',
-      numCaps: json['num_caps'] != null ? json['num_caps']! : 0,
-      season: json['season'] != null ? json['season']! : 0
-    );
+  factory Saga.fromJson(Map<String, dynamic> json) {
+    try {
+      return Saga(
+        id: json['id'] ?? 0,
+        title: json['title'] ?? '',
+        score: json['score'] != null ? json['score'].toDouble() : double.parse('0.0'),
+        comment: json['final_comment'] ?? '' ,
+        category: json['category'] ?? '' ,
+        status: json['status'] ?? '',
+        creationDate: json['creation_date'] != null ? DateTime.parse(json['creation_date']!) : DateTime.now(),
+        pendingPriority: json['pending_priority'] ?? '',
+        postViewPriority: json['post_view_priority'] ?? '',
+        image: json['imageUrl'] ?? '',
+        numCaps: json['num_caps'] != null ? json['num_caps']! : 0,
+        season: json['season'] != null ? json['season']! : 0
+      );
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 
   @override
   Map<String, dynamic> toJson() => {
