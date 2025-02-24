@@ -55,15 +55,17 @@ class EntityHeader extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.start,
+              spacing: 16,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 8,
+                  spacing: 2,
                   children: [
                     const FormTitle(title: 'Calificación', textSize: 24,),
                     (currentEntity.score != 0) ?
                     Row(
+                      spacing: 2,
                       children: [
                         Text("${currentEntity.score}", style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w600),),
                         const Icon(Icons.grade_outlined)
@@ -73,7 +75,7 @@ class EntityHeader extends StatelessWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 7,
+                  spacing: 2,
                   children: [
                     const FormTitle(title: 'Prioridad', textSize: 21,),
                     Text(
@@ -90,22 +92,23 @@ class EntityHeader extends StatelessWidget {
                       Text('#${currentEntity.position}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),),
                     ],
                   ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 12,
-                  children: [
-                    Text(
-                      "Capitulos: ${ (currentEntity as Saga).numCaps != 0 ? (currentEntity as Saga).numCaps : '-'}",
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
-                      maxLines: 2,
-                    ),
-                    Text(
-                      "Temporadas: ${((currentEntity as Saga).season != 0) ? (currentEntity as Saga).season : '-'}",
-                      style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w300),
-                      maxLines: 2,
-                    )
-                  ],
-                )
+                if (currentEntity is Saga)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 12,
+                    children: [
+                      Text(
+                        "Capitulos: ${ (currentEntity as Saga).numCaps != 0 ? (currentEntity as Saga).numCaps : '-'}",
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
+                        maxLines: 2,
+                      ),
+                      Text(
+                        "Temporadas: ${((currentEntity as Saga).season != 0) ? (currentEntity as Saga).season : '-'}",
+                        style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w300),
+                        maxLines: 2,
+                      )
+                    ],
+                  )
               ],
             ),
           )
