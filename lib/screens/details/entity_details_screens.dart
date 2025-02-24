@@ -59,6 +59,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
           child: Container(
             padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
             child: Column(
+              spacing: 20,
               children: [
                 EntityHeader(currentEntity: entity,),
                 EntityBody(currentEntity: entity,),

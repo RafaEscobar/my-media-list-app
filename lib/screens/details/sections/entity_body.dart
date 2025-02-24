@@ -29,22 +29,23 @@ class EntityBody extends StatelessWidget{
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(currentEntity.category, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w300, color: Colors.white),),
+                Text(currentEntity.category, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w200, color: Colors.white),),
                 const Text("/", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w200, color: Colors.white),),
-                Text(DateFormat("dd/MM/yy").format(currentEntity.creationDate), style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w300, color: Colors.white),),
+                Text(DateFormat("dd/MM/yy").format(currentEntity.creationDate), style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w200, color: Colors.white),),
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text('LORE dwndeionde iednewo ndwedn ewdionew doinewdni ewediewndiewndewid diewdo iewndinwe ednewdnewi odnewiodew iond ewinod wiiendd oiewnd oiewnnd eoiwn ednio n', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300,),),
-          ),
-          Lottie.asset(
-            width: 200,
-            "assets/animations/live.json",
-            renderCache: RenderCache.drawingCommands,
-            fit: BoxFit.fitHeight
-          ),
+          (currentEntity.status == 'Pendiente' || currentEntity.status == 'En emisión') ?
+            Lottie.asset(
+              width: 200,
+              "assets/animations/live.json",
+              renderCache: RenderCache.drawingCommands,
+              fit: BoxFit.fitHeight
+            ) :
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 22),
+              child: Text(currentEntity.comment, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w200,),),
+            ),
         ],
       ),
     );
