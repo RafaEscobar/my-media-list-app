@@ -6,6 +6,7 @@ import 'package:mymedialist/provider/saga_provider.dart';
 import 'package:mymedialist/screens/details/sections/entity_body.dart';
 import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
+import 'package:mymedialist/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 class EntityDetailsScreens extends StatefulWidget {
@@ -29,8 +30,6 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
 
   void _getEntity() {
     try {
-      dynamic nose = widget.entity;
-      print(nose);
       if (widget.entity != null){
         entity = widget.entity!;
       } else {
@@ -51,9 +50,15 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
 
   @override
   Widget build(BuildContext context) {
-    dynamic nose = widget.entity;
-    print(nose);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppTheme.primary,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: const Icon(Icons.arrow_back, color: Colors.white,)
+        ),
+        title: const Text("Detalles", style: TextStyle(color: Colors.white),),
+      ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(

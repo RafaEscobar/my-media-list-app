@@ -20,7 +20,7 @@ class EntityBody extends StatelessWidget{
       child: Column(
         spacing: 22,
         children: [
-          FormTitle(title: currentEntity.title, maxLines: 2,),
+          FormTitle(title: currentEntity.title, maxLines: 2, textSize: 28,),
           Container(
             decoration: BoxDecoration(
               color: AppTheme.primary,
