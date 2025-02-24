@@ -50,14 +50,14 @@ class EntityHeader extends StatelessWidget {
                     ) : const Text("---"),
                   ],
                 ),
-                currentEntity is Saga && currentEntity.position != null ?
+                if (currentEntity is Saga && currentEntity.position != null)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const FormTitle(title: 'Posición', textSize: 20,),
                       Text('#${currentEntity.position}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),),
                     ],
-                  ) : Container(),
+                  ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -65,7 +65,7 @@ class EntityHeader extends StatelessWidget {
                     Text(currentEntity.status, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),),
                   ],
                 ),
-                currentEntity is Saga ?
+                if (currentEntity is Saga)
                 Row(
                   spacing: 10,
                   children: [
@@ -74,7 +74,7 @@ class EntityHeader extends StatelessWidget {
                     ((currentEntity as Saga).season != 0) ?
                     const Text('Temporadas: 2', style: TextStyle(fontSize: 12), maxLines: 2,) : Container()
                   ],
-                ) : Container()
+                )
               ],
             ),
           )
