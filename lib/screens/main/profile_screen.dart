@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/auth/auth_screen.dart';
+import 'package:mymedialist/widgets/general/empty_state.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:provider/provider.dart';
 
@@ -31,12 +32,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return SizedBox(
       child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const SizedBox(height: 10,),
-            Text(appProvider.userInfo.name),
-            Text(appProvider.userInfo.email),
-            Text("${appProvider.userInfo.id}"),
-            SelectableText(appProvider.userInfo.token),
+            const EmptyState(title: 'Próximamente', lottieName: 'soon'),
             ElevatedButton(
               onPressed: logout,
               child: const Text('Cerrar sesión')
