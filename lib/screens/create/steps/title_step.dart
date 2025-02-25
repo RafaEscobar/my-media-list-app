@@ -55,13 +55,17 @@ class _TitleScreenState extends State<TitleScreen> with CancelCreationMixin {
     super.dispose();
   }
 
+  String _getCurrentTitle() {
+    return (_entityProvider.type == TypeEnum.media.name) ?
+        _entityProvider.mediaData['title'] ?? '' :
+        _entityProvider.sagaData['title'] ?? '';
+  }
+
   @override
   void initState() {
     super.initState();
     _entityProvider = context.read<EntertainmentEntityProvider>();
-     _title =  (_entityProvider.type == TypeEnum.media.name) ?
-        _entityProvider.mediaData['title'] :
-        _entityProvider.sagaData['title'];
+     _title = _getCurrentTitle();
   }
 
   /*

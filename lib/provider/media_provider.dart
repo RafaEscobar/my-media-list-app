@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymedialist/main.dart';
-import 'package:mymedialist/models/media.dart';
+import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/services/api_service.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -9,25 +9,18 @@ import 'package:provider/provider.dart';
 
 
 class MediaProvider extends ChangeNotifier{
-  // Media list from API
-  List<Media> _mediaList = [];
   // Variable to connect with AppProvider
   final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
 
-  //* General Getters and Setters
-  List<Media> get mediaList => _mediaList;
-  set mediaList(List<Media> newMediaList){
-    _mediaList = newMediaList;
-    notifyListeners();
-  }
 
-  Future<List<Media>> getMedia({ required int limit, required int page, int? categoryId } ) async {
+  Future<List<Entity>> getMedia({ required int limit, required int page, int? categoryId } ) async {
     try {
       Response response = await ApiService.request('/medias?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
       if (response.statusCode == 200) {
-        List<Media> mediaList = [];
+        List<Entity> mediaList = [];
+        mediaList.clear();
         for( Map<String, dynamic> mediaJson in response.data['data'] ) {
-          mediaList.add(Media.fromJson(mediaJson));
+          mediaList.add(Entity.fromJson(mediaJson));
         }
         return mediaList;
       } else {

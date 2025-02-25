@@ -5,8 +5,10 @@ import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
+import 'package:mymedialist/screens/create/steps/caps_step.dart';
 import 'package:mymedialist/screens/create/steps/priority_screen.dart';
 import 'package:mymedialist/screens/create/steps/score_step.dart';
+import 'package:mymedialist/screens/create/steps/status_step.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/utils/entertainment.dart';
 import 'package:mymedialist/utils/redirect.dart';
@@ -47,7 +49,14 @@ class _CommentScreenState extends State<CommentScreen> with CancelCreationMixin 
 
   bool _validateComment() => _formKey.currentState!.fields['comment']!.validate();
 
-  Future<void> _onPreviousStep() async => await Redirect.redirectWithLoader(ScoreScreen.routeName, context);
+  Future<void> _onPreviousStep() async {
+      await Redirect.redirectWithLoader(
+        (_entityProvider.type == TypeEnum.media.name) ? ScoreScreen.routeName :
+          (_entityProvider.shouldAddMoreInfo) ?
+            CapsStep.routeName :
+            StatusScreen.routeName
+      , context);
+  }
 
   @override
   void initState() {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/enum/category_enum.dart';
-import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/saga.dart';
 import 'package:mymedialist/provider/saga_provider.dart';
 import 'package:mymedialist/widgets/general/media_card.dart';
@@ -17,7 +16,6 @@ class AnimesScreen extends StatefulWidget {
 class _AnimesScreenState extends State<AnimesScreen> {
   final int _limit = 5;
   final PagingController<int, Saga> _pagingController = PagingController(firstPageKey: 1);
-  final SagaProvider sagaProvider = navigatorKey.currentState!.context.read<SagaProvider>();
 
   @override
   void initState() {
@@ -29,13 +27,13 @@ class _AnimesScreenState extends State<AnimesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Saga> sagaList = await sagaProvider.getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.animes.identifier);
-      bool isLastPage = sagaList.length < _limit;
+      List<Saga> currentList = await context.read<SagaProvider>().getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.animes.identifier);
+      bool isLastPage = currentList.length < _limit;
       if (isLastPage) {
-        _pagingController.appendLastPage(sagaList);
+        _pagingController.appendLastPage(currentList);
       } else {
         int nextPageKey = ++pageKey;
-        _pagingController.appendPage(sagaList, nextPageKey);
+        _pagingController.appendPage(currentList, nextPageKey);
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -56,11 +54,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
         ),
         builderDelegate: PagedChildBuilderDelegate<Saga>(itemBuilder: (BuildContext context, Saga anime, int index) {
           return Center(
-            child: MediaCard(
-              imagePath: anime.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
-              name: anime.title,
-              score: anime.score,
-            ),
+            child: MediaCard(entity: anime),
           );
         },)
       )

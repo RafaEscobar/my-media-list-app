@@ -50,7 +50,6 @@ class _MainNavigationState extends State<MainNavigation> with TickerProviderStat
                 HomeScreen(),
                 GradesScreen(),
                 TypeScreen(),
-                //SeasonScreen(),
                 PendingsScreen(),
                 ProfileScreen()
               ],

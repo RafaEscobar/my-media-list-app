@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/enum/category_enum.dart';
-import 'package:mymedialist/main.dart';
-import 'package:mymedialist/models/media.dart';
+import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/widgets/general/media_card.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +15,7 @@ class MoviesScreen extends StatefulWidget {
 
 class _MoviesScreenState extends State<MoviesScreen> {
   final int _limit = 10;
-  final PagingController<int, Media> _pagingController = PagingController(firstPageKey: 1);
-  final MediaProvider _mediaProvider = navigatorKey.currentState!.context.read<MediaProvider>();
+  final PagingController<int, Entity> _pagingController = PagingController(firstPageKey: 1);
 
   @override
   void initState() {
@@ -29,17 +27,13 @@ class _MoviesScreenState extends State<MoviesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Media> movieList = await _mediaProvider.getMedia(
-        limit: _limit,
-        page: pageKey,
-        categoryId: CategoryEnum.movies.identifier
-      );
-      bool isLastPage = movieList.length < _limit;
+      List<Entity> mediaList = await context.read<MediaProvider>().getMedia(limit: _limit, page: pageKey, categoryId: CategoryEnum.movies.identifier);
+      bool isLastPage = mediaList.length < _limit;
       if (isLastPage) {
-        _pagingController.appendLastPage(movieList);
+        _pagingController.appendLastPage(mediaList);
       } else {
         int nextPageKey = ++pageKey;
-        _pagingController.appendPage(movieList, nextPageKey);
+        _pagingController.appendPage(mediaList, nextPageKey);
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -58,13 +52,9 @@ class _MoviesScreenState extends State<MoviesScreen> {
           mainAxisSpacing: 10,
           childAspectRatio: 2/2.6
         ),
-        builderDelegate: PagedChildBuilderDelegate<Media>(itemBuilder: (BuildContext context, Media movie, int index) {
+        builderDelegate: PagedChildBuilderDelegate<Entity>(itemBuilder: (BuildContext context, Entity movie, int index) {
           return Center(
-            child: MediaCard(
-              imagePath: movie.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
-              name: movie.title,
-              score: movie.score
-            ),
+            child: MediaCard(entity: movie),
           );
         }),
       ),

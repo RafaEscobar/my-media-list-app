@@ -4,8 +4,8 @@ import 'package:mymedialist/mixins/cancel_creation_mixin.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/screens/create/modal_widgets/input_body.dart';
 import 'package:mymedialist/screens/create/modal_widgets/input_footer.dart';
+import 'package:mymedialist/screens/create/steps/comment_step.dart';
 import 'package:mymedialist/screens/create/steps/priority_screen.dart';
-import 'package:mymedialist/screens/create/steps/score_step.dart';
 import 'package:mymedialist/screens/create/steps/season_step.dart';
 import 'package:mymedialist/screens/create/steps/status_step.dart';
 import 'package:mymedialist/theme/app_theme.dart';
@@ -19,15 +19,15 @@ import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
-class NumCaps extends StatefulWidget {
-  const NumCaps({super.key});
+class CapsStep extends StatefulWidget {
+  const CapsStep({super.key});
   static const String routeName = 'num-caps';
 
   @override
-  State<NumCaps> createState() => _NumCapsState();
+  State<CapsStep> createState() => _CapsStepState();
 }
 
-class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
+class _CapsStepState extends State<CapsStep> with CancelCreationMixin {
   late EntertainmentEntityProvider _entityProvider;
   final FocusNode _capsFocusNode = FocusNode();
   final _formKey = GlobalKey<FormBuilderState>();
@@ -52,7 +52,7 @@ class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
     if (_entityProvider.isPendingPriority) {
       Redirect.redirectWithLoader(PriorityScreen.routeName, context);
     } else {
-      Redirect.redirectWithLoader(ScoreScreen.routeName, context);
+      Redirect.redirectWithLoader(CommentScreen.routeName, context);
     }
   }
 
@@ -64,15 +64,17 @@ class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
     }
   }
 
-  Future<void> _navigateToPreviousStep() async => (_entityProvider.category == 'Manga') ?
+  Future<void> _navigateToPreviousStep() async {
+    (_entityProvider.category == 'Mangas') ?
     await Redirect.redirectWithLoader(StatusScreen.routeName, context) :
     await Redirect.redirectWithLoader(SeasonScreen.routeName, context);
+  }
 
   @override
   void initState() {
     super.initState();
     _entityProvider = context.read<EntertainmentEntityProvider>();
-    _currentValue = (_maxValue >= context.read<EntertainmentEntityProvider>().sagaData['num_caps']) ?
+    _currentValue = (context.read<EntertainmentEntityProvider>().sagaData['num_caps'] != null && _maxValue >= context.read<EntertainmentEntityProvider>().sagaData['num_caps']) ?
       context.read<EntertainmentEntityProvider>().sagaData['num_caps'] : 1;
   }
 
@@ -104,7 +106,7 @@ class _NumCapsState extends State<NumCaps> with CancelCreationMixin {
                         children: [
                           const FormTitle(title: '¿Cuántos capítulos tiene?'),
                           const SizedBox(height: 20,),
-                          (_maxValue < _entityProvider.sagaData['num_caps']) ?
+                          (_maxValue < (_entityProvider.sagaData['num_caps'] ?? 1)) ?
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 40),
                             child: Text(

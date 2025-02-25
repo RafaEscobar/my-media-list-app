@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/auth/auth_screen.dart';
 import 'package:mymedialist/screens/auth/splash_screen.dart';
@@ -12,7 +13,7 @@ import 'package:mymedialist/screens/create/steps/season_step.dart';
 import 'package:mymedialist/screens/create/steps/status_step.dart';
 import 'package:mymedialist/screens/create/steps/title_step.dart';
 import 'package:mymedialist/screens/create/type_screen.dart';
-import 'package:mymedialist/screens/main/details_screens.dart';
+import 'package:mymedialist/screens/details/entity_details_screens.dart';
 import 'package:mymedialist/screens/main/home_screen.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/services/preferences.dart';
@@ -61,9 +62,9 @@ class AppRoute {
                 builder: ( BuildContext context, GoRouterState state ) => PriorityScreen()
               ),
               GoRoute(
-                path: NumCaps.routeName,
-                name: NumCaps.routeName,
-                builder: ( BuildContext context, GoRouterState state) => const NumCaps(),
+                path: CapsStep.routeName,
+                name: CapsStep.routeName,
+                builder: ( BuildContext context, GoRouterState state) => const CapsStep(),
               ),
               GoRoute(
                 path: SeasonScreen.routeName,
@@ -71,9 +72,12 @@ class AppRoute {
                 builder: ( BuildContext context, GoRouterState state) => const SeasonScreen(),
               ),
               GoRoute(
-                path: "${DetailsScreens.routeName}/:entityId",
-                name: DetailsScreens.routeName,
-                builder: ( BuildContext context, GoRouterState state) => DetailsScreens(entityId: int.parse(state.pathParameters['entityId']!),),
+                path: EntityDetailsScreens.routeName,
+                name: EntityDetailsScreens.routeName,
+                builder: (BuildContext context, GoRouterState state) {
+                  final entity = state.extra as Entity;
+                  return EntityDetailsScreens(entity: entity,);
+                }
               ),
               GoRoute(
                 path: AddImageScreen.routeName,

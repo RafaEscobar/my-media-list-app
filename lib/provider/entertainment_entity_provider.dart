@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/main.dart';
+import 'package:mymedialist/models/entity.dart';
+import 'package:mymedialist/models/saga.dart';
 import 'package:mymedialist/models/status.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/services/api_service.dart';
@@ -13,29 +15,10 @@ class EntertainmentEntityProvider extends ChangeNotifier {
   int _currentStep = 0;
 
   //* Data to create a media register
-  Map<String, dynamic> _mediaData = {
-    "title": '',
-    "score": 5,
-    "comment": '',
-    "category_id": null,
-    "status_id": null,
-    "pending_priority_id": null,
-    "post_view_priority_id": null,
-    "image": null,
-    "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id
-  };
+  Map<String, dynamic> _mediaData = {"user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
 
   //* Data to create a saga register
   Map<String, dynamic> _sagaData = {
-    'title': '',
-    'num_caps': 1,
-    'season': 1,
-    'final_comment': '',
-    'category_id': null,
-    'status_id': null,
-    'pending_priority_id': null,
-    'post_view_priority_id': null,
-    'image': null,
     "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id
   };
 
@@ -110,25 +93,28 @@ class EntertainmentEntityProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> createMedia(BuildContext context) async {
-    Response response = await _sendRequest(context);
-    if (context.mounted) return _handleResponse(response, context);
-    throw Exception("Contexto no disponible");
+  Future<Entity> createMedia(BuildContext context) async {
+    try {
+      Response response = await _sendRequest(context);
+      if (context.mounted) return _handleResponse(response, context);
+      throw Exception("Error de contexto");
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   Future<Response> _sendRequest(BuildContext context) async {
-    AppProvider appProvider = context.read<AppProvider>();
     FormData formData = FormData.fromMap((_type == TypeEnum.media.name) ? mediaData : sagaData);
     return await ApiService.request(
       _type == TypeEnum.media.name ? '/medias' : '/sagas',
-      auth: appProvider.userInfo.token,
+      auth: context.read<AppProvider>().userInfo.token,
       body: formData,
     );
   }
 
-  int _handleResponse(Response response, BuildContext context){
+  Entity _handleResponse(Response response, BuildContext context){
     if (response.statusCode == 201) {
-      return response.data['data']['id'];
+      return (type == TypeEnum.media.name) ? Entity.fromJson(response.data["data"]) : Saga.fromJson(response.data["data"]);
     } else if (response.statusCode == 422) {
       throw Exception('La solicitud presenta errores, error: ${response.statusCode}');
     } else {
@@ -138,29 +124,8 @@ class EntertainmentEntityProvider extends ChangeNotifier {
 
   void deleteData(){
     _currentStep = 0;
-    _mediaData = {
-      "title": '',
-      "score": 5,
-      "comment": '',
-      "category_id": null,
-      "status_id": null,
-      "pending_priority_id": null,
-      "post_view_priority_id": null,
-      "image": null,
-      "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id
-    };
-    _sagaData = {
-      'title': '',
-      'num_caps': 1,
-      'season': 1,
-      'final_comment': '',
-      'category_id': null,
-      'status_id': null,
-      'pending_priority_id': null,
-      'post_view_priority_id': null,
-      'image': null,
-      "user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id
-    };
+    _mediaData = {"user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
+    _sagaData = {"user_id": navigatorKey.currentState!.context.read<AppProvider>().userInfo.id};
     _type = '';
     _category = '';
     _shouldAddMoreInfo = false;

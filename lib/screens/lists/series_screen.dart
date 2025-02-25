@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/enum/category_enum.dart';
-import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/saga.dart';
 import 'package:mymedialist/provider/saga_provider.dart';
 import 'package:mymedialist/widgets/general/media_card.dart';
@@ -17,7 +16,6 @@ class SeriesScreen extends StatefulWidget {
 class _SeriesScreenState extends State<SeriesScreen> {
   final int _limit = 10;
   final PagingController<int, Saga> _pagingController = PagingController(firstPageKey: 1);
-  final SagaProvider _sagaProvider = navigatorKey.currentState!.context.read<SagaProvider>();
 
   @override
   void initState() {
@@ -29,17 +27,14 @@ class _SeriesScreenState extends State<SeriesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Saga> serieList = await _sagaProvider.getSaga(
-        limit: _limit,
-        page: pageKey,
-        categoryId: CategoryEnum.series.identifier
-      );
-      bool isLastPage = serieList.length < _limit;
+      SagaProvider sagaProvider = context.read<SagaProvider>();
+      List<Saga> currentList = await sagaProvider.getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.series.identifier);
+      bool isLastPage = currentList.length < _limit;
       if (isLastPage) {
-        _pagingController.appendLastPage(serieList);
+        _pagingController.appendLastPage(currentList);
       } else {
         int nextPageKey = ++pageKey;
-        _pagingController.appendPage(serieList, nextPageKey);
+        _pagingController.appendPage(currentList, nextPageKey);
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -60,11 +55,7 @@ class _SeriesScreenState extends State<SeriesScreen> {
         ),
         builderDelegate: PagedChildBuilderDelegate<Saga>(itemBuilder: ( BuildContext context, Saga serie, int index) {
           return Center(
-            child: MediaCard(
-              imagePath: serie.image.replaceAll('http://localhost:8000', 'https://8bf7-187-235-135-111.ngrok-free.app'),
-              name: serie.title,
-              score: serie.score
-            ),
+            child: MediaCard(entity: serie),
           );
         }),
       ),
