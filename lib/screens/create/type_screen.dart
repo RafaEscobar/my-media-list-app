@@ -3,6 +3,7 @@ import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/category_provider.dart';
 import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/general/media_type_card.dart';
+import 'package:mymedialist/widgets/main_head.dart';
 import 'package:provider/provider.dart';
 
 class TypeScreen extends StatefulWidget {
@@ -28,6 +29,12 @@ class _TypeScreenState extends State<TypeScreen> {
         color: Colors.white,
         child: Column(
           children: [
+            const SizedBox(height: 10,),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: MainHead(withoutSearch: false,)
+            ),
+            const SizedBox(height: 10,),
             const FormTitle(title: '¿Qué vas a calificar?'),
             const SizedBox(height: 20,),
             Expanded(
