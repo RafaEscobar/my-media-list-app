@@ -65,7 +65,7 @@ class EntityHeader extends StatelessWidget {
                     const FormTitle(title: 'Calificación', textSize: 24,),
                     (currentEntity.score != 0) ?
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                       decoration: BoxDecoration(
                         color: AppTheme.primary,
                         borderRadius: BorderRadius.circular(10),
