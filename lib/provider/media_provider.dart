@@ -9,22 +9,15 @@ import 'package:provider/provider.dart';
 
 
 class MediaProvider extends ChangeNotifier{
-  // Media list from API
-  List<Entity> _mediaList = [];
   // Variable to connect with AppProvider
   final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
 
-  //* General Getters and Setters
-  List<Entity> get mediaList => _mediaList;
-  set mediaList(List<Entity> newMediaList){
-    _mediaList = newMediaList;
-    notifyListeners();
-  }
 
   Future<List<Entity>> getMedia({ required int limit, required int page, int? categoryId } ) async {
     try {
       Response response = await ApiService.request('/medias?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
       if (response.statusCode == 200) {
+        List<Entity> mediaList = [];
         mediaList.clear();
         for( Map<String, dynamic> mediaJson in response.data['data'] ) {
           mediaList.add(Entity.fromJson(mediaJson));

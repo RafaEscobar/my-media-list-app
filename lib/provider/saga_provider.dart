@@ -8,15 +8,7 @@ import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:provider/provider.dart';
 
 class SagaProvider extends ChangeNotifier{
-  List<Saga> _sagaList = [];
   final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
-
-  //* General Getters and Setters
-  List<Saga> get sagaList => _sagaList;
-  set sagaList(List<Saga> newSagaList){
-    _sagaList = newSagaList;
-    notifyListeners();
-  }
 
   Future<List<Saga>> getSaga({ required int limit, required int page, int? categoryId } ) async {
     try {
