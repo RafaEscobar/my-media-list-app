@@ -18,7 +18,7 @@ class EmptyState extends StatelessWidget{
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(title, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w200),),
+            Text(title, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w200), textAlign: TextAlign.center,),
             Lottie.asset(
               width: lottieWidth,
               "assets/animations/$lottieName.json",

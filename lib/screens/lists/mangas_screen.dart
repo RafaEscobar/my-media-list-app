@@ -3,6 +3,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/models/saga.dart';
 import 'package:mymedialist/provider/saga_provider.dart';
+import 'package:mymedialist/widgets/general/empty_state.dart';
 import 'package:mymedialist/widgets/general/media_card.dart';
 import 'package:provider/provider.dart';
 
@@ -52,11 +53,14 @@ class _MangasScreenState extends State<MangasScreen> {
           mainAxisSpacing: 10,
           childAspectRatio: 2/2.6
         ),
-        builderDelegate: PagedChildBuilderDelegate<Saga>(itemBuilder: ( BuildContext context, Saga manga, int index) {
-          return Center(
-            child: MediaCard(entity: manga),
-          );
-        }),
+        builderDelegate: PagedChildBuilderDelegate<Saga>(
+          itemBuilder: ( BuildContext context, Saga manga, int index) {
+            return Center(
+              child: MediaCard(entity: manga),
+            );
+          },
+          noItemsFoundIndicatorBuilder: (context) => const EmptyState(title: 'No hay elementos que mostrar', lottieName: 'empty_state'),
+        ),
       ),
     );
   }
