@@ -75,15 +75,13 @@ class AppRoute {
                 path: EntityDetailsScreens.routeName,
                 name: EntityDetailsScreens.routeName,
                 builder: (BuildContext context, GoRouterState state) {
-                  dynamic nose = state.extra;
-                  print(nose);
                   final entity = state.extra as Entity;
                   return EntityDetailsScreens(entity: entity,);
                 }
               ),
               GoRoute(
-                path: "${EntityDetailsScreens.routeName}/:entityId",
                 name: "${EntityDetailsScreens.routeName}-details",
+                path: "${EntityDetailsScreens.routeName}/:entityId",
                 builder: ( BuildContext context, GoRouterState state) {
                   return EntityDetailsScreens(
                     entityId: state.pathParameters["entityId"] ?? '0',

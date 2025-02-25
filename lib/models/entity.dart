@@ -10,6 +10,7 @@ class Entity {
   final String? postViewPriority;
   final String image;
   final String? position;
+  final String? type;
 
   Entity({
     this.id = 0,
@@ -19,6 +20,7 @@ class Entity {
     required this.category,
     required this.status,
     required this.creationDate,
+    required this.type,
     this.pendingPriority,
     this.postViewPriority,
     this.position,
@@ -32,7 +34,8 @@ class Entity {
         title: json['title'] ?? '',
         score: json['score'] != null ? (json['score']!).toDouble() : double.parse('0.0'),
         comment: json['comment'] ?? '' ,
-        category: json['category'] ?? '',
+        category: json['classification']?['category'] ?? '',
+        type: json['classification']?['type'] ?? '',
         status: json['status'] ?? '',
         creationDate: json['creation_date'] != null ? DateTime.parse(json['creation_date']!) : DateTime.now(),
         pendingPriority: json['pending_priority'],
@@ -51,6 +54,7 @@ class Entity {
     'score': score,
     'comment': comment,
     'category_id': category,
+    'type': type,
     'status_id': status,
     'creationDate': creationDate,
     'pending_priority_id': pendingPriority,
