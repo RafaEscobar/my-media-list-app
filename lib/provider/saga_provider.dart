@@ -21,12 +21,12 @@ class SagaProvider extends ChangeNotifier{
   Future<List<Saga>> getSaga({ required int limit, required int page, int? categoryId } ) async {
     try {
       Response response = await ApiService.request('/sagas?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
+      List<Saga> currentList = [];
       if (response.statusCode == 200) {
-        sagaList.clear();
         for( Map<String, dynamic> sagaJson in response.data['data'] ) {
-          sagaList.add(Saga.fromJson(sagaJson));
+          currentList.add(Saga.fromJson(sagaJson));
         }
-        return sagaList;
+        return currentList;
       } else {
         Alert.show(text: 'Error al obtener el contenido.');
         throw Exception();

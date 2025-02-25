@@ -14,11 +14,7 @@ class MediaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.goNamed(
-        "${EntityDetailsScreens.routeName}-details",
-        pathParameters: {"entityId": "${entity.id}"},
-        queryParameters: {"type": entity.type}
-      ),
+      onTap: () => context.goNamed(EntityDetailsScreens.routeName, extra: entity),
       child: Stack(
         children: [
           Card(

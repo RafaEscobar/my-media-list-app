@@ -27,13 +27,14 @@ class _SeriesScreenState extends State<SeriesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Saga> sagaList = await context.read<SagaProvider>().getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.series.identifier);
-      bool isLastPage = sagaList.length < _limit;
+      SagaProvider sagaProvider = context.read<SagaProvider>();
+      List<Saga> currentList = await sagaProvider.getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.series.identifier);
+      bool isLastPage = currentList.length < _limit;
       if (isLastPage) {
-        _pagingController.appendLastPage(sagaList);
+        _pagingController.appendLastPage(currentList);
       } else {
         int nextPageKey = ++pageKey;
-        _pagingController.appendPage(sagaList, nextPageKey);
+        _pagingController.appendPage(currentList, nextPageKey);
       }
     } catch (e) {
       throw Exception(e.toString());

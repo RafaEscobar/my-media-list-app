@@ -80,16 +80,6 @@ class AppRoute {
                 }
               ),
               GoRoute(
-                name: "${EntityDetailsScreens.routeName}-details",
-                path: "${EntityDetailsScreens.routeName}/:entityId",
-                builder: ( BuildContext context, GoRouterState state) {
-                  return EntityDetailsScreens(
-                    entityId: state.pathParameters["entityId"] ?? '0',
-                    type: state.uri.queryParameters["type"],
-                  );
-                }
-              ),
-              GoRoute(
                 path: AddImageScreen.routeName,
                 name: AddImageScreen.routeName,
                 builder: (BuildContext context, GoRouterState state) => const AddImageScreen(),

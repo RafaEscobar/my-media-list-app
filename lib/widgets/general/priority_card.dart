@@ -31,13 +31,8 @@ class PriorityCard extends StatelessWidget {
   Future<void> _sendRequest(EntertainmentEntityProvider entityProvider, BuildContext context) async {
     Entity? newEntity;
     await Loader.runLoad(asyncFunction: () async {
-       await entityProvider.createMedia(context).then((value){
-        print(value);
-         newEntity = value;
-       });
+       newEntity = await entityProvider.createMedia(context);
     });
-    print(newEntity);
-    print('object');
     entityProvider.deleteData();
     if (context.mounted) context.goNamed(EntityDetailsScreens.routeName, extra: newEntity);
   }

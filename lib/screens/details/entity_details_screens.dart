@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/models/entity.dart';
-import 'package:mymedialist/provider/media_provider.dart';
-import 'package:mymedialist/provider/saga_provider.dart';
 import 'package:mymedialist/screens/details/sections/entity_body.dart';
 import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
 import 'package:mymedialist/theme/app_theme.dart';
-import 'package:provider/provider.dart';
 
 class EntityDetailsScreens extends StatefulWidget {
+  static const String routeName = 'details-screen';
   const EntityDetailsScreens({
-    this.entityId,
-    this.type,
     this.entity,
     super.key,
   });
-  static const String routeName = 'details-screen';
-  final String? entityId;
-  final String? type;
   final Entity? entity;
 
   @override
@@ -28,24 +20,10 @@ class EntityDetailsScreens extends StatefulWidget {
 class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
   late Entity entity;
 
-  void _getEntity() {
-    try {
-      if (widget.entity != null){
-        entity = widget.entity!;
-      } else {
-        entity = widget.type == TypeEnum.media.name ?
-          context.read<MediaProvider>().mediaList.firstWhere((media) => media.id == int.parse(widget.entityId!)) :
-          context.read<SagaProvider>().sagaList.firstWhere((saga) => saga.id == int.parse(widget.entityId!));
-      }
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    _getEntity();
+     entity = widget.entity!;
   }
 
   @override
