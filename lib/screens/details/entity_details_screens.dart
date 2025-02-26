@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/models/entity.dart';
+import 'package:mymedialist/provider/chapter_provider.dart';
 import 'package:mymedialist/screens/details/add_chapter/step_one.dart';
 import 'package:mymedialist/screens/details/add_chapter/step_three.dart';
 import 'package:mymedialist/screens/details/add_chapter/step_two.dart';
@@ -8,6 +10,7 @@ import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
 import 'package:mymedialist/screens/details/sections/floating_buttons.dart';
 import 'package:mymedialist/theme/app_theme.dart';
+import 'package:provider/provider.dart';
 
 class EntityDetailsScreens extends StatefulWidget {
   static const String routeName = 'details-screen';
@@ -31,6 +34,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
   }
 
   void _addChapter() {
+    context.read<ChapterProvider>().sagaId = entity.id;
     showDialog(
       barrierColor: Colors.black87,
       barrierDismissible: false,
@@ -106,9 +110,12 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingButtons(
-        actionAddChapter: _addChapter,
-        actionEdit: () => (),
+      floatingActionButton: Visibility(
+        visible: (widget.entity!.type == TypeEnum.saga.name),
+        child: FloatingButtons(
+          actionAddChapter: _addChapter,
+          actionEdit: () => (),
+        ),
       )
     );
   }

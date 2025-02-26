@@ -39,6 +39,11 @@ class _StepOneState extends State<StepOne> {
     }
   }
 
+  void _closeModal() {
+    _chapterProvider.cleanData();
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context){
     return Container(
@@ -71,7 +76,7 @@ class _StepOneState extends State<StepOne> {
             margin: const EdgeInsets.only(top: 30),
             padding: const EdgeInsets.all(0),
             textBtnLeft: "Cerrar",
-            actionBtnL: () => Navigator.of(context).pop(),
+            actionBtnL: _closeModal,
             textBtnRight: "Continuar",
             actionBtnR: _navigateToNext,
           )
