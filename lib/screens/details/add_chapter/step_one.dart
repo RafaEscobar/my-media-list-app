@@ -6,7 +6,12 @@ class StepOne extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return const SizedBox(
-      child: Placeholder(),
+      child: Column(
+        children: [
+          Text("Step 1"),
+          Placeholder()
+        ],
+      )
     );
   }
 }

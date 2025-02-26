@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mymedialist/models/entity.dart';
+import 'package:mymedialist/screens/details/add_chapter/step_one.dart';
+import 'package:mymedialist/screens/details/add_chapter/step_three.dart';
+import 'package:mymedialist/screens/details/add_chapter/step_two.dart';
 import 'package:mymedialist/screens/details/sections/entity_body.dart';
 import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
@@ -20,11 +23,46 @@ class EntityDetailsScreens extends StatefulWidget {
 
 class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
   late Entity entity;
+  int currentStep = 0;
 
   @override
   void initState() {
     super.initState();
      entity = widget.entity!;
+  }
+
+  void _addChapter() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              content: AnimatedSwitcher(
+                duration: const Duration(microseconds: 300),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return FadeTransition(opacity: animation, child: child,);
+                },
+                child: _getCurrentStep(),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _getCurrentStep() {
+    switch (currentStep) {
+      case 0:
+        return const StepOne();
+      case 1:
+        return const StepTwo();
+      case 2:
+        return const StepThree();
+      default:
+        return Container();
+    }
   }
 
   @override
@@ -54,7 +92,10 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: const FloatingButtons()
+      floatingActionButton: FloatingButtons(
+        actionAddChapter: _addChapter,
+        actionEdit: () => (),
+      )
     );
   }
 }
