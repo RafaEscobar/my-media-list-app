@@ -23,7 +23,6 @@ class EntityDetailsScreens extends StatefulWidget {
 
 class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
   late Entity entity;
-  int currentStep = 0;
 
   @override
   void initState() {
@@ -33,17 +32,23 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
 
   void _addChapter() {
     showDialog(
+      barrierColor: Colors.black87,
+      barrierDismissible: false,
       context: context,
       builder: (context) {
+        int currentStep = 0;
         return StatefulBuilder(
           builder: (context, setState) {
+            void onNextStep() => setState(() => currentStep++);
+            void onPreviousStep() => setState(() => currentStep--);
+
             return AlertDialog(
               content: AnimatedSwitcher(
                 duration: const Duration(microseconds: 300),
                 transitionBuilder: (Widget child, Animation<double> animation) {
                   return FadeTransition(opacity: animation, child: child,);
                 },
-                child: _getCurrentStep(),
+                child: _getCurrentStep(currentStep, onNextStep, onPreviousStep),
               ),
             );
           },
@@ -52,10 +57,10 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
     );
   }
 
-  Widget _getCurrentStep() {
+  Widget _getCurrentStep(int currentStep, VoidCallback onNextStep, VoidCallback onPreviousStep) {
     switch (currentStep) {
       case 0:
-        return const StepOne();
+        return StepOne(nextStep: onNextStep,);
       case 1:
         return const StepTwo();
       case 2:
