@@ -44,12 +44,18 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
 
             return AlertDialog(
               content: AnimatedSwitcher(
-                duration: const Duration(microseconds: 300),
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  return FadeTransition(opacity: animation, child: child,);
-                },
-                child: _getCurrentStep(currentStep, onNextStep, onPreviousStep),
-              ),
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (Widget child, Animation<double> animation) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(1.0, 0.0),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
+                    );
+                  },
+                  child: _getCurrentStep(currentStep, onNextStep, onPreviousStep),
+                ),
             );
           },
         );
