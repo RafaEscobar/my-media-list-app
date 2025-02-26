@@ -1,4 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mymedialist/provider/app_provider.dart';
+import 'package:mymedialist/services/api_service.dart';
+import 'package:provider/provider.dart';
 
 class ChapterProvider extends ChangeNotifier{
   String _name = '';
@@ -37,7 +41,19 @@ class ChapterProvider extends ChangeNotifier{
     "saga_id": _sagaId
   };
 
-  
+  Future<bool> createChapter(BuildContext context) async {
+    try {
+      Response response = await ApiService.request(
+        '/chapters',
+        body: getData(),
+        auth: context.read<AppProvider>().userInfo.token
+      );
+      if (response.statusCode == 201) return true;
+      throw Exception("${response.statusCode}: ${response.data}");
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 
   void cleanData(){
     _name = '';

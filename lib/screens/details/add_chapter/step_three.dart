@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mymedialist/provider/chapter_provider.dart';
 import 'package:mymedialist/theme/app_theme.dart';
+import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/general/input.dart';
+import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -29,11 +32,20 @@ class _StepThreeState extends State<StepThree> {
     _commentController = TextEditingController(text: _chapterProvider.comment.isNotEmpty ? _chapterProvider.comment : '');
   }
 
-  void _navigateToNext() {
-    _commentFocusNode.unfocus();
-    if (_formKey.currentState!.fields['comment']!.validate()) {
-      _chapterProvider.comment = _formKey.currentState!.fields['comment']!.value.toString();
-      
+  Future<void> _navigateToNext() async {
+    try {
+      _commentFocusNode.unfocus();
+      if (_formKey.currentState!.fields['comment']!.validate()) {
+        _chapterProvider.comment = _formKey.currentState!.fields['comment']!.value.toString();
+        Loader.runLoad(asyncFunction: () async => await _chapterProvider.createChapter(context).then((response){
+          if (response) {
+            _chapterProvider.cleanData();
+            if (mounted) context.pop();
+          }
+        }));
+      }
+    } catch (e) {
+      Alert.show(text: e.toString(), contentWidth: 300);
     }
   }
 
