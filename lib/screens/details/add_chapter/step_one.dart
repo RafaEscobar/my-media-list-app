@@ -19,11 +19,13 @@ class _StepOneState extends State<StepOne> {
   final _formKey = GlobalKey<FormBuilderState>();
   final FocusNode _nameFocusNode = FocusNode();
   late ChapterProvider _chapterProvider;
+  late TextEditingController _nameController;
 
   @override
   void initState() {
     super.initState();
     _chapterProvider = context.read<ChapterProvider>();
+    _nameController = TextEditingController(text: _chapterProvider.name.isNotEmpty ? _chapterProvider.name : '');
   }
 
   @override
@@ -33,9 +35,10 @@ class _StepOneState extends State<StepOne> {
   }
 
   void _navigateToNext() {
+    _nameFocusNode.unfocus();
     if (_formKey.currentState!.fields['name']!.validate()) {
       _chapterProvider.name = _formKey.currentState!.fields['name']!.value.toString();
-      widget.nextStep;
+      widget.nextStep();
     }
   }
 
@@ -58,6 +61,7 @@ class _StepOneState extends State<StepOne> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Input(
+                controller: _nameController,
                 maxLength: 60,
                 showMaxLenght: false,
                 focusNode: _nameFocusNode,
