@@ -30,11 +30,11 @@ class _StepOneState extends State<StepOne> {
   Widget build(BuildContext context){
     return Container(
       height: 260,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.only(right: 2, left: 2, top: 4, bottom: 0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const FormTitle(title: 'Nombre o número del capítulo:', maxLines: 2, textSize: 22,),
+          const FormTitle(title: 'Nombre o número del capítulo:', maxLines: 2, textSize: 20,),
           FormBuilder(
             key: _formKey,
             child: Container(
@@ -55,7 +55,7 @@ class _StepOneState extends State<StepOne> {
           ),
           BottomButtons(
             textSize: 18,
-            margin: const EdgeInsets.all(0),
+            margin: const EdgeInsets.only(top: 30),
             padding: const EdgeInsets.all(0),
             textBtnLeft: "Cerrar",
             actionBtnL: () => Navigator.of(context).pop(),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/provider/category_provider.dart';
+import 'package:mymedialist/provider/chapter_provider.dart';
 import 'package:mymedialist/provider/entertainment_entity_provider.dart';
 import 'package:mymedialist/provider/media_provider.dart';
 import 'package:mymedialist/provider/pending_priority_provider.dart';
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget
         ChangeNotifierProvider(create: (_) => PendingPriorityProvider(),),
         ChangeNotifierProvider(create: (_) => PostViewPriorityProvider(),),
         ChangeNotifierProvider(create: (_) => EntertainmentEntityProvider(),),
-        ChangeNotifierProvider(create: (_) => SagaProvider())
+        ChangeNotifierProvider(create: (_) => SagaProvider()),
+        ChangeNotifierProvider(create: (_) => ChapterProvider())
       ],
       builder: (_, __) {
         return MaterialApp.router(
