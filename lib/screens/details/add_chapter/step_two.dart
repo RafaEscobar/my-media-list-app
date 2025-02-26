@@ -16,14 +16,19 @@ class StepTwo extends StatefulWidget {
 }
 
 class _StepTwoState extends State<StepTwo> {
-  late ChapterProvider chapterProvider;
+  late ChapterProvider _chapterProvider;
   late double _currentValue;
 
   @override
   void initState() {
     super.initState();
-    chapterProvider = context.read<ChapterProvider>();
-    _currentValue = chapterProvider.score != 0 ? chapterProvider.score : 5;
+    _chapterProvider = context.read<ChapterProvider>();
+    _currentValue = _chapterProvider.score != 0 ? _chapterProvider.score : 5;
+  }
+
+  void _navigateToNext() {
+    _chapterProvider.score = _currentValue;
+    widget.onNextStep();
   }
 
   @override
@@ -68,7 +73,7 @@ class _StepTwoState extends State<StepTwo> {
             textBtnLeft: "Regresar",
             actionBtnL: widget.onPreviousStep,
             textBtnRight: "Continuar",
-            actionBtnR: widget.onNextStep,
+            actionBtnR: _navigateToNext,
           )
         ],
       )

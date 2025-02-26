@@ -77,7 +77,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
       case 1:
         return StepTwo(onNextStep, onPreviousStep,);
       case 2:
-        return StepThree(onNextStep, onPreviousStep,);
+        return StepThree(onPreviousStep,);
       default:
         return Container();
     }
@@ -103,7 +103,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
               children: [
                 EntityHeader(currentEntity: entity,),
                 EntityBody(currentEntity: entity,),
-                const EntityCorousel()
+                const EntityCorousel(),
               ],
             ),
           ),

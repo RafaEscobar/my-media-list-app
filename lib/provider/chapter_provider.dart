@@ -30,14 +30,14 @@ class ChapterProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Map<String, dynamic> getData() {
-    return {
-      "name": _name,
-      "score": _score,
-      "comment": _comment,
-      "saga_id": _sagaId
-    };
-  }
+  Map<String, dynamic> getData() => {
+    "name": _name,
+    "score": _score,
+    "comment": _comment,
+    "saga_id": _sagaId
+  };
+
+  
 
   void cleanData(){
     _name = '';

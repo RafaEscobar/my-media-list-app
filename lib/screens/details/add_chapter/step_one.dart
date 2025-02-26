@@ -31,6 +31,7 @@ class _StepOneState extends State<StepOne> {
   @override
   void dispose() {
     _nameFocusNode.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 

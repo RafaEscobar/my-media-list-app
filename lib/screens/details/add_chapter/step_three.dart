@@ -9,9 +9,8 @@ import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
 class StepThree extends StatefulWidget {
-  const StepThree(this.onPreviousStep, this.onNextStep, {super.key});
+  const StepThree(this.onPreviousStep, {super.key});
   final Function() onPreviousStep;
-  final Function() onNextStep;
 
   @override
   State<StepThree> createState() => _StepThreeState();
@@ -30,9 +29,19 @@ class _StepThreeState extends State<StepThree> {
     _commentController = TextEditingController(text: _chapterProvider.comment.isNotEmpty ? _chapterProvider.comment : '');
   }
 
+  void _navigateToNext() {
+    _commentFocusNode.unfocus();
+    if (_formKey.currentState!.fields['comment']!.validate()) {
+      _chapterProvider.comment = _formKey.currentState!.fields['comment']!.value.toString();
+      
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      height: 320,
+      padding: const EdgeInsets.only(right: 2, left: 2, top: 4, bottom: 0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -44,7 +53,7 @@ class _StepThreeState extends State<StepThree> {
               focusNode: _commentFocusNode,
               obscureText: false,
               name: 'comment',
-              maxLines: 8,
+              maxLines: 4,
               maxLength: 235,
               textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
               validator: FormBuilderValidators.compose([
@@ -76,7 +85,7 @@ class _StepThreeState extends State<StepThree> {
             textBtnLeft: "Regresar",
             actionBtnL: widget.onPreviousStep,
             textBtnRight: "Finzalizar",
-            actionBtnR: widget.onNextStep,
+            actionBtnR: _navigateToNext,
           )
         ],
       )
