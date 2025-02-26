@@ -69,11 +69,11 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
   Widget _getCurrentStep(int currentStep, VoidCallback onNextStep, VoidCallback onPreviousStep) {
     switch (currentStep) {
       case 0:
-        return StepOne(nextStep: onNextStep,);
+        return StepOne(onNextStep,);
       case 1:
-        return StepTwo(onNextStep: onNextStep, onPreviousStep: onPreviousStep,);
+        return StepTwo(onNextStep, onPreviousStep,);
       case 2:
-        return const StepThree();
+        return StepThree(onNextStep, onPreviousStep,);
       default:
         return Container();
     }

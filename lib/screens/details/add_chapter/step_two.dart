@@ -6,11 +6,7 @@ import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
 class StepTwo extends StatefulWidget {
-  const StepTwo({
-    super.key,
-    required this.onNextStep,
-    required this.onPreviousStep
-  });
+  const StepTwo(this.onNextStep, this.onPreviousStep, {super.key,});
   final Function() onNextStep;
   final Function() onPreviousStep;
 
