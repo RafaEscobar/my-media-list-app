@@ -49,9 +49,9 @@ class ChapterProvider extends ChangeNotifier{
         auth: context.read<AppProvider>().userInfo.token
       );
       if (response.statusCode == 201) return true;
-      throw Exception("${response.statusCode}: ${response.data}");
+      throw "${response.statusCode}: ${response.data["message"]}";
     } catch (e) {
-      throw Exception(e.toString());
+      throw e.toString();
     }
   }
 

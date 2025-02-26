@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mymedialist/provider/chapter_provider.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
@@ -33,21 +32,42 @@ class _StepThreeState extends State<StepThree> {
   }
 
   Future<void> _navigateToNext() async {
-    try {
-      _commentFocusNode.unfocus();
-      if (_formKey.currentState!.fields['comment']!.validate()) {
-        _chapterProvider.comment = _formKey.currentState!.fields['comment']!.value.toString();
-        Loader.runLoad(asyncFunction: () async => await _chapterProvider.createChapter(context).then((response){
-          if (response) {
-            _chapterProvider.cleanData();
-            if (mounted) context.pop();
-          }
-        }));
-      }
-    } catch (e) {
-      Alert.show(text: e.toString(), contentWidth: 300);
+    _commentFocusNode.unfocus();
+    if (_formKey.currentState!.fields['comment']!.validate()) {
+      _chapterProvider.comment = _formKey.currentState!.fields['comment']!.value.toString();
+      await Loader.runLoad(asyncFunction: () async => await _chapterProvider.createChapter(context)
+        .then((response){
+          _chapterProvider.cleanData();
+          if (mounted) Navigator.of(context).pop();
+          _onSuccess();
+        })
+        .catchError((errorMessage){
+          if (mounted) Navigator.of(context).pop();
+          _onError(errorMessage.toString());
+        }
+      ));
     }
   }
+
+  void _onError(String message) => Alert.show(
+    text: message,
+    contentWidth: 340,
+    duration: const Duration(seconds: 5),
+    textColor: Colors.white,
+    background: Colors.red,
+    textSize: 16,
+    centeredText: true
+  );
+
+  void _onSuccess() => Alert.show(
+    text: "Capítulo agregado correctamente.",
+    contentWidth: 340,
+    duration: const Duration(seconds: 3),
+    textColor: Colors.white,
+    background: Colors.green,
+    textSize: 16,
+    centeredText: true
+  );
 
   @override
   Widget build(BuildContext context) {
