@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mymedialist/theme/app_theme.dart';
 
 class Button extends StatelessWidget {
   const Button({
     super.key,
-    required this.text,
-    required this.backgroundSplash,
+    this.backgroundSplash = AppTheme.primary,
     this.background = Colors.black,
     this.textColor = Colors.white,
     this.textSize = 22,
@@ -14,10 +14,12 @@ class Button extends StatelessWidget {
     this.buttonHeight = 46,
     this.action,
     this.textWeight,
+    this.text,
+    this.icon
   });
 
   final Function()? action;
-  final String text;
+  final String? text;
   final Color background;
   final Color backgroundSplash;
   final Color textColor;
@@ -27,13 +29,14 @@ class Button extends StatelessWidget {
   final double buttonWidth;
   final double buttonHeight;
   final FontWeight? textWeight;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: buttonWidth,
       height: buttonHeight,
-      color: Colors.white,
+      color: Colors.transparent,
       child: Material(
         color: background,
         borderRadius: BorderRadius.circular(borderRadius),
@@ -43,12 +46,14 @@ class Button extends StatelessWidget {
           splashColor: backgroundSplash,
           child: Container(
             padding: padding,
-            child: Center(
-              child: Text(
-                text,
-                style: TextStyle(color: textColor, fontSize: textSize, fontWeight: textWeight),
-              ),
-            ),
+            child: text != null ?
+              Center(
+                child: Text(
+                  text!,
+                  style: TextStyle(color: textColor, fontSize: textSize, fontWeight: textWeight),
+                ),
+              ) :
+              icon
           ),
         ),
       ),
