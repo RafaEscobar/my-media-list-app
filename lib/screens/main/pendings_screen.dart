@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymedialist/widgets/general/empty_state.dart';
 
 class PendingsScreen extends StatefulWidget {
   const PendingsScreen({super.key});
@@ -11,10 +12,6 @@ class PendingsScreen extends StatefulWidget {
 class _PendingsScreenState extends State<PendingsScreen> {
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      child: Center(
-        child: Text('data')
-      ),
-    );
+    return const EmptyState(title: 'Próximamente', lottieName: 'soon');
   }
 }

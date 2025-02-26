@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
+import 'package:mymedialist/theme/app_theme.dart';
 
 class BottomTabs extends StatefulWidget {
   const BottomTabs({super.key, required this.tabBarController});
@@ -30,7 +31,7 @@ class _BottomTabsState extends State<BottomTabs> {
         tabIconColor: Colors.blue[600],
         tabIconSize: 28.0,
         tabIconSelectedSize: 26.0,
-        tabSelectedColor: Colors.blue[900],
+        tabSelectedColor: AppTheme.primary,
         tabIconSelectedColor: Colors.white,
         tabBarColor: Colors.white,
         onTabItemSelected: (int value) {

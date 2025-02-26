@@ -3,6 +3,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/provider/media_provider.dart';
+import 'package:mymedialist/widgets/general/empty_state.dart';
 import 'package:mymedialist/widgets/general/media_card.dart';
 import 'package:provider/provider.dart';
 
@@ -52,11 +53,14 @@ class _MoviesScreenState extends State<MoviesScreen> {
           mainAxisSpacing: 10,
           childAspectRatio: 2/2.6
         ),
-        builderDelegate: PagedChildBuilderDelegate<Entity>(itemBuilder: (BuildContext context, Entity movie, int index) {
-          return Center(
-            child: MediaCard(entity: movie),
-          );
-        }),
+        builderDelegate: PagedChildBuilderDelegate<Entity>(
+          itemBuilder: (BuildContext context, Entity movie, int index) {
+            return Center(
+              child: MediaCard(entity: movie),
+            );
+          },
+          noItemsFoundIndicatorBuilder: (context) => const EmptyState(title: 'No hay elementos que mostrar', lottieName: 'empty_state'),
+        ),
       ),
     );
   }

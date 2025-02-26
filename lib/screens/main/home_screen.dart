@@ -5,6 +5,7 @@ import 'package:mymedialist/screens/lists/mangas_screen.dart';
 import 'package:mymedialist/screens/lists/movies_screen.dart';
 import 'package:mymedialist/screens/lists/series_screen.dart';
 import 'package:mymedialist/screens/lists/videogames_screens.dart';
+import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/main_head.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,8 +16,25 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 5, vsync: this);
+    _tabController.addListener((){
+      setState(() => _selectedIndex = _tabController.index);
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,10 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               color: Colors.white,
               child: TabBar(
-                indicatorColor: Colors.black,
-                onTap: (value) {
-                  setState(() => _selectedIndex = value);
-                },
+                indicatorColor: AppTheme.primary,
+                controller: _tabController,
                 tabs: <Widget>[
                   Tab(
                     text: 'Anime',
@@ -44,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "assets/images/anime.svg",
                       height: 20,
                       width: 20,
-                      colorFilter: ColorFilter.mode((_selectedIndex == 0) ? Colors.blue : Colors.black, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode((_selectedIndex == 0) ? AppTheme.primary : Colors.black, BlendMode.srcIn),
                     ),
                   ),
                   Tab(
@@ -53,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "assets/images/movie.svg",
                       height: 20,
                       width: 20,
-                      colorFilter: ColorFilter.mode((_selectedIndex == 1) ? Colors.blue : Colors.black, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode((_selectedIndex == 1) ? AppTheme.primary : Colors.black, BlendMode.srcIn),
                     ),
                   ),
                   Tab(
@@ -62,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "assets/images/game.svg",
                       height: 20,
                       width: 20,
-                      colorFilter: ColorFilter.mode((_selectedIndex == 2) ? Colors.blue : Colors.black, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode((_selectedIndex == 2) ? AppTheme.primary : Colors.black, BlendMode.srcIn),
                     ),
                   ),
                   Tab(
@@ -71,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "assets/images/manga.svg",
                       height: 20,
                       width: 20,
-                      colorFilter: ColorFilter.mode((_selectedIndex == 3) ? Colors.blue : Colors.black, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode((_selectedIndex == 3) ? AppTheme.primary : Colors.black, BlendMode.srcIn),
                     ),
                   ),
                   Tab(
@@ -80,16 +96,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       "assets/images/serie.svg",
                       height: 20,
                       width: 20,
-                      colorFilter: ColorFilter.mode((_selectedIndex == 4) ? Colors.blue : Colors.black, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode((_selectedIndex == 4) ? AppTheme.primary : Colors.black, BlendMode.srcIn),
                     ),
                   ),
                 ],
               ),
             ),
-            // TabBarView
-            const Expanded(
+            Expanded(
               child: TabBarView(
-                children: [
+                controller: _tabController,
+                children: const [
                   AnimesScreen(),
                   MoviesScreen(),
                   VideogamesScreens(),

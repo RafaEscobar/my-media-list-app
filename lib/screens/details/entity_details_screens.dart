@@ -3,6 +3,7 @@ import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/screens/details/sections/entity_body.dart';
 import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
+import 'package:mymedialist/screens/details/sections/floating_buttons.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 
 class EntityDetailsScreens extends StatefulWidget {
@@ -51,7 +52,9 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
             ),
           ),
         ),
-      )
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: const FloatingButtons()
     );
   }
 }
