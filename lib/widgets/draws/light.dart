@@ -6,8 +6,8 @@ class Light extends CustomPainter {
     Paint paint = Paint()
       ..shader = const LinearGradient(
         colors: [Colors.white70, Color.fromARGB(103, 30, 124, 240)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
     Path path = Path()

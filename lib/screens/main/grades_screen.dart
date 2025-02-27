@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mymedialist/theme/app_theme.dart';
+import 'package:mymedialist/widgets/draws/light.dart';
+import 'package:mymedialist/widgets/draws/podium.dart';
 //import 'package:mymedialist/widgets/general/empty_state.dart';
 
 class GradesScreen extends StatelessWidget {
@@ -8,54 +9,26 @@ class GradesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Row(
-          spacing: 20,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Transform(
-              transform: Matrix4.identity()..setEntry(3, 2, 0.010)..rotateY(0.3),
-              alignment: Alignment.center,
-              child: Container(
-                width: 100,
-                height: 164,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.red.shade300, Colors.white],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-              ),
+    return SizedBox(
+      child: Stack(
+        children: [
+          Positioned(
+            top: 50,
+            right: 92,
+            left: 92,
+            child: CustomPaint(
+              size: Size(130, MediaQuery.of(context).size.height * .4),
+              painter: Light()
             ),
-            Container(
-              width: 100,
-              height: 200,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppTheme.primary, Colors.white],
-                  begin: Alignment.center,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-            ),
-            Transform(
-              transform: Matrix4.identity()..setEntry(3, 2, 0.010)..rotateY(-0.3),
-              alignment: Alignment.center,
-              child: Container(
-                width: 100,
-                height: 164,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.green.shade300, Colors.white],
-                    begin: Alignment.centerRight,
-                    end: Alignment.bottomLeft,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
+          ),
+          const Positioned(
+            right: 0,
+            left: 0,
+            top: 220,
+            child: Podium()
+          )
+        ],
+      ),
+    );
   }
 }
