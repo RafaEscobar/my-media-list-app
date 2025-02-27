@@ -47,8 +47,8 @@ class _MainNavigationState extends State<MainNavigation> with TickerProviderStat
               physics: const NeverScrollableScrollPhysics(),
               controller: _motionTabBarController,
               children: const [
-                HomeScreen(),
                 GradesScreen(),
+                //HomeScreen(),
                 TypeScreen(),
                 PendingsScreen(),
                 ProfileScreen()
