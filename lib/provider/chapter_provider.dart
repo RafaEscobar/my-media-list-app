@@ -56,9 +56,9 @@ class ChapterProvider extends ChangeNotifier{
     }
   }
 
-  Future<List<Chapter>> getChapters(BuildContext context, {required int limit, required int pageKey, required int sagaId}) async {
+  Future<List<Chapter>> getChapters(BuildContext context, {required int limit, required int pageKey, required int sagaId, required bool ascOrder}) async {
     try {
-      Response response = await ApiService.request("/chapters?limit=$limit&page=$pageKey&saga_id=$sagaId", auth: context.read<AppProvider>().userInfo.token);
+      Response response = await ApiService.request("/chapters?limit=$limit&page=$pageKey&saga_id=$sagaId&ascOrder=$ascOrder", auth: context.read<AppProvider>().userInfo.token);
       if (response.statusCode == 200) {
         List<Chapter> currentList = [];
         for(Map<String, dynamic> chapterJson in response.data['data']){

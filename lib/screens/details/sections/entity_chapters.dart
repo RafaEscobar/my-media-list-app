@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/models/chapter.dart';
 import 'package:mymedialist/provider/chapter_provider.dart';
+import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/chapter_card.dart';
 import 'package:mymedialist/widgets/general/forms/form_title.dart';
@@ -21,6 +23,7 @@ class EntityChapters extends StatefulWidget {
 class EntityChaptersState extends State<EntityChapters> {
   final int _limit = 50;
   final PagingController<int, Chapter> _pagingController = PagingController(firstPageKey: 1);
+  bool isAscOrder = true;
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
@@ -28,8 +31,8 @@ class EntityChaptersState extends State<EntityChapters> {
         context,
         limit: _limit,
         pageKey: pageKey,
-        sagaId: widget.sagaId
-
+        sagaId: widget.sagaId,
+        ascOrder: isAscOrder,
       );
       bool isLastPage = currentList.length < _limit;
       if (isLastPage) {
@@ -64,10 +67,25 @@ class EntityChaptersState extends State<EntityChapters> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const FormTitle(title: "Capítulos"),
-              IconButton(
-                onPressed: () => (),
-                icon: const Icon(Icons.filter_list)
-              )
+              GestureDetector(
+                onTap: () {
+                  setState(() => isAscOrder = !isAscOrder);
+                  _pagingController.refresh();
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primary,
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: SvgPicture.asset(
+                    "assets/icons/${isAscOrder ? 'asc' : 'desc'}.svg",
+                    height: 18,
+                    width: 18,
+                    colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  )
+                ),
+              ),
             ],
           ),
           Expanded(
