@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mymedialist/models/chapter.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/services/api_service.dart';
 import 'package:provider/provider.dart';
@@ -50,6 +51,22 @@ class ChapterProvider extends ChangeNotifier{
       );
       if (response.statusCode == 201) return true;
       throw "${response.statusCode}: ${response.data["message"]}";
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<List<Chapter>> getChapters(BuildContext context, {required int limit, required int pageKey, required int sagaId}) async {
+    try {
+      Response response = await ApiService.request("/chapters?limit=$limit&page=$pageKey&saga_id=$sagaId", auth: context.read<AppProvider>().userInfo.token);
+      if (response.statusCode == 200) {
+        List<Chapter> currentList = [];
+        for(Map<String, dynamic> chapterJson in response.data['data']){
+          currentList.add(Chapter.fromJson(chapterJson));
+        }
+        return currentList;
+      }
+      throw "Error al obtener el listado ${response.data['message']}";
     } catch (e) {
       throw e.toString();
     }

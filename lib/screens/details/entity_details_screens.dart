@@ -6,6 +6,7 @@ import 'package:mymedialist/screens/details/add_chapter/step_one.dart';
 import 'package:mymedialist/screens/details/add_chapter/step_three.dart';
 import 'package:mymedialist/screens/details/add_chapter/step_two.dart';
 import 'package:mymedialist/screens/details/sections/entity_body.dart';
+import 'package:mymedialist/screens/details/sections/entity_chapters.dart';
 import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
 import 'package:mymedialist/screens/details/sections/floating_buttons.dart';
@@ -104,6 +105,8 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
                 EntityHeader(currentEntity: entity,),
                 EntityBody(currentEntity: entity,),
                 const EntityCorousel(),
+                EntityChapters(sagaId: entity.id),
+                const SizedBox(height: 16,)
               ],
             ),
           ),
