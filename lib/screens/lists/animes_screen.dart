@@ -28,7 +28,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Saga> currentList = await context.read<SagaProvider>().getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.animes.identifier);
+      List<Saga> currentList = await context.read<SagaProvider>().getSagas(limit: _limit, page: pageKey, categoryId: CategoryEnum.animes.identifier);
       bool isLastPage = currentList.length < _limit;
       if (isLastPage) {
         _pagingController.appendLastPage(currentList);

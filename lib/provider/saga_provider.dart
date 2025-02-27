@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class SagaProvider extends ChangeNotifier{
   final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
 
-  Future<List<Saga>> getSaga({ required int limit, required int page, int? categoryId } ) async {
+  Future<List<Saga>> getSagas({ required int limit, required int page, int? categoryId } ) async {
     try {
       Response response = await ApiService.request('/sagas?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
       List<Saga> currentList = [];
@@ -25,6 +25,20 @@ class SagaProvider extends ChangeNotifier{
       }
     } catch (e) {
       throw Exception(e.toString());
+    }
+  }
+
+  Future<Saga> getSaga(int sagaId) async {
+    try {
+      Response response = await ApiService.request("/sagas/$sagaId", auth: appProvider.userInfo.token);
+      if (response.statusCode == 200) {
+        return Saga.fromJson(response.data['data']);
+      } else if (response.statusCode == 404){
+        throw "No se pudo encontrar la saga";
+      }
+      throw "${response.statusCode}: ${response.data['message']}";
+    } catch (e) {
+      throw e.toString();
     }
   }
 }
