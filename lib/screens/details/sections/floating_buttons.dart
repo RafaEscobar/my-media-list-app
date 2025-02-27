@@ -15,25 +15,35 @@ class FloatingButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
+    final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
     return SizedBox(
       width: 50,
       height: 130,
       child: Column(
         spacing: 14,
         children: [
-          Button(
-            action: actionEdit,
-            icon: Padding(
-              padding: const EdgeInsets.all(3),
-              child: SvgPicture.asset(
-                "assets/icons/edit.svg",
-                colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          Tooltip(
+            message: "Próximamente",
+            key: tooltipKey,
+            triggerMode: TooltipTriggerMode.manual,
+            showDuration: const Duration(milliseconds: 500),
+            child: Button(
+              action: () {
+                tooltipKey.currentState!.ensureTooltipVisible();
+                //actionEdit!();
+              },
+              icon: Padding(
+                padding: const EdgeInsets.all(3),
+                child: SvgPicture.asset(
+                  "assets/icons/edit.svg",
+                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                ),
               ),
+              background: AppTheme.primary,
+              borderRadius: 50,
+              buttonWidth: 50,
+              buttonHeight: 50,
             ),
-            background: AppTheme.primary,
-            borderRadius: 50,
-            buttonWidth: 50,
-            buttonHeight: 50,
           ),
           Button(
             action: actionAddChapter,
