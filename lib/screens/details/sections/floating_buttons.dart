@@ -4,7 +4,14 @@ import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/button.dart';
 
 class FloatingButtons extends StatelessWidget {
-  const FloatingButtons({super.key});
+  const FloatingButtons({
+    super.key,
+    this.actionEdit,
+    this.actionAddChapter
+  });
+
+  final Function()? actionEdit;
+  final Function()? actionAddChapter;
 
   @override
   Widget build(BuildContext context){
@@ -15,7 +22,7 @@ class FloatingButtons extends StatelessWidget {
         spacing: 14,
         children: [
           Button(
-            action: () => (),
+            action: actionEdit,
             icon: Padding(
               padding: const EdgeInsets.all(3),
               child: SvgPicture.asset(
@@ -29,7 +36,7 @@ class FloatingButtons extends StatelessWidget {
             buttonHeight: 50,
           ),
           Button(
-            action: () => (),
+            action: actionAddChapter,
             icon: Padding(
               padding: const EdgeInsets.all(2),
               child: SvgPicture.asset(

@@ -12,7 +12,6 @@ class MediaProvider extends ChangeNotifier{
   // Variable to connect with AppProvider
   final AppProvider appProvider = navigatorKey.currentState!.context.read<AppProvider>();
 
-
   Future<List<Entity>> getMedia({ required int limit, required int page, int? categoryId } ) async {
     try {
       Response response = await ApiService.request('/medias?limit=$limit&page=$page&category_id=$categoryId', auth: appProvider.userInfo.token);
