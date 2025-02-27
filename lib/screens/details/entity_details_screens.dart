@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/models/saga.dart';
@@ -12,6 +13,7 @@ import 'package:mymedialist/screens/details/sections/entity_chapters.dart';
 import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
 import 'package:mymedialist/screens/details/sections/floating_buttons.dart';
+import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -98,15 +100,17 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
       appBar: AppBar(
         backgroundColor: AppTheme.primary,
         leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.replaceNamed(MainNavigation.routeName),
           icon: const Icon(Icons.arrow_back, color: Colors.white,)
         ),
         title: const Text("Detalles", style: TextStyle(color: Colors.white),),
       ),
       body: SingleChildScrollView(
         child: PopScope(
+          canPop: false,
           onPopInvokedWithResult: (didPop, result) {
-
+            if (didPop) return;
+            context.replaceNamed(MainNavigation.routeName);
           },
           child: SafeArea(
             child: Container(
