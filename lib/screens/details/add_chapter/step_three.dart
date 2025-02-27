@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mymedialist/provider/chapter_provider.dart';
+import 'package:mymedialist/screens/details/sections/entity_chapters.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/forms/form_title.dart';
@@ -11,8 +12,9 @@ import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
 class StepThree extends StatefulWidget {
-  const StepThree(this.onPreviousStep, {super.key});
+  const StepThree(this.onPreviousStep, {super.key, required this.chapterKey});
   final Function() onPreviousStep;
+  final GlobalKey<EntityChaptersState> chapterKey;
 
   @override
   State<StepThree> createState() => _StepThreeState();
@@ -38,6 +40,7 @@ class _StepThreeState extends State<StepThree> {
       await Loader.runLoad(asyncFunction: () async => await _chapterProvider.createChapter(context)
         .then((response){
           _chapterProvider.cleanData();
+          widget.chapterKey.currentState!.refreshChapters();
           if (mounted) Navigator.of(context).pop();
           _onSuccess();
         })

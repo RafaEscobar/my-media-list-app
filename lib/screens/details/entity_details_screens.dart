@@ -27,6 +27,7 @@ class EntityDetailsScreens extends StatefulWidget {
 
 class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
   late Entity entity;
+  final GlobalKey<EntityChaptersState> _chapterKey = GlobalKey<EntityChaptersState>();
 
   @override
   void initState() {
@@ -78,7 +79,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
       case 1:
         return StepTwo(onNextStep, onPreviousStep,);
       case 2:
-        return StepThree(onPreviousStep,);
+        return StepThree(onPreviousStep, chapterKey: _chapterKey,);
       default:
         return Container();
     }
@@ -105,8 +106,13 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
                 EntityHeader(currentEntity: entity,),
                 EntityBody(currentEntity: entity,),
                 const EntityCorousel(),
-                EntityChapters(sagaId: entity.id),
-                const SizedBox(height: 16,)
+                if (entity.type == TypeEnum.saga.name)
+                   Column(
+                    children: [
+                      EntityChapters(key: _chapterKey, sagaId: entity.id),
+                      const SizedBox(height: 16,)
+                    ],
+                  ),
               ],
             ),
           ),

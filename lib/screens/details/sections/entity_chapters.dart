@@ -10,15 +10,15 @@ import 'package:provider/provider.dart';
 class EntityChapters extends StatefulWidget {
   const EntityChapters({
     super.key,
-    required this.sagaId
+    required this.sagaId,
   });
   final int sagaId;
 
   @override
-  State<EntityChapters> createState() => _EntityChaptersState();
+  State<EntityChapters> createState() => EntityChaptersState();
 }
 
-class _EntityChaptersState extends State<EntityChapters> {
+class EntityChaptersState extends State<EntityChapters> {
   final int _limit = 50;
   final PagingController<int, Chapter> _pagingController = PagingController(firstPageKey: 1);
 
@@ -43,12 +43,14 @@ class _EntityChaptersState extends State<EntityChapters> {
     }
   }
 
+  void refreshChapters() => _pagingController.refresh();
+
   @override
   void initState() {
+    super.initState();
     _pagingController.addPageRequestListener((pageKey){
       _fetchPage(pageKey: pageKey);
     });
-    super.initState();
   }
 
   @override
