@@ -23,7 +23,7 @@ class EntityChapters extends StatefulWidget {
 class EntityChaptersState extends State<EntityChapters> {
   final int _limit = 50;
   final PagingController<int, Chapter> _pagingController = PagingController(firstPageKey: 1);
-  bool isAscOrder = true;
+  bool isAscOrder = false;
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {

@@ -23,7 +23,11 @@ class ChapterCard extends StatelessWidget{
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          FormTitle(title: chapter.name, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 22),),
+          FormTitle(
+            title: chapter.name.length > 20 ? "${chapter.name.substring(0, 20)}..." : chapter.name,
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 22),
+            maxLines: 1,
+          ),
           Row(
             spacing: 4,
             mainAxisAlignment: MainAxisAlignment.center,
