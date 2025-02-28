@@ -65,16 +65,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<int> _generateRegister() async {
     int? statusCode;
-    await Loader.runLoad( asyncFunction: () async => statusCode = await appProvider.register(data: _getData()) );
+    await Loader.runLoad( asyncFunction: () async => statusCode =  await _callRegister());
     return statusCode!;
+  }
+
+  Future<int> _callRegister() async {
+    int statusCode = await appProvider.register(data: _getData());
+    if (statusCode == 201) await Call.firstCalls();
+    return statusCode;
   }
 
   bool _validateForm() => _formKey.currentState!.saveAndValidate();
 
-  Future<void> _onRegisterSuccess() async {
-    await Call.firstCalls();
-    ModalBottomSheet.showModal(body: const RemembermeBottomSheet(), height: 200, dismissible: false);
-  }
+  void _onRegisterSuccess() => ModalBottomSheet.showModal(body: const RemembermeBottomSheet(), height: 200, dismissible: false);
 
   void _onRegisterFailure() => Alert.show(
       text: 'Error al generar el registro',

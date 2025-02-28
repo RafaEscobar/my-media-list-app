@@ -48,7 +48,7 @@ class _MainNavigationState extends State<MainNavigation> with TickerProviderStat
               controller: _motionTabBarController,
               children: const [
                 GradesScreen(),
-                //HomeScreen(),
+                HomeScreen(),
                 TypeScreen(),
                 PendingsScreen(),
                 ProfileScreen()
