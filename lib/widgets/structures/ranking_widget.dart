@@ -50,8 +50,8 @@ class RankingWidget extends StatelessWidget{
                 builder: (context, value, child) {
                   return ListView.builder(
                     itemCount: currentList.length,
-                    itemBuilder: (context, index) => ,
-                  )
+                    itemBuilder: (context, index) => const Placeholder(),
+                  );
                 },
               )
             ),
