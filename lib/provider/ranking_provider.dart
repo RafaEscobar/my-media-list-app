@@ -50,19 +50,24 @@ class RankingProvider extends ChangeNotifier{
       Response response = await ApiService.request(categoryId == 0 ? "/ranking" : "/ranking/$categoryId", auth: appProvider.userInfo.token);
       if (response.statusCode == 200) {
         (categoryId==0) ? _saveLists(response.data) : null;
+      } else {
+        throw "${response.statusCode}: ${response.data['data']['message']}";
       }
-      throw "${response.statusCode}: ${response.data['data']['message']}";
     } catch (e) {
       throw e.toString();
     }
   }
 
   void _saveLists(Map<String, dynamic> data) {
-    animeList = (data['animes']['data'] as List).map((anime) => Saga.fromJson(anime)).toList();
-    mangaList = (data['mangas']['data'] as List).map((manga) => Saga.fromJson(manga)).toList();
-    serieList = (data['series']['data'] as List).map((serie) => Saga.fromJson(serie)).toList();
-    movieList = (data['movies']['data'] as List).map((movie) => Entity.fromJson(movie)).toList();
-    gameList = (data['games']['data'] as List).map((game) => Entity.fromJson(game)).toList();
+    try {
+      animeList = (data['animes']['data'] as List).map((anime) => Saga.fromJson(anime)).toList();
+      mangaList = (data['mangas']['data'] as List).map((manga) => Saga.fromJson(manga)).toList();
+      serieList = (data['series']['data'] as List).map((serie) => Saga.fromJson(serie)).toList();
+      movieList = (data['movies']['data'] as List).map((movie) => Entity.fromJson(movie)).toList();
+      gameList = (data['games']['data'] as List).map((game) => Entity.fromJson(game)).toList();
+    } catch (e) {
+      throw e.toString();
+    }
   }
 
 

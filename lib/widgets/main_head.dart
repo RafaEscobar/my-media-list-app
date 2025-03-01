@@ -5,9 +5,9 @@ import 'package:mymedialist/theme/app_theme.dart';
 class MainHead extends StatelessWidget {
   const MainHead({
     super.key,
-    this.withoutSearch = true
+    this.withSearch = true
   });
-  final bool withoutSearch;
+  final bool withSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class MainHead extends StatelessWidget {
             colorFilter: const ColorFilter.mode(AppTheme.primary, BlendMode.srcIn),
           ),
           Visibility(
-            visible: withoutSearch,
+            visible: withSearch,
             child: Tooltip(
               message: "Próximamente",
               key: tooltipKey,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/provider/ranking_provider.dart';
+import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/draws/light.dart';
 import 'package:mymedialist/widgets/draws/podium.dart';
+import 'package:mymedialist/widgets/general/ranking_card.dart';
 import 'package:provider/provider.dart';
 
 class RankingWidget extends StatelessWidget{
@@ -39,9 +41,10 @@ class RankingWidget extends StatelessWidget{
             left: 0,
             right: 0,
             child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               margin: const EdgeInsets.only(left: 10, right: 10),
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 126, 180, 247),
+                color: AppTheme.primary,
                 borderRadius: BorderRadius.circular(10),
               ),
               width: double.infinity,
@@ -50,7 +53,7 @@ class RankingWidget extends StatelessWidget{
                 builder: (context, value, child) {
                   return ListView.builder(
                     itemCount: currentList.length,
-                    itemBuilder: (context, index) => const Placeholder(),
+                    itemBuilder: (context, index) => RankingCard(entity: currentList[index])
                   );
                 },
               )

@@ -46,7 +46,7 @@ class _GradesScreenState extends State<GradesScreen> with SingleTickerProviderSt
             const SizedBox(height: 10,),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: MainHead()
+              child: MainHead(withSearch: false,)
             ),
             Container(
               color: Colors.white,
