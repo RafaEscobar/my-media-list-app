@@ -41,7 +41,7 @@ class _StepThreeState extends State<StepThree> {
       await Loader.runLoad(asyncFunction: () async => await _sendRequest()
         .then((response){
           _chapterProvider.cleanData();
-          widget.chapterKey.currentState!.refreshChapters();
+          //widget.chapterKey.currentState!.refreshChapters();
           _onSuccess();
         })
         .catchError((errorMessage){

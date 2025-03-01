@@ -16,8 +16,9 @@ class MoviesScreen extends StatefulWidget {
 
 class _MoviesScreenState extends State<MoviesScreen> {
   final int _limit = 10;
-  final PagingController<int, Entity> _pagingController = PagingController(firstPageKey: 1);
+  //final PagingController<int, Entity> _pagingController = PagingController(firstPageKey: 1);
 
+/*
   @override
   void initState() {
     super.initState();
@@ -63,5 +64,10 @@ class _MoviesScreenState extends State<MoviesScreen> {
         ),
       ),
     );
+  }
+  */
+  @override
+  Widget build(BuildContext context){
+    return Placeholder();
   }
 }

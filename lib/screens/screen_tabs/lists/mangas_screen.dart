@@ -16,8 +16,9 @@ class MangasScreen extends StatefulWidget {
 
 class _MangasScreenState extends State<MangasScreen> {
   final int _limit = 10;
-  final PagingController<int, Saga> _pagingController = PagingController(firstPageKey: 1);
+  //final PagingController<int, Saga> _pagingController = PagingController(firstPageKey: 1);
 
+  /*
   @override
   void initState() {
     super.initState();
@@ -63,5 +64,10 @@ class _MangasScreenState extends State<MangasScreen> {
         ),
       ),
     );
+  }
+  */
+  @override
+  Widget build(BuildContext context){
+    return Placeholder();
   }
 }
