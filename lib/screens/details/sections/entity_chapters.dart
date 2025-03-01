@@ -4,6 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mymedialist/models/chapter.dart';
 import 'package:mymedialist/provider/chapter_provider.dart';
 import 'package:mymedialist/theme/app_theme.dart';
+import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/chapter_card.dart';
 import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:provider/provider.dart';
@@ -21,19 +22,8 @@ class EntityChapters extends StatefulWidget {
 
 class EntityChaptersState extends State<EntityChapters> {
   final int _limit = 50;
-  bool isAscOrder = false;
-  late final _pagingController = PagingController<int, Chapter>(
-    getNextPageKey: (state) => (state.keys?.last ?? 0) + 1,
-    fetchPage: (pageKey) async => await context.read<ChapterProvider>().getChapters(
-      context,
-      limit: _limit,
-      pageKey: pageKey,
-      sagaId: widget.sagaId,
-      ascOrder: isAscOrder,
-    )
-  );
-  /*
   final PagingController<int, Chapter> _pagingController = PagingController(firstPageKey: 1);
+  bool isAscOrder = false;
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
@@ -55,14 +45,15 @@ class EntityChaptersState extends State<EntityChapters> {
       Alert.show(text: e.toString());
     }
   }
-  */
 
   void refreshChapters() => _pagingController.refresh();
 
   @override
-  void dispose() {
-    _pagingController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _pagingController.addPageRequestListener((pageKey){
+      _fetchPage(pageKey: pageKey);
+    });
   }
 
   @override
@@ -98,16 +89,12 @@ class EntityChaptersState extends State<EntityChapters> {
             ],
           ),
           Expanded(
-            child:  PagingListener(
-              controller: _pagingController,
-              builder: (context, state, fetchNextPage) => PagedListView<int, Chapter>(
-                state: state,
-                fetchNextPage: fetchNextPage,
-                builderDelegate: PagedChildBuilderDelegate(
-                  itemBuilder: (context, item, index) => ChapterCard(chapter: item),
-                ),
-              ),
-            )
+            child: PagedListView(
+              pagingController: _pagingController,
+              builderDelegate: PagedChildBuilderDelegate(
+                itemBuilder: (BuildContext context, Chapter item, int index) => ChapterCard(chapter: item),
+              )
+            ),
           )
         ],
       ),

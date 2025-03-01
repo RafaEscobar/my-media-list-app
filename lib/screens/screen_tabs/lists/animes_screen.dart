@@ -16,10 +16,8 @@ class AnimesScreen extends StatefulWidget {
 
 class _AnimesScreenState extends State<AnimesScreen> {
   final int _limit = 5;
+  final PagingController<int, Saga> _pagingController = PagingController(firstPageKey: 1);
 
-  //final PagingController<int, Saga> _pagingController = PagingController(firstPageKey: 1);
-
-  /*
   @override
   void initState() {
     super.initState();
@@ -45,7 +43,6 @@ class _AnimesScreenState extends State<AnimesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: PagedGridView<int, Saga>(
@@ -66,10 +63,5 @@ class _AnimesScreenState extends State<AnimesScreen> {
         )
       )
     );
-  }
-  */
-  @override
-  Widget build(BuildContext context){
-    return Placeholder();
   }
 }

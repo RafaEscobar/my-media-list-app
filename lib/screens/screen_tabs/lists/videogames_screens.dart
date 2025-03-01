@@ -16,9 +16,8 @@ class VideogamesScreens extends StatefulWidget {
 
 class _VideogamesScreensState extends State<VideogamesScreens> {
   final _limit = 10;
-  //final PagingController<int, Entity> _pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, Entity> _pagingController = PagingController(firstPageKey: 1);
 
-/*
   @override
   void initState() {
     super.initState();
@@ -64,10 +63,5 @@ class _VideogamesScreensState extends State<VideogamesScreens> {
         ),
       ),
     );
-  }
-  */
-  @override
-  Widget build(BuildContext context){
-    return Placeholder();
   }
 }
