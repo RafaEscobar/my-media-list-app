@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mymedialist/screens/screen_tabs/rankings/animes_ranking.dart';
+import 'package:mymedialist/screens/screen_tabs/rankings/games_ranking.dart';
+import 'package:mymedialist/screens/screen_tabs/rankings/mangas_ranking.dart';
+import 'package:mymedialist/screens/screen_tabs/rankings/movies_ranking.dart';
+import 'package:mymedialist/screens/screen_tabs/rankings/series_ranking.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/main_head.dart';
 
@@ -101,7 +106,11 @@ class _GradesScreenState extends State<GradesScreen> with SingleTickerProviderSt
               child: TabBarView(
                 controller: _tabController,
                 children: const [
-                  // Screens
+                  AnimesRanking(),
+                  MoviesRanking(),
+                  GamesRanking(),
+                  MangasRanking(),
+                  SeriesRanking()
                 ],
               ),
             ),
