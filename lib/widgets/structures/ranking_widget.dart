@@ -22,6 +22,13 @@ class RankingWidget extends StatelessWidget{
       child: Stack(
         children: [
           Positioned(
+            child: Row(
+              children: [
+                
+              ],
+            )
+          ),
+          Positioned(
             top: 46,
             right: 92,
             left: 92,
