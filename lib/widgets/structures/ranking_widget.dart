@@ -4,15 +4,18 @@ import 'package:mymedialist/provider/ranking_provider.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/draws/light.dart';
 import 'package:mymedialist/widgets/draws/podium.dart';
+import 'package:mymedialist/widgets/general/image_card.dart';
 import 'package:mymedialist/widgets/general/ranking_card.dart';
 import 'package:provider/provider.dart';
 
 class RankingWidget extends StatelessWidget{
   const RankingWidget({
     super.key,
-    required this.currentList
+    required this.shortList,
+    required this.list
   });
-  final List<Entity> currentList;
+  final List<Entity> shortList;
+  final List<Entity> list;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +25,34 @@ class RankingWidget extends StatelessWidget{
       child: Stack(
         children: [
           Positioned(
+            right: 0,
+            left: 0,
+            top: 60,
             child: Row(
+              spacing: 32,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                
+                if(shortList.length>=2) Container(
+                  margin: EdgeInsets.only(top: 40),
+                  child: Transform(
+                    transform: Matrix4.identity()..setEntry(3, 2, 0.060)..rotateY(-0.1),
+                    alignment: Alignment.center,
+                    child: ImageCard(imagePath: shortList[1].image, title: shortList[1].title)
+                  ),
+                ),
+                if(shortList.isNotEmpty) Container(
+                  margin: EdgeInsets.only(bottom: 30),
+                  child: ImageCard(imagePath: shortList[0].image, title: shortList[0].title)
+                ),
+                if(shortList.length>=3) Container(
+                  margin: EdgeInsets.only(top: 40),
+                  child: Transform(
+                    transform: Matrix4.identity()..setEntry(3, 2, 0.060)..rotateY(0.1),
+                    alignment: Alignment.center,
+                    child: ImageCard(imagePath: shortList[2].image, title: shortList[2].title),
+                  ),
+                ),
               ],
             )
           ),
@@ -59,8 +87,11 @@ class RankingWidget extends StatelessWidget{
               child: Consumer<RankingProvider>(
                 builder: (context, value, child) {
                   return ListView.builder(
-                    itemCount: currentList.length,
-                    itemBuilder: (context, index) => RankingCard(entity: currentList[index])
+                    itemCount: list.length,
+                    itemBuilder: (context, index) => RankingCard(
+                      entity: list[index],
+                      position: (index+4),
+                    )
                   );
                 },
               )

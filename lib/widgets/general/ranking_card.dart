@@ -4,8 +4,9 @@ import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/forms/form_title.dart';
 
 class RankingCard extends StatelessWidget{
-  const RankingCard({super.key, required this.entity});
+  const RankingCard({super.key, required this.entity, required this.position});
   final Entity entity;
+  final int position;
 
   @override
   Widget build(BuildContext context){
@@ -38,7 +39,12 @@ class RankingCard extends StatelessWidget{
                   ),
                 ),
               ),
-              FormTitle(title: entity.title.length > 13 ? "${entity.title.substring(0, 13)}..." : entity.title, textSize: 18,)
+              FormTitle(
+                title: entity.title.length > 13 ?
+                  "$position.${entity.title.substring(0, 13)}..." :
+                  "$position.${entity.title}",
+                textSize: 18,
+              )
             ],
           ),
           Row(

@@ -4,15 +4,28 @@ import 'package:mymedialist/provider/ranking_provider.dart';
 import 'package:mymedialist/widgets/structures/ranking_widget.dart';
 import 'package:provider/provider.dart';
 
-class AnimesRanking extends StatelessWidget {
+class AnimesRanking extends StatefulWidget {
   const AnimesRanking({super.key});
+
+  @override
+  State<AnimesRanking> createState() => _AnimesRankingState();
+}
+
+class _AnimesRankingState extends State<AnimesRanking> {
+  late RankingProvider _rankingProvider;
   late List<Entity> shortList;
   late List<Entity> list;
 
-  init
+  @override
+  void initState() {
+    _rankingProvider = context.read<RankingProvider>();
+    shortList = _rankingProvider.animeList.take(3).toList();
+    list = _rankingProvider.animeList;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return RankingWidget(currentList: context.read<RankingProvider>().animeList);
+    return RankingWidget(list: list, shortList: shortList,);
   }
 }
