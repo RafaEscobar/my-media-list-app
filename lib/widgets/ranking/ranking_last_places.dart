@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/provider/ranking_provider.dart';
 import 'package:mymedialist/theme/app_theme.dart';
+import 'package:mymedialist/widgets/general/empty_state.dart';
 import 'package:mymedialist/widgets/general/ranking_card.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,13 @@ class RankingLastPlaces extends StatelessWidget{
       height: height * .5,
       child: Consumer<RankingProvider>(
         builder: (context, value, child) {
+          if (currentList.isEmpty) {
+            return const EmptyState(
+              title: 'Aún no hay suficientes animes.',
+              textStyle: TextStyle(color: Colors.white, fontSize: 22),
+              lottieName: 'empty_state'
+            );
+          }
           return ListView.builder(
             itemCount: currentList.length,
             itemBuilder: (context, index) => RankingCard(

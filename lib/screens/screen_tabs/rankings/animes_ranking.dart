@@ -21,6 +21,8 @@ class _AnimesRankingState extends State<AnimesRanking> {
     _rankingProvider = context.read<RankingProvider>();
     shortList = _rankingProvider.animeList.take(3).toList();
     list = _rankingProvider.animeList.length>3 ? _rankingProvider.animeList.sublist(_rankingProvider.animeList.length-3) : [];
+    dynamic nose = list;
+    print("");
     super.initState();
   }
 
