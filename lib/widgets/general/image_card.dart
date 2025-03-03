@@ -14,25 +14,28 @@ class ImageCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 70,
-            width: 70,
+            height: 80,
+            width: 80,
             child: ClipOval(
               child: Transform.scale(
                 scale: 1.6,
                 child: Image.network(
                   imagePath,
                   fit: BoxFit.fill,
-                  height: 70,
-                  width: 70,
+                  height: 80,
+                  width: 80,
                 ),
               ),
             ),
           ),
-          FormTitle(
-            title: (title.length >= 12) ? "${title.substring(0, 12)}..." : title,
-            textSize: 12,
-            maxLines: 2,
-            textOverflow: TextOverflow.ellipsis,
+          SizedBox(
+            width: 66,
+            child: FormTitle(
+              title: (title.length >= 10) ? "${title.substring(0, 10)}..." : title,
+              textSize: 10,
+              maxLines: 2,
+              textOverflow: TextOverflow.ellipsis,
+            ),
           )
         ],
       ),

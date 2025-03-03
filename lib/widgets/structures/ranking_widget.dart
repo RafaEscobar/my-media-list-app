@@ -6,6 +6,7 @@ import 'package:mymedialist/widgets/draws/light.dart';
 import 'package:mymedialist/widgets/draws/podium.dart';
 import 'package:mymedialist/widgets/general/image_card.dart';
 import 'package:mymedialist/widgets/general/ranking_card.dart';
+import 'package:mymedialist/widgets/ranking/ranking_positions.dart';
 import 'package:provider/provider.dart';
 
 class RankingWidget extends StatelessWidget{
@@ -29,29 +30,27 @@ class RankingWidget extends StatelessWidget{
             left: 0,
             top: 60,
             child: Row(
-              spacing: 32,
+              spacing: 50,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if(shortList.length>=2) Container(
-                  margin: EdgeInsets.only(top: 40),
-                  child: Transform(
-                    transform: Matrix4.identity()..setEntry(3, 2, 0.060)..rotateY(-0.1),
-                    alignment: Alignment.center,
+                  margin: EdgeInsets.only(top: 36),
+                  child: Transform.rotate(
+                    angle: -0.24,
                     child: ImageCard(imagePath: shortList[1].image, title: shortList[1].title)
-                  ),
+                  )
                 ),
                 if(shortList.isNotEmpty) Container(
                   margin: EdgeInsets.only(bottom: 30),
                   child: ImageCard(imagePath: shortList[0].image, title: shortList[0].title)
                 ),
                 if(shortList.length>=3) Container(
-                  margin: EdgeInsets.only(top: 40),
-                  child: Transform(
-                    transform: Matrix4.identity()..setEntry(3, 2, 0.060)..rotateY(0.1),
-                    alignment: Alignment.center,
-                    child: ImageCard(imagePath: shortList[2].image, title: shortList[2].title),
-                  ),
+                  margin: EdgeInsets.only(top: 36),
+                  child: Transform.rotate(
+                    angle: 0.24,
+                    child: ImageCard(imagePath: shortList[2].image, title: shortList[2].title)
+                  )
                 ),
               ],
             )
@@ -70,6 +69,12 @@ class RankingWidget extends StatelessWidget{
             left: 0,
             top: 180,
             child: Podium()
+          ),
+          Positioned(
+            right: 0,
+            left: 0,
+            top: 200,
+            child: RankingPositions()
           ),
           Positioned(
             top: 350,
