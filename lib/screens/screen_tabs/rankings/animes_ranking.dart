@@ -20,7 +20,7 @@ class _AnimesRankingState extends State<AnimesRanking> {
   void initState() {
     _rankingProvider = context.read<RankingProvider>();
     shortList = _rankingProvider.animeList.take(3).toList();
-    list = _rankingProvider.animeList;
+    list = _rankingProvider.animeList.length>3 ? _rankingProvider.animeList.sublist(_rankingProvider.animeList.length-3) : [];
     super.initState();
   }
 

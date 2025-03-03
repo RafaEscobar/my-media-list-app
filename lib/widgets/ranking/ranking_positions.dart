@@ -7,7 +7,8 @@ class RankingPositions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      spacing: 42,
       children: [
         Container(
           margin: EdgeInsets.only(top: 30),

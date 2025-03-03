@@ -19,7 +19,7 @@ class Podium extends StatelessWidget{
               height: 164,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.red.shade300, Colors.white],
+                  colors: [const Color.fromARGB(178, 30, 124, 240), Colors.white],
                   begin: Alignment.centerLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -45,7 +45,7 @@ class Podium extends StatelessWidget{
               height: 164,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.green.shade300, Colors.white],
+                  colors: [const Color.fromARGB(99, 30, 124, 240), Colors.white],
                   begin: Alignment.centerRight,
                   end: Alignment.bottomLeft,
                 ),

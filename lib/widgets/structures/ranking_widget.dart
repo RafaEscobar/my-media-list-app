@@ -4,6 +4,7 @@ import 'package:mymedialist/provider/ranking_provider.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/draws/light.dart';
 import 'package:mymedialist/widgets/draws/podium.dart';
+import 'package:mymedialist/widgets/general/empty_state.dart';
 import 'package:mymedialist/widgets/general/image_card.dart';
 import 'package:mymedialist/widgets/general/ranking_card.dart';
 import 'package:mymedialist/widgets/ranking/ranking_positions.dart';
@@ -35,18 +36,18 @@ class RankingWidget extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if(shortList.length>=2) Container(
-                  margin: EdgeInsets.only(top: 36),
+                  margin: EdgeInsets.only(top: 35),
                   child: Transform.rotate(
                     angle: -0.24,
                     child: ImageCard(imagePath: shortList[1].image, title: shortList[1].title)
                   )
                 ),
                 if(shortList.isNotEmpty) Container(
-                  margin: EdgeInsets.only(bottom: 30),
+                  margin: EdgeInsets.only(bottom: 32),
                   child: ImageCard(imagePath: shortList[0].image, title: shortList[0].title)
                 ),
                 if(shortList.length>=3) Container(
-                  margin: EdgeInsets.only(top: 36),
+                  margin: EdgeInsets.only(top: 38),
                   child: Transform.rotate(
                     angle: 0.24,
                     child: ImageCard(imagePath: shortList[2].image, title: shortList[2].title)
@@ -91,12 +92,19 @@ class RankingWidget extends StatelessWidget{
               height: size.height * .5,
               child: Consumer<RankingProvider>(
                 builder: (context, value, child) {
+                  if (list.isEmpty) {
+                    return const EmptyState(
+                    title: 'Aún no hay suficientes animes.',
+                    textStyle: TextStyle(color: Colors.white, fontSize: 22),
+                    lottieName: 'empty_state'
+                  );
+                  }
                   return ListView.builder(
                     itemCount: list.length,
                     itemBuilder: (context, index) => RankingCard(
                       entity: list[index],
                       position: (index+4),
-                    )
+                    ),
                   );
                 },
               )
