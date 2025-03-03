@@ -24,14 +24,14 @@ class RankingWidget extends StatelessWidget{
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Container(
-        height: size.height * .94,
+        height: size.height * .9,
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: Stack(
           children: [
             Positioned(
               right: 0,
               left: 0,
-              top: 60,
+              top: 20,
               child: Row(
                 spacing: 50,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,7 +59,7 @@ class RankingWidget extends StatelessWidget{
               )
             ),
             Positioned(
-              top: 46,
+              top: 0,
               right: 92,
               left: 92,
               child: CustomPaint(
@@ -70,17 +70,17 @@ class RankingWidget extends StatelessWidget{
             const Positioned(
               right: 0,
               left: 0,
-              top: 180,
+              top: 144,
               child: Podium()
             ),
             Positioned(
               right: 0,
               left: 0,
-              top: 200,
+              top: 166,
               child: RankingPositions()
             ),
             Positioned(
-              top: 336,
+              top: 310,
               left: 0,
               right: 0,
               child: Container(
