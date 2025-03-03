@@ -78,12 +78,12 @@ class RankingWidget extends StatelessWidget{
             child: RankingPositions()
           ),
           Positioned(
-            top: 350,
+            top: 336,
             left: 0,
             right: 0,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              margin: const EdgeInsets.only(left: 10, right: 10),
+              margin: const EdgeInsets.only(left: 14, right: 14),
               decoration: BoxDecoration(
                 color: AppTheme.primary,
                 borderRadius: BorderRadius.circular(10),
