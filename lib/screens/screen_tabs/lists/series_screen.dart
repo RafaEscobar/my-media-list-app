@@ -7,15 +7,15 @@ import 'package:mymedialist/widgets/general/empty_state.dart';
 import 'package:mymedialist/widgets/general/media_card.dart';
 import 'package:provider/provider.dart';
 
-class AnimesScreen extends StatefulWidget {
-  const AnimesScreen({super.key});
+class SeriesScreen extends StatefulWidget {
+  const SeriesScreen({super.key});
 
   @override
-  State<AnimesScreen> createState() => _AnimesScreenState();
+  State<SeriesScreen> createState() => _SeriesScreenState();
 }
 
-class _AnimesScreenState extends State<AnimesScreen> {
-  final int _limit = 5;
+class _SeriesScreenState extends State<SeriesScreen> {
+  final int _limit = 10;
   final PagingController<int, Saga> _pagingController = PagingController(firstPageKey: 1);
 
   @override
@@ -28,7 +28,8 @@ class _AnimesScreenState extends State<AnimesScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Saga> currentList = await context.read<SagaProvider>().getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.animes.identifier);
+      SagaProvider sagaProvider = context.read<SagaProvider>();
+      List<Saga> currentList = await sagaProvider.getSagas(limit: _limit, page: pageKey, categoryId: CategoryEnum.series.identifier);
       bool isLastPage = currentList.length < _limit;
       if (isLastPage) {
         _pagingController.appendLastPage(currentList);
@@ -45,7 +46,7 @@ class _AnimesScreenState extends State<AnimesScreen> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: PagedGridView<int, Saga>(
+      child: PagedGridView(
         pagingController: _pagingController,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -54,14 +55,14 @@ class _AnimesScreenState extends State<AnimesScreen> {
           childAspectRatio: 2/2.6
         ),
         builderDelegate: PagedChildBuilderDelegate<Saga>(
-          itemBuilder: (BuildContext context, Saga anime, int index) {
+          itemBuilder: ( BuildContext context, Saga serie, int index) {
             return Center(
-              child: MediaCard(entity: anime),
+              child: MediaCard(entity: serie),
             );
           },
           noItemsFoundIndicatorBuilder: (context) => const EmptyState(title: 'No hay elementos que mostrar', lottieName: 'empty_state'),
-        )
-      )
+        ),
+      ),
     );
   }
 }

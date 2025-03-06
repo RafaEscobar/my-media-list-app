@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mymedialist/screens/lists/animes_screen.dart';
-import 'package:mymedialist/screens/lists/mangas_screen.dart';
-import 'package:mymedialist/screens/lists/movies_screen.dart';
-import 'package:mymedialist/screens/lists/series_screen.dart';
-import 'package:mymedialist/screens/lists/videogames_screens.dart';
+import 'package:mymedialist/screens/screen_tabs/lists/animes_screen.dart';
+import 'package:mymedialist/screens/screen_tabs/lists/mangas_screen.dart';
+import 'package:mymedialist/screens/screen_tabs/lists/movies_screen.dart';
+import 'package:mymedialist/screens/screen_tabs/lists/series_screen.dart';
+import 'package:mymedialist/screens/screen_tabs/lists/videogames_screens.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/main_head.dart';
 

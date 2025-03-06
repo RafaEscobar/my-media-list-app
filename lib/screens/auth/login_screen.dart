@@ -58,8 +58,14 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   Future<bool> _generateLogin() async {
     bool? isLogged;
-    await Loader.runLoad( asyncFunction: () async => isLogged = await _appProvider.login(credentials: _getCredentials()) );
+    await Loader.runLoad( asyncFunction: () async => isLogged = await _callLogin());
     return isLogged!;
+  }
+
+  Future<bool> _callLogin() async {
+    bool loginStatus = await _appProvider.login(credentials: _getCredentials());
+    if (loginStatus) await Call.firstCalls();
+    return loginStatus;
   }
 
   Map<String, dynamic> _getCredentials() => {
@@ -69,7 +75,6 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   Future<void> _onLoginSucces() async {
     Preferences.rememberme = rememberme;
-    await Call.firstCalls();
     if (!mounted) return;
     context.goNamed(MainNavigation.routeName);
   }

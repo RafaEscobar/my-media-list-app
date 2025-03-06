@@ -5,6 +5,7 @@ class FormTitle extends StatelessWidget {
     super.key,
     this.style,
     this.textAlign,
+    this.textOverflow,
     this.textSize = 26,
     this.maxLines = 1,
     required this.title,
@@ -14,6 +15,7 @@ class FormTitle extends StatelessWidget {
   final TextAlign? textAlign;
   final double textSize;
   final int maxLines;
+  final TextOverflow? textOverflow;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class FormTitle extends StatelessWidget {
       style: style ?? TextStyle(color: Colors.blueGrey.shade600, fontSize: textSize, fontWeight: FontWeight.w700),
       textAlign: textAlign ?? TextAlign.center,
       maxLines: maxLines,
+      overflow: textOverflow,
     );
   }
 }

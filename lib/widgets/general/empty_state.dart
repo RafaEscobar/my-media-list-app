@@ -6,11 +6,13 @@ class EmptyState extends StatelessWidget{
     required this.title,
     required this.lottieName,
     this.lottieWidth = 200,
+    this.textStyle = const TextStyle(fontSize: 40, fontWeight: FontWeight.w200),
     super.key,
   });
   final String title;
   final String lottieName;
   final double lottieWidth;
+  final TextStyle textStyle;
 
   @override
   Widget build(BuildContext context){
@@ -18,7 +20,7 @@ class EmptyState extends StatelessWidget{
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(title, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w200), textAlign: TextAlign.center,),
+            Text(title, style: textStyle, textAlign: TextAlign.center,),
             Lottie.asset(
               width: lottieWidth,
               "assets/animations/$lottieName.json",

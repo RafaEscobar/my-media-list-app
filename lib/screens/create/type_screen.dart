@@ -32,7 +32,7 @@ class _TypeScreenState extends State<TypeScreen> {
             const SizedBox(height: 10,),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: MainHead(withoutSearch: false,)
+              child: MainHead(withSearch: false,)
             ),
             const SizedBox(height: 10,),
             const FormTitle(title: '¿Qué vas a calificar?'),

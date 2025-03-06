@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mymedialist/enum/type_enum.dart';
 import 'package:mymedialist/models/entity.dart';
+import 'package:mymedialist/models/saga.dart';
 import 'package:mymedialist/provider/chapter_provider.dart';
+import 'package:mymedialist/provider/saga_provider.dart';
 import 'package:mymedialist/screens/details/add_chapter/step_one.dart';
 import 'package:mymedialist/screens/details/add_chapter/step_three.dart';
 import 'package:mymedialist/screens/details/add_chapter/step_two.dart';
@@ -10,6 +13,7 @@ import 'package:mymedialist/screens/details/sections/entity_chapters.dart';
 import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
 import 'package:mymedialist/screens/details/sections/floating_buttons.dart';
+import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -72,6 +76,11 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
     );
   }
 
+  Future<void> _updateCurrentEntity() async {
+    Saga newEntity = await context.read<SagaProvider>().getSaga(entity.id);
+    setState(() => entity = newEntity);
+  }
+
   Widget _getCurrentStep(int currentStep, VoidCallback onNextStep, VoidCallback onPreviousStep) {
     switch (currentStep) {
       case 0:
@@ -79,7 +88,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
       case 1:
         return StepTwo(onNextStep, onPreviousStep,);
       case 2:
-        return StepThree(onPreviousStep, chapterKey: _chapterKey,);
+        return StepThree(chapterKey: _chapterKey, onPreviousStep: onPreviousStep, updateEntity: _updateCurrentEntity,);
       default:
         return Container();
     }
@@ -91,29 +100,36 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
       appBar: AppBar(
         backgroundColor: AppTheme.primary,
         leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.replaceNamed(MainNavigation.routeName),
           icon: const Icon(Icons.arrow_back, color: Colors.white,)
         ),
         title: const Text("Detalles", style: TextStyle(color: Colors.white),),
       ),
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-            padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
-            child: Column(
-              spacing: 20,
-              children: [
-                EntityHeader(currentEntity: entity,),
-                EntityBody(currentEntity: entity,),
-                const EntityCorousel(),
-                if (entity.type == TypeEnum.saga.name)
-                   Column(
-                    children: [
-                      EntityChapters(key: _chapterKey, sagaId: entity.id),
-                      const SizedBox(height: 16,)
-                    ],
-                  ),
-              ],
+        child: PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) return;
+            context.replaceNamed(MainNavigation.routeName);
+          },
+          child: SafeArea(
+            child: Container(
+              padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
+              child: Column(
+                spacing: 20,
+                children: [
+                  EntityHeader(currentEntity: entity,),
+                  EntityBody(currentEntity: entity,),
+                  const EntityCorousel(),
+                  if (entity.type == TypeEnum.saga.name)
+                     Column(
+                      children: [
+                        EntityChapters(key: _chapterKey, sagaId: entity.id),
+                        const SizedBox(height: 16,)
+                      ],
+                    ),
+                ],
+              ),
             ),
           ),
         ),

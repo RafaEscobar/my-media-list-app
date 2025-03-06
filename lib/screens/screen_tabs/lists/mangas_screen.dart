@@ -28,7 +28,7 @@ class _MangasScreenState extends State<MangasScreen> {
 
   Future<void> _fetchPage({ required int pageKey }) async {
     try {
-      List<Saga> sagaList = await context.read<SagaProvider>().getSaga(limit: _limit, page: pageKey, categoryId: CategoryEnum.mangas.identifier);
+      List<Saga> sagaList = await context.read<SagaProvider>().getSagas(limit: _limit, page: pageKey, categoryId: CategoryEnum.mangas.identifier);
       bool isLastPage = sagaList.length < _limit;
       if (isLastPage) {
         _pagingController.appendLastPage(sagaList);

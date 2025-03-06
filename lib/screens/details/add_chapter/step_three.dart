@@ -12,8 +12,9 @@ import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
 class StepThree extends StatefulWidget {
-  const StepThree(this.onPreviousStep, {super.key, required this.chapterKey});
+  const StepThree({super.key, required this.chapterKey,required this.onPreviousStep, required this.updateEntity});
   final Function() onPreviousStep;
+  final Function() updateEntity;
   final GlobalKey<EntityChaptersState> chapterKey;
 
   @override
@@ -37,11 +38,10 @@ class _StepThreeState extends State<StepThree> {
     _commentFocusNode.unfocus();
     if (_formKey.currentState!.fields['comment']!.validate()) {
       _chapterProvider.comment = _formKey.currentState!.fields['comment']!.value.toString();
-      await Loader.runLoad(asyncFunction: () async => await _chapterProvider.createChapter(context)
+      await Loader.runLoad(asyncFunction: () async => await _sendRequest()
         .then((response){
           _chapterProvider.cleanData();
-          widget.chapterKey.currentState!.refreshChapters();
-          if (mounted) Navigator.of(context).pop();
+          //widget.chapterKey.currentState!.refreshChapters();
           _onSuccess();
         })
         .catchError((errorMessage){
@@ -50,6 +50,13 @@ class _StepThreeState extends State<StepThree> {
         }
       ));
     }
+  }
+
+  Future<bool> _sendRequest() async {
+    if (!await _chapterProvider.createChapter(context)) return false;
+    if (mounted) Navigator.of(context).pop();
+    await widget.updateEntity();
+    return true;
   }
 
   void _onError(String message) => Alert.show(
