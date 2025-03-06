@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/auth/auth_screen.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/services/preferences.dart';
+import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/utils/call.dart';
 import 'package:provider/provider.dart';
 
@@ -58,8 +60,18 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Placeholder(),
+    return Scaffold(
+      backgroundColor: AppTheme.primary,
+      body: SizedBox(
+        child: Center(
+          child: SvgPicture.asset(
+            "assets/images/logob.svg",
+            height: 140,
+            width: 140,
+            colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          ),
+        ),
+      )
     );
   }
 }
