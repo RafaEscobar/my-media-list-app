@@ -10,7 +10,6 @@ import 'package:mymedialist/screens/details/add_chapter/step_three.dart';
 import 'package:mymedialist/screens/details/add_chapter/step_two.dart';
 import 'package:mymedialist/screens/details/sections/entity_body.dart';
 import 'package:mymedialist/screens/details/sections/entity_chapters.dart';
-import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
 import 'package:mymedialist/screens/details/sections/floating_buttons.dart';
 import 'package:mymedialist/screens/navigation/main_navigation.dart';
@@ -120,7 +119,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
                 children: [
                   EntityHeader(currentEntity: entity,),
                   EntityBody(currentEntity: entity,),
-                  const EntityCorousel(),
+                  //const EntityCorousel(),
                   if (entity.type == TypeEnum.saga.name)
                      Column(
                       children: [

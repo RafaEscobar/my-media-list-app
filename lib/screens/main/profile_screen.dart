@@ -4,6 +4,7 @@ import 'package:mymedialist/main.dart';
 import 'package:mymedialist/provider/app_provider.dart';
 import 'package:mymedialist/screens/auth/auth_screen.dart';
 import 'package:mymedialist/widgets/general/empty_state.dart';
+import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/general/loader.dart';
 import 'package:provider/provider.dart';
 
@@ -29,16 +30,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      color: Colors.white,
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          spacing: 400,
           children: [
             const EmptyState(title: 'Próximamente', lottieName: 'soon'),
-            ElevatedButton(
-              onPressed: logout,
-              child: const Text('Cerrar sesión')
-            ),
+            Column(
+              spacing: 10,
+              children: [
+                FormTitle(title: "Versión 0.2.0", textSize: 18,),
+                ElevatedButton(
+                  onPressed: logout,
+                  child: const Text('Cerrar sesión')
+                ),
+              ],
+            )
           ],
         ),
       ),

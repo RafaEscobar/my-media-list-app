@@ -30,7 +30,7 @@ class EntityHeader extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
                         width: 170,
-                        "https://img.thegoodocs.com/templates/preview/aesthetic-indie-movie-poster-163161.webp",
+                        currentEntity.image,
                         fit: BoxFit.contain,
                       )
                     )
