@@ -24,7 +24,7 @@ class RankingWidget extends StatelessWidget{
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: Stack(
           children: [
-            Positioned(right: 0, left: 0, top: 20, child: RankingTopPlaces(currentList: shortList)),
+            Positioned(right: 0, left: 0, top: 28, child: RankingTopPlaces(currentList: shortList)),
             Positioned(
               right: 92,
               left: 92,
@@ -33,9 +33,9 @@ class RankingWidget extends StatelessWidget{
                 painter: Light()
               ),
             ),
-            const Positioned(right: 0, left: 0, top: 144, child: Podium()),
-            Positioned( right: 0, left: 0, top: 166, child: RankingPositions()),
-            Positioned(top: 310, left: 0, right: 0, child: RankingLastPlaces(currentList: list, height: size.height))
+            const Positioned(right: 0, left: 0, top: 164, child: Podium()),
+            Positioned( right: 0, left: 0, top: 176, child: RankingPositions()),
+            Positioned(top: 330, left: 0, right: 0, child: RankingLastPlaces(currentList: list, height: size.height))
           ],
         ),
       ),
