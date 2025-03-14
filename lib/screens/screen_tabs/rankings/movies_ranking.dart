@@ -20,7 +20,7 @@ class _MoviesRankingState extends State<MoviesRanking> {
   void initState() {
     _rankingProvider = context.read<RankingProvider>();
     shortList = _rankingProvider.movieList.take(3).toList();
-    list = _rankingProvider.movieList.length>3 ? _rankingProvider.movieList.sublist(_rankingProvider.movieList.length-3) : [];
+    list = _rankingProvider.movieList.length>3 ? _rankingProvider.movieList.sublist(3) : [];
     super.initState();
   }
 

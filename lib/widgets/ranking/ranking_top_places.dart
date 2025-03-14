@@ -13,7 +13,7 @@ class RankingTopPlaces extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.only(top: 28),
+          margin: EdgeInsets.only(top: 19),
           child: Transform.rotate(
             angle: -0.24,
             child: (currentList.length>=2) ? ImageCard(entity: currentList[1]) : ImageCard()

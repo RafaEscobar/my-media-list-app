@@ -33,12 +33,13 @@ class ImageCard extends StatelessWidget {
           SizedBox(
             width: 66,
             child: FormTitle(
-              title: (entity!.title.length >= 16) ? "${entity!.title.substring(0, 16)}..." : entity!.title,
+              title: (entity!.title.length >= 17) ? "${entity!.title.substring(0, 17)}..." : entity!.title,
               maxLines: 2,
-              style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16, color: AppTheme.primary),
+              style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14, color: AppTheme.primary, height: 1),
               textOverflow: TextOverflow.ellipsis,
             ),
           ),
+          SizedBox(height: 2,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
