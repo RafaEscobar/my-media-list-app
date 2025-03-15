@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/main.dart';
 import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/models/saga.dart';
@@ -45,14 +46,12 @@ class RankingProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> getRankings({ int categoryId = 0 }) async {
+  Future<void> getRankings() async {
     try {
-      Response response = await ApiService.request(categoryId == 0 ? "/ranking" : "/ranking/$categoryId", auth: appProvider.userInfo.token);
-      if (response.statusCode == 200) {
-        (categoryId==0) ? _saveLists(response.data) : null;
-      } else {
+      Response response = await ApiService.request("/ranking", auth: appProvider.userInfo.token);
+      (response.statusCode == 200) ?
+        _saveLists(response.data) :
         throw "${response.statusCode}: ${response.data['data']['message']}";
-      }
     } catch (e) {
       throw e.toString();
     }
@@ -67,6 +66,41 @@ class RankingProvider extends ChangeNotifier{
       gameList = (data['games']['data'] as List).map((game) => Entity.fromJson(game)).toList();
     } catch (e) {
       throw e.toString();
+    }
+  }
+
+  Future<void> getNewRanking({required int categoryId}) async {
+    try {
+      Response response = await ApiService.request("/ranking/$categoryId", auth: appProvider.userInfo.token);
+      (response.statusCode == 200) ?
+        _updateList(
+          response.data,
+          CategoryEnum.values.where((value) => value.identifier == categoryId).first
+        ) :
+        throw "${response.statusCode}: ${response.data['data']['message']}";
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  void _updateList(Map<String, dynamic> list, CategoryEnum categoryId)
+  {
+    switch (categoryId) {
+      case CategoryEnum.movies:
+        movieList = (list['data'] as List).map((movie) => Entity.fromJson(movie)).toList();
+      break;
+      case CategoryEnum.series:
+        serieList = (list['data'] as List).map((serie) => Saga.fromJson(serie)).toList();
+      break;
+      case CategoryEnum.mangas:
+        mangaList = (list['data'] as List).map((manga) => Saga.fromJson(manga)).toList();
+      break;
+      case CategoryEnum.videogames:
+        gameList = (list['data'] as List).map((game) => Entity.fromJson(game)).toList();
+      break;
+      case CategoryEnum.animes:
+        animeList = (list['data'] as List).map((anime) => Saga.fromJson(anime)).toList();
+      break;
     }
   }
 

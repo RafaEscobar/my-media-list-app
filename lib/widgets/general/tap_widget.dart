@@ -4,6 +4,7 @@ class TapWidget extends StatelessWidget {
   const TapWidget({
     super.key,
     this.width = 200,
+    this.height = 60,
     this.borderRadius,
     this.backgroundColor = Colors.white,
     this.padding = const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
@@ -14,6 +15,7 @@ class TapWidget extends StatelessWidget {
   final BorderRadius? borderRadius;
   final Color? splashColor;
   final double width;
+  final double height;
   final Color backgroundColor;
   final Function() onTap;
   final Widget body;
@@ -23,6 +25,7 @@ class TapWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width,
+      height: height,
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: borderRadius ?? BorderRadius.circular(10),

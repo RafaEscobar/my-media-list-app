@@ -80,7 +80,6 @@ class _AddImageScreenState extends State<AddImageScreen> with CancelCreationMixi
     modalBody = Container(
       padding: const EdgeInsets.only(left: 20),
       child: Column(
-        spacing: 14,
         children: [
           TapWidget(
             width: 340,

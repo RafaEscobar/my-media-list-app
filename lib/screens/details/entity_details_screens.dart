@@ -10,10 +10,8 @@ import 'package:mymedialist/screens/details/add_chapter/step_three.dart';
 import 'package:mymedialist/screens/details/add_chapter/step_two.dart';
 import 'package:mymedialist/screens/details/sections/entity_body.dart';
 import 'package:mymedialist/screens/details/sections/entity_chapters.dart';
-import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
 import 'package:mymedialist/screens/details/sections/floating_buttons.dart';
-import 'package:mymedialist/screens/navigation/main_navigation.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -100,7 +98,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
       appBar: AppBar(
         backgroundColor: AppTheme.primary,
         leading: IconButton(
-          onPressed: () => context.replaceNamed(MainNavigation.routeName),
+          onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back, color: Colors.white,)
         ),
         title: const Text("Detalles", style: TextStyle(color: Colors.white),),
@@ -110,7 +108,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
           canPop: false,
           onPopInvokedWithResult: (didPop, result) {
             if (didPop) return;
-            context.replaceNamed(MainNavigation.routeName);
+            context.pop();
           },
           child: SafeArea(
             child: Container(
@@ -120,7 +118,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
                 children: [
                   EntityHeader(currentEntity: entity,),
                   EntityBody(currentEntity: entity,),
-                  const EntityCorousel(),
+                  //const EntityCorousel(),
                   if (entity.type == TypeEnum.saga.name)
                      Column(
                       children: [
