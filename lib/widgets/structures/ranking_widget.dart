@@ -12,10 +12,12 @@ class RankingWidget extends StatelessWidget{
   const RankingWidget({
     super.key,
     required this.shortList,
-    required this.list
+    required this.list,
+    required this.refresh,
   });
   final List<Entity> shortList;
   final List<Entity> list;
+  final Function() refresh;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class RankingWidget extends StatelessWidget{
         width: 50,
         height: 50,
         borderRadius: BorderRadius.circular(26),
-        onTap: () => (),
+        onTap: refresh,
         body: Icon(Icons.refresh, color: AppTheme.primary,),
       )
     );
