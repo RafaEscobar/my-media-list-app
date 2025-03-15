@@ -24,19 +24,19 @@ class EntityHeader extends StatelessWidget {
               spacing: 10,
               children: [
                 SizedBox(
-                  width: 170,
+                  height: 200,
+                  width: 180,
                   child: Center(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Hero(
                         tag: "poster_${currentEntity.id}_details",
                         child: Image.network(
-                          width: 170,
                           currentEntity.image,
                           fit: BoxFit.contain,
                         ),
                       )
-                    )
+                    ),
                   ),
                 ),
                 Container(
