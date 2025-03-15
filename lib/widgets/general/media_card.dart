@@ -29,9 +29,15 @@ class MediaCard extends StatelessWidget {
               child: Center(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    entity.image,
-                    fit: BoxFit.contain,
+                  child: Hero(
+                      flightShuttleBuilder: (flightContext, animation, direction, fromContext, toContext) {
+                      return FadeTransition(opacity: animation, child: toContext.widget);
+                    },
+                    tag: "poster_${entity.id}_details",
+                    child: Image.network(
+                      entity.image,
+                      fit: BoxFit.contain,
+                    ),
                   )
                 ),
               ),
@@ -86,7 +92,7 @@ class MediaCard extends StatelessWidget {
                     color: AppTheme.primary,
                   ),
                   width: double.infinity,
-                  child: Text(
+                  child:Text(
                     entity.title,
                     style: const TextStyle(
                       color: Colors.white,

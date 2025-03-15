@@ -28,29 +28,25 @@ class BottomSheetWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  children: [
-                    withCloseIcon ?
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: Icon(Icons.cancel_outlined, size: 32, color: Colors.blueGrey.shade600,)
-                      ),
-                    ) : const SizedBox(height: 20,),
-                    Text(
-                      title,
-                      style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 24, fontWeight: FontWeight.w700),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 20,),
-                    body != null ?
-                      Align(
-                        alignment: alignment,
-                        child: body
-                      ) : Container()
-                  ],
+                withCloseIcon ?
+                Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: Icon(Icons.cancel_outlined, size: 32, color: Colors.blueGrey.shade600,)
+                  ),
+                ) : const SizedBox(height: 20,),
+                Text(
+                  title,
+                  style: TextStyle(color: Colors.blueGrey.shade600, fontSize: 24, fontWeight: FontWeight.w700),
+                  textAlign: TextAlign.center,
                 ),
+                const SizedBox(height: 6,),
+                body != null ?
+                  Align(
+                    alignment: alignment,
+                    child: body
+                  ) : Container(),
                 footer ?? Container(),
               ],
             ),

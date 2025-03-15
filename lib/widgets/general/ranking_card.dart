@@ -29,10 +29,10 @@ class RankingCard extends StatelessWidget{
                 width: 36,
                 child: ClipOval(
                   child: Transform.scale(
-                    scale: 1.6,
+                    scale: 1,
                     child: Image.network(
                       entity.image,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       height: 36,
                       width: 36,
                     ),
@@ -40,17 +40,17 @@ class RankingCard extends StatelessWidget{
                 ),
               ),
               FormTitle(
-                title: entity.title.length > 13 ?
-                  "$position.${entity.title.substring(0, 13)}..." :
+                title: entity.title.length > 15 ?
+                  "$position.${entity.title.substring(0, 15)}..." :
                   "$position.${entity.title}",
-                textSize: 18,
+                textSize: 16,
               )
             ],
           ),
           Row(
             spacing: 2,
             children: [
-              FormTitle(title: "${entity.score}", style: TextStyle(color: AppTheme.primary, fontSize: 18, fontWeight: FontWeight.w300),),
+              FormTitle(title: "${entity.score}", style: TextStyle(color: AppTheme.primary, fontSize: 18, fontWeight: FontWeight.w400),),
               Icon(Icons.grade_outlined, color: AppTheme.primary, size: 17)
             ],
           )

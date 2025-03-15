@@ -24,16 +24,19 @@ class EntityHeader extends StatelessWidget {
               spacing: 10,
               children: [
                 SizedBox(
-                  width: 170,
+                  height: 200,
+                  width: 180,
                   child: Center(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        width: 170,
-                        "https://img.thegoodocs.com/templates/preview/aesthetic-indie-movie-poster-163161.webp",
-                        fit: BoxFit.contain,
+                      child: Hero(
+                        tag: "poster_${currentEntity.id}_details",
+                        child: Image.network(
+                          currentEntity.image,
+                          fit: BoxFit.contain,
+                        ),
                       )
-                    )
+                    ),
                   ),
                 ),
                 Container(
