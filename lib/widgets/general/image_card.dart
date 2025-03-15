@@ -19,10 +19,10 @@ class ImageCard extends StatelessWidget {
             width: 80,
             child: ClipOval(
               child: Transform.scale(
-                scale: 1.6,
+                scale: 1,
                 child: Image.network(
                   entity!.image,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   height: 80,
                   width: 80,
                 )
