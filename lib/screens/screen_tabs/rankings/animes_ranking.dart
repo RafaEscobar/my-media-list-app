@@ -31,7 +31,7 @@ class _AnimesRankingState extends State<AnimesRanking> {
     RankingProvider rankingProvider = context.read<RankingProvider>();
     try {
       setState(() => isUpdating = true);
-      rankingProvider.getNewRanking(categoryId:  CategoryEnum.animes.index);
+      await rankingProvider.getNewRanking(categoryId:  CategoryEnum.animes.identifier);
       _generateLists();
       setState(() => isUpdating = false);
     } catch (e) {
@@ -46,13 +46,16 @@ class _AnimesRankingState extends State<AnimesRanking> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return isUpdating ?
-      Container(
-        color: Colors.white,
-        width: size.width,
-        height: size.height,
-        child: LottieBuilder.asset("assets/animations/loader_a.json"),
+      SizedBox(
+        child: Center(
+          child: Lottie.asset(
+            width: 200,
+            "assets/animations/loader_a.json",
+            renderCache: RenderCache.drawingCommands,
+            fit: BoxFit.fitHeight
+          ),
+        ),
       ) :
       RankingWidget(list: list, shortList: shortList, refresh: _updateList,);
   }

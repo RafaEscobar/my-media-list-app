@@ -71,11 +71,11 @@ class RankingProvider extends ChangeNotifier{
 
   Future<void> getNewRanking({required int categoryId}) async {
     try {
-      Response response = await ApiService.request("ranking/$categoryId", auth: appProvider.userInfo.token);
+      Response response = await ApiService.request("/ranking/$categoryId", auth: appProvider.userInfo.token);
       (response.statusCode == 200) ?
         _updateList(
           response.data,
-          CategoryEnum.values.where((value) => value.index == categoryId).first
+          CategoryEnum.values.where((value) => value.identifier == categoryId).first
         ) :
         throw "${response.statusCode}: ${response.data['data']['message']}";
     } catch (e) {

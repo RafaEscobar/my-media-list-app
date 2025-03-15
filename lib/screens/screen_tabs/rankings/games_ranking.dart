@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mymedialist/enum/category_enum.dart';
 import 'package:mymedialist/models/entity.dart';
 import 'package:mymedialist/provider/ranking_provider.dart';
@@ -30,7 +31,7 @@ class _GamesRankingState extends State<GamesRanking> {
     RankingProvider rankingProvider = context.read<RankingProvider>();
     try {
       setState(() => isUpdating = true);
-      rankingProvider.getNewRanking(categoryId:  CategoryEnum.videogames.index);
+      await rankingProvider.getNewRanking(categoryId:  CategoryEnum.videogames.identifier);
       _generateLists();
       setState(() => isUpdating = false);
     } catch (e) {
@@ -45,6 +46,17 @@ class _GamesRankingState extends State<GamesRanking> {
 
   @override
   Widget build(BuildContext context) {
-    return RankingWidget(list: list, shortList: shortList, refresh: _updateList,);
+    return isUpdating ?
+      SizedBox(
+        child: Center(
+          child: Lottie.asset(
+            width: 200,
+            "assets/animations/loader_a.json",
+            renderCache: RenderCache.drawingCommands,
+            fit: BoxFit.fitHeight
+          ),
+        ),
+      ) :
+      RankingWidget(list: list, shortList: shortList, refresh: _updateList,);
   }
 }
