@@ -6,6 +6,7 @@ import 'package:mymedialist/provider/chapter_provider.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/alert.dart';
 import 'package:mymedialist/widgets/general/chapter_card.dart';
+import 'package:mymedialist/widgets/general/empty_state.dart';
 import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:provider/provider.dart';
 
@@ -59,7 +60,7 @@ class EntityChaptersState extends State<EntityChapters> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 320,
+      height: 300,
       child: Column(
         spacing: 20,
         children: [
@@ -93,6 +94,12 @@ class EntityChaptersState extends State<EntityChapters> {
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate(
                 itemBuilder: (BuildContext context, Chapter item, int index) => ChapterCard(chapter: item),
+                noItemsFoundIndicatorBuilder: (context) => const EmptyState(
+                  title: 'No hay capítulos',
+                  lottieName: 'empty_state',
+                  textStyle: TextStyle(fontSize: 22),
+                  lottieWidth: 120,
+                ),
               )
             ),
           )
