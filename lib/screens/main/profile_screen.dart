@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       color: Colors.white,
       child: Center(
         child: Column(
-          spacing: 400,
+          spacing: 380,
           children: [
             const EmptyState(title: 'Próximamente', lottieName: 'soon'),
             Column(
