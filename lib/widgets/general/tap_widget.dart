@@ -4,7 +4,7 @@ class TapWidget extends StatelessWidget {
   const TapWidget({
     super.key,
     this.width = 200,
-    this.height = 100,
+    this.height = 60,
     this.borderRadius,
     this.backgroundColor = Colors.white,
     this.padding = const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
