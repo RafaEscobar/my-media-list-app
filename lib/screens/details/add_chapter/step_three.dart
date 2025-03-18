@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mymedialist/provider/chapter_provider.dart';
 import 'package:mymedialist/screens/details/sections/entity_chapters.dart';
 import 'package:mymedialist/theme/app_theme.dart';
@@ -98,11 +97,6 @@ class _StepThreeState extends State<StepThree> {
               maxLines: 4,
               maxLength: 235,
               textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(errorText: 'El comentario es obligatorio'),
-                FormBuilderValidators.minLength(3, errorText: 'El comentario es demasiado corto'),
-                FormBuilderValidators.maxLength(232, errorText: 'El comentario es muy largo')
-              ]),
               inputDecoration: InputDecoration(
                 hintText: 'Mi opinión',
                 border: OutlineInputBorder(
