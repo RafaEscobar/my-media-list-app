@@ -38,10 +38,11 @@ class _StepThreeState extends State<StepThree> {
     _commentFocusNode.unfocus();
     if (_formKey.currentState!.fields['comment']!.validate()) {
       _chapterProvider.comment = _formKey.currentState!.fields['comment']!.value.toString();
+      Navigator.of(context).pop();
       await Loader.runLoad(asyncFunction: () async => await _sendRequest()
         .then((response){
           _chapterProvider.cleanData();
-          //widget.chapterKey.currentState!.refreshChapters();
+          widget.chapterKey.currentState!.refreshChapters();
           _onSuccess();
         })
         .catchError((errorMessage){
@@ -54,7 +55,6 @@ class _StepThreeState extends State<StepThree> {
 
   Future<bool> _sendRequest() async {
     if (!await _chapterProvider.createChapter(context)) return false;
-    if (mounted) Navigator.of(context).pop();
     await widget.updateEntity();
     return true;
   }
