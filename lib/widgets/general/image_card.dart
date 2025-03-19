@@ -21,7 +21,7 @@ class ImageCard extends StatelessWidget {
               child: Transform.scale(
                 scale: 1,
                 child: Image.network(
-                  entity!.image,
+                  entity!.images[0],
                   fit: BoxFit.cover,
                   height: 80,
                   width: 80,

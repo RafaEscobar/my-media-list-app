@@ -8,7 +8,7 @@ class Entity {
   final DateTime creationDate;
   final String? pendingPriority;
   final String? postViewPriority;
-  final String image;
+  final List<dynamic> images;
   final String? position;
   final String? type;
 
@@ -24,7 +24,7 @@ class Entity {
     this.pendingPriority,
     this.postViewPriority,
     this.position,
-    required this.image
+    required this.images
   });
 
   factory Entity.fromJson(Map<String, dynamic> json) {
@@ -41,7 +41,7 @@ class Entity {
         pendingPriority: json['pending_priority'],
         postViewPriority: json['post_view_priority'],
         position: json['position'],
-        image: json['imageUrl'] ?? ''
+        images: json['images'] ?? []
       );
     } catch (e) {
       throw Exception(e.toString());
@@ -60,6 +60,6 @@ class Entity {
     'pending_priority_id': pendingPriority,
     'post_view_priority_id': postViewPriority,
     'position': position,
-    'image': image,
+    'images': images,
   };
 }
