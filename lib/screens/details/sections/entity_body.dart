@@ -37,7 +37,7 @@ class EntityBody extends StatelessWidget{
           ),
           (currentEntity.status == 'Pendiente' || currentEntity.status == 'En emisión') ?
             Lottie.asset(
-              width: 200,
+              width: 100,
               "assets/animations/live.json",
               renderCache: RenderCache.drawingCommands,
               fit: BoxFit.fitHeight
