@@ -11,8 +11,8 @@ import 'package:mymedialist/screens/details/add_chapter/step_two.dart';
 import 'package:mymedialist/screens/details/sections/entity_body.dart';
 import 'package:mymedialist/screens/details/sections/entity_chapters.dart';
 import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
+import 'package:mymedialist/screens/details/sections/entity_details_options.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
-import 'package:mymedialist/screens/details/sections/floating_buttons.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -103,6 +103,11 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
           icon: const Icon(Icons.arrow_back, color: Colors.white,)
         ),
         title: const Text("Detalles", style: TextStyle(color: Colors.white),),
+        actions: [EntityDetailsOptions(
+          addChapter: _addChapter,
+          addPhoto: () => (),
+          edit: () => ()
+        )],
       ),
       body: SingleChildScrollView(
         child: PopScope(
@@ -133,14 +138,6 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: Visibility(
-        visible: (widget.entity!.type == TypeEnum.saga.name),
-        child: FloatingButtons(
-          actionAddChapter: _addChapter,
-          actionEdit: () => (),
-        ),
-      )
     );
   }
 }
