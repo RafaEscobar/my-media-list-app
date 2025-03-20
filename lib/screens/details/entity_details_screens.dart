@@ -10,10 +10,12 @@ import 'package:mymedialist/screens/details/add_chapter/step_three.dart';
 import 'package:mymedialist/screens/details/add_chapter/step_two.dart';
 import 'package:mymedialist/screens/details/sections/entity_body.dart';
 import 'package:mymedialist/screens/details/sections/entity_chapters.dart';
+import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
+import 'package:mymedialist/screens/details/sections/entity_details_options.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
-import 'package:mymedialist/screens/details/sections/floating_buttons.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:star_menu/star_menu.dart';
 
 class EntityDetailsScreens extends StatefulWidget {
   static const String routeName = 'details-screen';
@@ -30,6 +32,7 @@ class EntityDetailsScreens extends StatefulWidget {
 class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
   late Entity entity;
   final GlobalKey<EntityChaptersState> _chapterKey = GlobalKey<EntityChaptersState>();
+  final StarMenuController starMenuController = StarMenuController();
 
   @override
   void initState() {
@@ -102,6 +105,12 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
           icon: const Icon(Icons.arrow_back, color: Colors.white,)
         ),
         title: const Text("Detalles", style: TextStyle(color: Colors.white),),
+        actions: [EntityDetailsOptions(
+          addChapter: _addChapter,
+          addPhoto: () => (),
+          edit: () => (),
+          controller: starMenuController,
+        )],
       ),
       body: SingleChildScrollView(
         child: PopScope(
@@ -118,7 +127,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
                 children: [
                   EntityHeader(currentEntity: entity,),
                   EntityBody(currentEntity: entity,),
-                  //const EntityCorousel(),
+                  EntityCorousel(images: entity.images,),
                   if (entity.type == TypeEnum.saga.name)
                      Column(
                       children: [
@@ -132,14 +141,6 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: Visibility(
-        visible: (widget.entity!.type == TypeEnum.saga.name),
-        child: FloatingButtons(
-          actionAddChapter: _addChapter,
-          actionEdit: () => (),
-        ),
-      )
     );
   }
 }
