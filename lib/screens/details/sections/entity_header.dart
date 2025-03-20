@@ -32,7 +32,7 @@ class EntityHeader extends StatelessWidget {
                       child: Hero(
                         tag: "poster_${currentEntity.id}_details",
                         child: Image.network(
-                          currentEntity.image,
+                          currentEntity.images[0],
                           fit: BoxFit.contain,
                         ),
                       )

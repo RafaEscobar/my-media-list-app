@@ -12,7 +12,7 @@ class Saga extends Entity{
     required super.creationDate,
     required super.pendingPriority,
     required super.postViewPriority,
-    required super.image,
+    required super.images,
     required this.numCaps,
     required this.season,
   });
@@ -33,7 +33,7 @@ class Saga extends Entity{
         creationDate: json['creation_date'] != null ? DateTime.parse(json['creation_date']!) : DateTime.now(),
         pendingPriority: json['pending_priority'] ?? '',
         postViewPriority: json['post_view_priority'] ?? '',
-        image: json['imageUrl'] ?? '',
+        images: json['imageUrl'] ?? [],
         numCaps: json['num_caps'] != null ? json['num_caps']! : 0,
         season: json['season'] != null ? json['season']! : 0
       );
@@ -54,7 +54,7 @@ class Saga extends Entity{
     'creationDate': creationDate,
     'pending_priority': pendingPriority,
     'post_view_priority': postViewPriority,
-    'imageUrl': image,
+    'images': images,
     'num_caps': numCaps,
     'season': season
   };
