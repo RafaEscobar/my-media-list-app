@@ -33,7 +33,7 @@ class Saga extends Entity{
         creationDate: json['creation_date'] != null ? DateTime.parse(json['creation_date']!) : DateTime.now(),
         pendingPriority: json['pending_priority'] ?? '',
         postViewPriority: json['post_view_priority'] ?? '',
-        images: json['imageUrl'] ?? [],
+        images: json['images'] ?? [],
         numCaps: json['num_caps'] != null ? json['num_caps']! : 0,
         season: json['season'] != null ? json['season']! : 0
       );

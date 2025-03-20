@@ -41,7 +41,7 @@ class Entity {
         pendingPriority: json['pending_priority'],
         postViewPriority: json['post_view_priority'],
         position: json['position'],
-        images: json['imageUrl'] ?? []
+        images: json['images'] ?? []
       );
     } catch (e) {
       throw Exception(e.toString());
