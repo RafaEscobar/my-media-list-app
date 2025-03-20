@@ -15,6 +15,7 @@ import 'package:mymedialist/screens/details/sections/entity_details_options.dart
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:star_menu/star_menu.dart';
 
 class EntityDetailsScreens extends StatefulWidget {
   static const String routeName = 'details-screen';
@@ -31,6 +32,7 @@ class EntityDetailsScreens extends StatefulWidget {
 class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
   late Entity entity;
   final GlobalKey<EntityChaptersState> _chapterKey = GlobalKey<EntityChaptersState>();
+  final StarMenuController starMenuController = StarMenuController();
 
   @override
   void initState() {
@@ -106,7 +108,8 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
         actions: [EntityDetailsOptions(
           addChapter: _addChapter,
           addPhoto: () => (),
-          edit: () => ()
+          edit: () => (),
+          controller: starMenuController,
         )],
       ),
       body: SingleChildScrollView(

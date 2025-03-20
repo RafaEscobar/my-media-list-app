@@ -9,11 +9,13 @@ class EntityDetailsOptions extends StatelessWidget{
     super.key,
     required this.addChapter,
     required this.addPhoto,
-    required this.edit
+    required this.edit,
+    required this.controller
   });
   final Function() addChapter;
   final Function() addPhoto;
   final Function() edit;
+  final StarMenuController controller;
 
   @override
   Widget build(BuildContext context){
@@ -21,6 +23,15 @@ class EntityDetailsOptions extends StatelessWidget{
     return Container(
       margin: EdgeInsets.only(right: 14),
       child: StarMenu(
+        onItemTapped: (index, controller) {
+          if (index == 1) {
+            controller.closeMenu!();
+            addChapter();
+          } else if (index == 2){
+            controller.closeMenu!();
+            addPhoto();
+          }
+        },
         params: StarMenuParameters(
           shape: MenuShape.linear,
           linearShapeParams: LinearShapeParams(
@@ -54,7 +65,6 @@ class EntityDetailsOptions extends StatelessWidget{
             ),
           ),
           Button(
-            action: addChapter,
             icon: Padding(
               padding: const EdgeInsets.all(2),
               child: SvgPicture.asset(
@@ -70,7 +80,6 @@ class EntityDetailsOptions extends StatelessWidget{
             buttonHeight: 50,
           ),
           Button(
-            action: addPhoto,
             icon: Padding(
               padding: const EdgeInsets.all(2),
               child: SvgPicture.asset(
