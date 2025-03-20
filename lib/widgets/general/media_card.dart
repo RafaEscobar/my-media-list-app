@@ -35,7 +35,7 @@ class MediaCard extends StatelessWidget {
                     },
                     tag: "poster_${entity.id}_details",
                     child: Image.network(
-                      entity.image,
+                      entity.images[0],
                       fit: BoxFit.contain,
                     ),
                   )
