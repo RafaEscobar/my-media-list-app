@@ -52,6 +52,7 @@ class _StepOneState extends State<StepOne> {
   Widget build(BuildContext context){
     return Container(
       height: 260,
+      color: Colors.white,
       padding: const EdgeInsets.only(right: 2, left: 2, top: 4, bottom: 0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

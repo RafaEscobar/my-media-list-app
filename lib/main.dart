@@ -11,6 +11,7 @@ import 'package:mymedialist/provider/post_view_priority_provider.dart';
 import 'package:mymedialist/provider/ranking_provider.dart';
 import 'package:mymedialist/provider/saga_provider.dart';
 import 'package:mymedialist/provider/status_provider.dart';
+import 'package:mymedialist/provider/upload_image_provider.dart';
 import 'package:mymedialist/routes/app_route.dart';
 import 'package:mymedialist/services/preferences.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget
         ChangeNotifierProvider(create: (_) => EntertainmentEntityProvider(),),
         ChangeNotifierProvider(create: (_) => SagaProvider()),
         ChangeNotifierProvider(create: (_) => ChapterProvider()),
-        ChangeNotifierProvider(create: (_) => RankingProvider())
+        ChangeNotifierProvider(create: (_) => RankingProvider()),
+        ChangeNotifierProvider(create: (_) => UploadImageProvider())
       ],
       builder: (_, __) {
         return MaterialApp.router(

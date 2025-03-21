@@ -13,6 +13,8 @@ import 'package:mymedialist/screens/details/sections/entity_chapters.dart';
 import 'package:mymedialist/screens/details/sections/entity_corousel.dart';
 import 'package:mymedialist/screens/details/sections/entity_details_options.dart';
 import 'package:mymedialist/screens/details/sections/entity_header.dart';
+import 'package:mymedialist/screens/details/upload_image/image_step_one.dart';
+import 'package:mymedialist/screens/details/upload_image/image_step_two.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:star_menu/star_menu.dart';
@@ -54,6 +56,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
             void onPreviousStep() => setState(() => currentStep--);
 
             return AlertDialog(
+              backgroundColor: Colors.white,
               content: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 160),
                   transitionBuilder: (Widget child, Animation<double> animation) {
@@ -68,7 +71,45 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
                       ),
                     );
                   },
-                  child: _getCurrentStep(currentStep, onNextStep, onPreviousStep),
+                  child: _getCurrentStepChapter(currentStep, onNextStep, onPreviousStep),
+                ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _uploadImage() {
+    context.read<ChapterProvider>().sagaId = entity.id;
+    showDialog(
+      barrierColor: Colors.black87,
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        int currentStep = 0;
+        return StatefulBuilder(
+          builder: (context, setState) {
+            void onNextStep() => setState(() => currentStep++);
+            void onPreviousStep() => setState(() => currentStep--);
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              backgroundColor: Colors.white,
+              content: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 160),
+                  transitionBuilder: (Widget child, Animation<double> animation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0.0, -1.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: _getCurrentStepImage(currentStep, onNextStep, onPreviousStep),
                 ),
             );
           },
@@ -82,7 +123,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
     setState(() => entity = newEntity);
   }
 
-  Widget _getCurrentStep(int currentStep, VoidCallback onNextStep, VoidCallback onPreviousStep) {
+  Widget _getCurrentStepChapter(int currentStep, VoidCallback onNextStep, VoidCallback onPreviousStep) {
     switch (currentStep) {
       case 0:
         return StepOne(onNextStep,);
@@ -90,6 +131,17 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
         return StepTwo(onNextStep, onPreviousStep,);
       case 2:
         return StepThree(chapterKey: _chapterKey, onPreviousStep: onPreviousStep, updateEntity: _updateCurrentEntity,);
+      default:
+        return Container();
+    }
+  }
+
+  Widget _getCurrentStepImage(int currentStep, Function() onNextStep, Function() onPreviousStep) {
+    switch (currentStep) {
+      case 0:
+        return ImageStepOne(nextStep: onNextStep,);
+      case 1:
+        return ImageStepTwo();
       default:
         return Container();
     }
@@ -107,7 +159,7 @@ class _EntityDetailsScreensState extends State<EntityDetailsScreens> {
         title: const Text("Detalles", style: TextStyle(color: Colors.white),),
         actions: [EntityDetailsOptions(
           addChapter: _addChapter,
-          addPhoto: () => (),
+          addPhoto: _uploadImage,
           edit: () => (),
           controller: starMenuController,
         )],
