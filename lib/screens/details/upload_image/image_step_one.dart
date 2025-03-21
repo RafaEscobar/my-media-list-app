@@ -4,6 +4,7 @@ import 'package:mymedialist/provider/upload_image_provider.dart';
 import 'package:mymedialist/theme/app_theme.dart';
 import 'package:mymedialist/widgets/general/forms/form_title.dart';
 import 'package:mymedialist/widgets/general/tap_widget.dart';
+import 'package:mymedialist/widgets/structures/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
 class ImageStepOne extends StatefulWidget{
@@ -31,7 +32,7 @@ class _ImageStepOneState extends State<ImageStepOne> {
   @override
   Widget build(BuildContext context){
     return SizedBox(
-      height: 240,
+      height: 300,
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -77,6 +78,18 @@ class _ImageStepOneState extends State<ImageStepOne> {
                 ),
               ],
             )
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            child: BottomButtons(
+              backgroundBtnL: Colors.blueGrey.shade600,
+              onlyOneBtn: true,
+              textSize: 18,
+              margin: const EdgeInsets.only(top: 30),
+              padding: const EdgeInsets.all(0),
+              textBtnLeft: "Cerrar",
+              actionBtnL: _closeModal,
+            ),
           )
         ],
       )
